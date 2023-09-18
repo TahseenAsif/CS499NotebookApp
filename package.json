@@ -1,0 +1,15 @@
+{
+  "name": "codestone",
+  "version": "1.0.0",
+  "description": "A notebook for coders.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^26.2.1"
+  }
+}
