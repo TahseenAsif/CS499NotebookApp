@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+    <link href="./index.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="notepad">
+        <div class="navbar">
+            <select name="fonts" id="fonts">
+                <option value="Monospace">Monospace</option>
+                <option value="Arial">Arial</option>
+                <option value="Impact">Impact</option>
+            </select>
+            <button id="bold">B</button>
+            <button id="italic">
+                <i>I</i>
+            </button>
+            <button id="underline">U</button>
+            <button id="highlight">H</button>
+            <button id="un"><s>H</s></button>
+            <input id="font-color" type="color"/>
+
+    
+        </div>
+        <div class="note">
+            <div class="line-numbers">
+                <span>1</span>
+            </div>
+    
+            <div class="textareawrapper">
+                <div class="textarea" contenteditable="true"></div>
+            </div>
+            
+        </div>
+    
+
+
+</body>
+</html>
+

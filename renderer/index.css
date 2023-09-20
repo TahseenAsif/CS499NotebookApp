@@ -1,0 +1,44 @@
+.note{
+    border: 2px solid black;
+    display: flex;
+    width: 500px;
+    min-height: 500px;
+    gap: 10px;
+    padding: 10px;
+    line-height: 21px;
+    font-family: monospace;
+    font-size: 15px;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    width: 522px;
+}
+
+.line-numbers{
+    text-align: left;
+}
+
+.line-numbers span{
+    width: 100%;
+    display: block;
+}
+
+.textarea{
+    display: inline-block;
+    width: 100%;
+    outline: none;
+    max-height: 500px;
+    
+}
+.textareawrapper{
+    width: 100%;
+    max-height: 500px;
+}
+
+.font-color{
+    background-color: black;
+    border: none;
+}
