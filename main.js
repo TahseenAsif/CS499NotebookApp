@@ -5,8 +5,8 @@ const path = require('path');
 function createWindow() {
     const window = new BrowserWindow({
         title: 'Note App',
-        width: 1000,
-        height: 1000
+        width: 100000,
+        height: 100000
     });
 
     window.loadFile(path.join(__dirname, './renderer/index.html'));
@@ -14,6 +14,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
     createWindow();
+    
 
     app.on('activate' , () => {
         if(BrowserWindow.getAllWindows().length === 0) {

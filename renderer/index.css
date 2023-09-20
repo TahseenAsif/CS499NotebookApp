@@ -28,14 +28,15 @@
 
 .textarea{
     display: inline-block;
-    width: 100%;
+    width: 98%;
     outline: none;
     max-height: 500px;
-    
+    overflow: hidden
 }
 .textareawrapper{
     width: 100%;
     max-height: 500px;
+
 }
 
 .font-color{
