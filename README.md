@@ -6,7 +6,7 @@ Responsible for the code section of the Codestone Application
 - Push 2
     - added folders (css, html, img, js)
     - added files in css, html, and js
-    - added codeeditor.html replaced index.html
+    - added codeeditor.html that replaces index.html
 
 - Push 1
     - Setup python environment
