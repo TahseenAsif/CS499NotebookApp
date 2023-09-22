@@ -7,9 +7,16 @@ let mainWindow
 
 function createWindow () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600, webPreferences: {preload: path.join(__dirname, 'preload.js')}})
+    mainWindow = new BrowserWindow({
+        width: 900,
+        height: 800,
+        minHeight: 650,
+        minWidth: 600,
+        frame: false,
+        webPreferences: {preload: path.join(__dirname, 'preload.js')}
+    })
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile('codeeditor.html')
     // open dev tools
     mainWindow.webContents.openDevTools()
     mainWindow.on('closed', () => {
@@ -24,7 +31,7 @@ app.on('activate', () => {
 })
 
 // method will be called when electron has finished initialization
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
