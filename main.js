@@ -1,9 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const {app, BrowserWindow, ipcMain} = require('electron');
+const path = require('path');
+//const fs = require('fs');
 
-// global reference of the window object
-let mainWindow
+let mainWindow;
 
 function createWindow () {
     // Create the browser window.
@@ -13,46 +13,61 @@ function createWindow () {
         minHeight: 650,
         minWidth: 600,
         frame: false,
-        webPreferences: {preload: path.join(__dirname, 'preload.js')}
-    })
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    // ipcMain.handle('create-file', (req, data) => {
+    //     if(!data || !data.title || !data.content){
+    //         return false;
+    //     }
+    //     const filePath = path.join(__dirname, 'notes', `${data.title}.txt`);
+    //     fs.writeFileSync(filePath, data.content);
+    //     return {success: true, filePath};
+    // });
+
     // and load the index.html of the app.
-    mainWindow.loadFile('codeeditor.html')
+    mainWindow.loadFile('codeeditor.html');
     // open dev tools
-    mainWindow.webContents.openDevTools()
-    mainWindow.on('closed', () => {
-        win = null
-    })
+    mainWindow.webContents.openDevTools();
 }
-
-app.on('activate', () => {
-    if(win === null){
-        createWindow()
-    }
-})
-
-// method will be called when electron has finished initialization
-// app.on('ready', createWindow)
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
-    createWindow()
-    app.on('activate', function () {
-        // On macOS it's common to re-create a window in the app when the
-        // dock icon is clicked and there are no other windows open.
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-      })
-})
+    createWindow();
+    // app.on('activate', function () {
+    //     // On macOS it's common to re-create a window in the app when the
+    //     // dock icon is clicked and there are no other windows open.
+    //     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    //   })
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
+});
+
+/**
+ * ipcmain listening for title bar interactions (minimize, maximize, exit)
+ */
+ipcMain.on("winMinimize", () => {
+    mainWindow.minimize();
 })
-  
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+
+ipcMain.on("winMaximize", () => {
+    mainWindow.maximize();
+})
+
+ipcMain.on("winClose", () => {
+    mainWindow.close();
+})
+
