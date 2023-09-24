@@ -27,14 +27,23 @@ window.addEventListener("DOMContentLoaded" , (event) => {
 
     document.getElementById('bold').addEventListener('click', event =>{
         document.execCommand("bold");
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
     })
     
     document.getElementById('italic').addEventListener('click', event =>{
         document.execCommand('italic')
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
     })
     
     document.getElementById('underline').addEventListener('click', event =>{
         document.execCommand('underline')
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
     })
 
     document.querySelector('.textarea').addEventListener('keydown', function(e){
@@ -45,33 +54,37 @@ window.addEventListener("DOMContentLoaded" , (event) => {
 
     document.getElementById('font-color').addEventListener('input', event => {
         document.execCommand('foreColor', false, document.getElementById('font-color').value)
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
+    })
+    
+
+
+    document.getElementById('highlight').addEventListener('click', () => {
+        var dropdownMenu = document.querySelector('.dropdown-menu');
+        if (dropdownMenu.style.display === 'none'){
+            dropdownMenu.style.display = 'flex'
+        }
+        else {
+            dropdownMenu.style.display = 'none';
+        }
     })
 
-    document.getElementById('highlight').addEventListener('click', event =>{
+    document.getElementById('yellow').addEventListener('mousedown', () =>{
+        document.execCommand('backcolor', true, '#FFFF00')
+        document.querySelector('.dropdown-menu').style.display='none'
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
+  
+    })
 
-        /*
-        let selectedText = window.getSelection().getRangeAt(0);
-        let s = selectedText.extractContents();
-        var span = document.createElement("span");
-        span.style.backgroundColor='yellow';
-        span.appendChild(s);
-        selectedText.insertNode(span);
-        */
-
-       /*
-       const el = document.createElement('span');
-       el.style.background='yellow'
-       var s = window.getSelection();
-       var range = s.getRangeAt(0);
-       range.surroundContents(el)
-        */        
-
-       document.execCommand('backcolor', true, '#FFFF00')
-      
+    document.getElementById('none').addEventListener('mousedown', () =>{
+        document.execCommand('removeFormat')
     })
 
 
-    document.getElementById('un').addEventListener('click', () =>{
-        document.execCommand('removeFormat');
-    })
+       
+
 })
