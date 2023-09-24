@@ -14,6 +14,11 @@ body *{
     grid-template-rows: auto 1fr;
 }
 
+.titleBar{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
 .windowTitle{
     padding: 10px;
     height: auto;
@@ -53,4 +58,19 @@ body *{
 
 .windowControlsStyle button:hover{
     background: #484848;
+}
+
+/*prevent window title bar from being selected*/
+.noSelect{
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+
+.draggable{
+    -webkit-app-region: drag
+}
+
+.nodrag{
+    -webkit-app-region: no-drag
 }
