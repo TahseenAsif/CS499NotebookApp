@@ -1,87 +1,115 @@
 body{
     margin: 0;
-    height: 100%;
-}
-.header-container{
-    width: 100%;
-    height: 30px;
-    background: gray;
-    display: flex;
-    justify-content: right;
 }
 
+#addNewBookContainer{
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    background-color: rgba(131,128,128,0.8);
+    width: 100%;
+    height: 100vh;
+}
+#addingNewBook{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    border: solid 1px;
+    width: 25vw;
+    height: 25vh;
+}
+#addHeader{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+#bookName{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#addFooter{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#headerContainer{
+    display: flex;
+    background: rgb(88,88,88);
+    width: 100%;
+    height: 5vh;
+}
+#mainHeader{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    display: flex;
+    height: 5vh;
+    align-items: center;
+    font-family: monospace;
+    font-size: x-large;
+    font-weight: bold;
+}
 #main{
     display: flex;
-    height: 100%;
-}
-
-.side-panel{
-    
-    width: 10%;
-    min-height: 100%;
-    background: lightgray;
-}
-
-
-.note{
-    border: 2px solid black;
-    display: flex;
-    width: 500px;
-    min-height: 500px;
-    gap: 10px;
-    padding: 10px;
-    line-height: 21px;
-    font-family: monospace;
-    font-size: 15px;
-}
-
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0px;
-    width: 522px;
-    
-}
-
-.line-numbers{
-    text-align: left;
-}
-
-.line-numbers span{
     width: 100%;
-    display: block;
+    height: 95vh;
 }
-
-.textarea{
-    display: inline-block;
-    width: 98%;
-    outline: none;
-    max-height: 500px;
-    overflow: hidden
+#sidePanel{
+    background: gray;
+    width: 15%;
+    height: 95vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.textareawrapper{
-    width: 100%;
-    max-height: 500px;
-
-}
-
-.font-color{
-    background-color: black;
+#addNewBook{
+    padding: 10px 0;
     border: none;
+    background: gray;
+    font-family: monospace;
+    font-size: x-large;
+    border-bottom: solid 1px rgb(88,88,88);
+    width: 100%;
+    height: 5vh;
+}
+#addNewBook:hover{
+    cursor: pointer;
+    border-color: black;
+    font-weight: bolder;
+}
+.books{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    padding: 10px 0 0 10px;
 }
 
-#highlight{
-    height: 27px;
-    display: block;
-    width: 50px;
+.editor{
+    width: 42.5%;
+    height: 95vh;
+}
+#codeEditor{
+    background: black;
 }
 
-button{
-    width: 50px;
-}
+#navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 
+    width: 100%;
+    height: 5%;
+}
 .dropdown{
-    max-height: 27px;
     display: block;
     width: 50px;
 }
@@ -89,19 +117,54 @@ button{
     padding: 5px 5px 5px 5px;
     display: none;
     position: absolute;
-    background-color: rgb(218, 218, 218);
+    background-color: rgb(218,218,218);
     justify-content: space-around;
     align-items: center;
     width: 75px;
 }
-
-.items{
-    display: block;
-
-}
-
 .items:hover{
-    outline: solid 1px black;
+    outline: solid;
+}
+.navButton{
+    width: 50px;
+    height: 25px;
 }
 
+#notepadContainer{
+    height: 95%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
+#notepad{
+    border: 2px solid black;
+    display: flex;
+    width: 90%;
+    height: 95%;
+    gap: 10px;
+    padding: 10px;
+    line-height: 21px;
+    font-family: monospace;
+    font-size: 15px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.lineNumbers{
+    text-align: left;
+    
+}
+.lineNumbers span{
+    width: 100%;
+    display: block;
+}
+.textareaContainer{
+    width: 100%;
+    height: 100%;
+}
+.textarea{
+    display: inline-block;
+    width: 98%;
+    min-height: inherit;
+    outline: none;
+}

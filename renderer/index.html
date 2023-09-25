@@ -8,49 +8,87 @@
     <link href="./index.css" rel="stylesheet">
 </head>
 <body>
-    <div class="header-container"></div>
 
-    <div id="main">
+    <div id="addNewBookContainer">
+        <div id="addingNewBook">
+            <div id="addHeader">Add New Notebook: </div>
+            <div id="bookName">
+                <input type="text" id="bookTitle" value="Notebook"/>
+            </div>
+            <div id="addFooter">
+                <button class="addNewBookButtons" id="save">Save</button>
+                <button class="addNewBookButtons" id="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-        <div class="side-panel"></div>
+    <div id="mainContainer">
+        <div id="headerContainer">
+            <div id="mainHeader">Notebook</div>
+        </div>
+        <div id="main">
+            <div id="sidePanel">
+                <button id="addNewBook">Add New Book</button>
+            </div>
 
+            <div class="editor" id="textEditor">
+                <div id="navbar">
+                    <select name="Fonts" id="fonts">
+                        <option value="Monospace">Monospace</option>
+                        <option value="Arial">Arial</option>
+                        <option value="'Times New Roman'">Times New Roman</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Cambria">Cambria</option>
+                    </select>
+                    <input type="color" id="fontColor"/>
+                    <div class="dropdown">
+                        <button class="navButton" id="highlight">
+                            <i class="fa-solid fa-highlighter"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="items" id="yellow">
+                                <i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i>
+                            </div>
+                            <div class="items" id="none">
+                                <i id='h' class="fa-solid fa-ban fa-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="navButton" id="bold">
+                        <i class="fa-solid fa-bold"></i>
+                    </button>
+                    <button class="navButton" id="italic">
+                        <i class="fa-solid fa-italic"></i>
+                    </button>
+                    <button class="navButton" id="underline">
+                        <i class="fa-solid fa-underline"></i>
+                    </button>
+                </div>
 
+                <div id="notepadContainer">
+                    <div id="notepad">
+                        <div class="lineNumbers">
+                            <span>1</span>
+                        </div>
 
-
-        <div class="notepad">
-            <div class="navbar">
-                <select name="fonts" id="fonts">
-                    <option value="Monospace">Monospace</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Impact">Impact</option>
-                </select>
-                <input id="font-color" type="color"/>
-                <div class="dropdown">
-                    <button id="highlight"><i class="fa-solid fa-highlighter"></i></button>
-                    <div class="dropdown-menu">
-                        <div class="items" id="yellow"><i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i></div>
-                        <div class="items" id="none"><i id='h' class="fa-solid fa-ban fa-lg"></i></div>
+                        <div class="textareaContainer">
+                            <div class="textarea" contenteditable="true"></div>
+                        </div>
                         
                     </div>
                 </div>
-                <button id="bold"><i class="fa-solid fa-bold"></i></button>
-                <button id="italic"><i class="fa-solid fa-italic"></i></button>
-                <button id="underline"><i class="fa-solid fa-underline"></i></button>
+
             </div>
 
-            <div class="note">
-                <div class="line-numbers">
-                    <span>1</span>
-                </div>
-        
-                <div class="textareawrapper">
-                    <div class="textarea" contenteditable="true"></div>
-                </div>
+            <div class="editor" id="codeEditor">
+                <div style="color: white;">
+                <h1>Code Editor Part</h1></div>
             </div>
-        
         </div>
-
     </div>
+
+
 </body>
 </html>
 

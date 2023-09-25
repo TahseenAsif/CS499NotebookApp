@@ -1,67 +1,73 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $('.textarea').css('min-height', $('text.area').height());
     $('.textarea').html('');
     var currentHeight = $('.textarea').height();
     var lineHeight = currentHeight;
-    $('.textarea').keyup(function(){
-      if($(this).height()!=currentHeight){
-        currentHeight = $(this).height();
-        var lines = currentHeight/lineHeight;
-        $('.line-numbers').html('')
-        for (i = 1; i < lines+1; i++) {
-          $('.line-numbers').append('<span>'+i+'</span>')
+    $('.textarea').keyup(function () {
+        if ($(this).height() != currentHeight) {
+            currentHeight = $(this).height();
+            var lines = currentHeight / lineHeight;
+            $('.lineNumbers').html('')
+            for (i = 1; i < lines + 1; i++) {
+                $('.lineNumbers').append('<span>' + i + '</span>')
+            }
         }
-      }
     });
 });
 
 
+window.addEventListener('DOMContentLoaded', (event) => {
+    
+    const sidePanel = document.getElementById('sidePanel');
+    const addNewBook = document.getElementById('addNewBook');
+    const addNewBookContainer = document.getElementById('addNewBookContainer')
+    const cancel = document.getElementById('cancel')
+    const save = document.getElementById('save');
 
-window.addEventListener("DOMContentLoaded" , (event) => { 
+    const font = document.getElementById('fonts');
+    const bold = document.getElementById('bold');
+    const italic = document.getElementById('italic');
+    const underline = document.getElementById('underline');
+    const fontColor = document.getElementById('fontColor');
+    const highlight = document.getElementById('highlight');
+    const yellow = document.getElementById('yellow');
+    const none = document.getElementById('none');
 
-    const font = document.getElementById('fonts')
-
-    font.addEventListener('change', event => {
-        document.querySelector('.note').style.fontFamily = font.value
+    //Navbar buttons
+    font.addEventListener('change', () => {
+        document.getElementById('notepad').style.fontFamily = font.value;
     })
 
-    document.getElementById('bold').addEventListener('click', event =>{
-        document.execCommand("bold");
+    bold.addEventListener('click', () => {
+        document.execCommand('bold')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
     })
     
-    document.getElementById('italic').addEventListener('click', event =>{
+    italic.addEventListener('click', () => {
         document.execCommand('italic')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
     })
-    
-    document.getElementById('underline').addEventListener('click', event =>{
+
+    underline.addEventListener('click', () => {
         document.execCommand('underline')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
     })
 
-    document.querySelector('.textarea').addEventListener('keydown', function(e){
-        if(e.keyCode == 9){
-            document.execCommand('insertHTML' ,false,"&nbsp&nbsp&nbsp&nbsp")
-        }
-    })
-
-    document.getElementById('font-color').addEventListener('input', event => {
-        document.execCommand('foreColor', false, document.getElementById('font-color').value)
+    fontColor.addEventListener('input', () => {
+        document.execCommand('foreColor', false, fontColor.value)
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
     })
-    
 
-
-    document.getElementById('highlight').addEventListener('click', () => {
+    highlight.addEventListener('click', () => {
+        var dropdownMenu = document.querySelector('.dropdown-menu')
         var dropdownMenu = document.querySelector('.dropdown-menu');
         if (dropdownMenu.style.display === 'none'){
             dropdownMenu.style.display = 'flex'
@@ -71,20 +77,52 @@ window.addEventListener("DOMContentLoaded" , (event) => {
         }
     })
 
-    document.getElementById('yellow').addEventListener('mousedown', () =>{
+    yellow.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, '#FFFF00')
         document.querySelector('.dropdown-menu').style.display='none'
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-  
     })
 
-    document.getElementById('none').addEventListener('mousedown', () =>{
-        document.execCommand('removeFormat')
+    none.addEventListener('mousedown', () =>{
+        document.execCommand('backcolor', true, 'white');
+        document.querySelector('.dropdown-menu').style.display='none'
+        if(window.getSelection){
+            window.getSelection().removeAllRanges();
+        }
     })
 
+    //Adding new Notebook
+    var noteBookNum = 0;
 
-       
+    addNewBook.addEventListener('click', () =>{
+        addNewBookContainer.style.display ='block';
+    })
 
+    cancel.addEventListener('click', () => {
+        addNewBookContainer.style.display = 'none';
+    })
+
+    save.addEventListener('click', () => {
+        const title = document.getElementById('bookTitle').value;
+        
+        const newBook = document.createElement('div');
+        newBook.classList.add('books');
+        var bkTitle = '';
+
+
+        if(title === 'Notebook'){
+            noteBookNum++;
+            bkTitle = document.createTextNode(`${title} ${noteBookNum}`)
+        }
+        else{
+            bkTitle = document.createTextNode(`${title}`)
+        }
+
+        newBook.appendChild(bkTitle);
+        sidePanel.appendChild(newBook);
+        addNewBookContainer.style.display = 'none';
+        document.getElementById('bookTitle').value = 'Notebook';
+    })
 })
