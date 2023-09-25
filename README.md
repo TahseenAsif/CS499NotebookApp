@@ -6,6 +6,7 @@ Responsible for the code section of the Codestone Application
 - 09/24/2023
     - added some functions to the window bar (minimize, maximize, close)
     - draggable window
+    - reinstalled npm and updated package-lock.json file
 
 - 09/22/2023
     - added folders for organization (css, html, img, js)
