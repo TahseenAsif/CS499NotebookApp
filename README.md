@@ -3,10 +3,13 @@
 Responsible for the code section of the Codestone Application
 
 ## Version 0.0.1k
+- 09/25/2023
+    - added menu bar (functionally not implemented)
+
 - 09/24/2023
     - added some functions to the window bar (minimize, maximize, close)
     - draggable window
-    - reinstalled npm and updated package-lock.json file
+    - modified package-lock.json
 
 - 09/22/2023
     - added folders for organization (css, html, img, js)
