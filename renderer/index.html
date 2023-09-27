@@ -10,16 +10,16 @@
 <body>
 
     <div id="addNewBookContainer">
-        <div id="addingNewBook">
-            <div id="addHeader">Add New Notebook: </div>
-            <div id="bookName">
-                <input type="text" id="bookTitle" value="Notebook"/>
-            </div>
-            <div id="addFooter">
-                <button class="addNewBookButtons" id="save">Save</button>
-                <button class="addNewBookButtons" id="cancel">Cancel</button>
-            </div>
-        </div>
+        <form id="addingNewBook">
+            <h1 id="addHeader">New Book</h1>
+
+            <label for="bookTitle">Title</label>
+            <input type="text" id="bookTitle" value="Notebook">
+
+            <div id="addNewBookButtonsContainer">
+                <button class='addNewBookButtons' id="save">Save</button>
+                <button class='addNewBookButtons' id="cancel">Cancel</button></div>
+        </form>
     </div>
 
     <div id="mainContainer">
