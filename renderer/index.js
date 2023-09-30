@@ -19,7 +19,7 @@ $(document).ready(function () {
 window.addEventListener('DOMContentLoaded', (event) => {
     
     const sidePanel = document.getElementById('sidePanel');
-    const addNewBook = document.getElementById('addNewBook');
+    const addNewBook = document.getElementById('addNewBookk');
     const addNewBookContainer = document.getElementById('addNewBookContainer')
     const cancel = document.getElementById('cancel')
     const save = document.getElementById('save');
@@ -100,29 +100,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
         addNewBookContainer.style.display ='block';
     })
 
-    cancel.addEventListener('click', () => {
+    cancel.addEventListener('click', event => {
         addNewBookContainer.style.display = 'none';
+
+        event.preventDefault();
     })
 
-    save.addEventListener('click', () => {
+    save.addEventListener('click', event => {
         const title = document.getElementById('bookTitle').value;
-        
-        const newBook = document.createElement('div');
-        newBook.classList.add('books');
+    
         var bkTitle = '';
 
 
         if(title === 'Notebook'){
             noteBookNum++;
-            bkTitle = document.createTextNode(`${title} ${noteBookNum}`)
+            bkTitle += `${title} ${noteBookNum}`
         }
         else{
-            bkTitle = document.createTextNode(`${title}`)
+            bkTitle = title
         }
 
-        newBook.appendChild(bkTitle);
-        sidePanel.appendChild(newBook);
+        const notebookCon = document.createElement('div');
+        notebookCon.classList.add('notebook')
+        notebookCon.id = `${bkTitle}`
+        notebookCon.innerHTML= `<i class="fa-solid fa-book"></i>
+        <span>${bkTitle}</span>
+        <div><i class="fa-solid fa-ellipsis"></i></div>`
+
+        document.querySelector('.notebookContainer').appendChild(notebookCon);
         addNewBookContainer.style.display = 'none';
         document.getElementById('bookTitle').value = 'Notebook';
+        event.preventDefault()
+
     })
 })
