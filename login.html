@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="css/login.css">
+    <title>CodeStone</title>
+  </head>
+  <body>
+    <div id="codeTitle">
+        <h1>CodeStone</h1>
+    </div>
+    <div id="loginForm">
+        <form action="">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"><br><br>
+            <label for="Password">Password</label>
+            <input type="text" id="password" name="password"><br><br>
+            <input type="submit" value="Login">
+            <a id="register" href="register.html">No account? Register here!</a>
+        </form>
+    </div>
+  </body>
+</html>

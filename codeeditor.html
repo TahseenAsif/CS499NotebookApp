@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"-->
+    <title>CodeStone</title>
+
+    <link rel="stylesheet" href="css/titlebar.css">
+
+    <script src="ace.js" type="text/javascript"></script>
+    <script src="mode-javascript.js" type="text/javascript"></script>
+
+
+
+    <style type="text/css" media="screen">
+        #editor { 
+            position: relative;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+
+    
+  </head>
+
+  <body>
+    <div class="container">
+        <div class="titlebar">
+            <div class="windowTitle">CodeStone</div>
+            <div class="navBar">
+                <button id="min">-</button>
+                <button id="max">+</button>
+                <button id="close">X</button>
+            </div>
+        </div>
+        <div class="editscreen">
+            <div id="editor">
+                fuction test(){};
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
+
+
+
+  </body>
+</html>
