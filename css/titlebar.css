@@ -1,0 +1,52 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+body *{
+    box-sizing: border-box;
+}
+
+.container{
+    height: 100%;
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.windowTitle{
+    padding: 10px;
+    height: auto;
+    display: inline-block;
+    font-family: monospace;
+}
+
+.navBar{
+    float: right;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-right: 5px;
+}
+
+.navBar button{
+    outline: 0;
+    border: 0;
+    padding: 5px;
+    background: none;
+    color: white;
+}
+
+.navBar button:hover{
+    background: #48494c;
+}
+
+.titlebar{
+    background: #202327;
+    color: white;
+    size: 10pt;
+}
+
+.editscreen{
+    display: grid;
+    grid-template-columns: 1fr;
+}
