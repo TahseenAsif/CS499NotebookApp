@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const { signInWithGoogle } = require('./firebase-config');
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -15,7 +16,8 @@ const createLoginWindow = () => {
         height: 600,
         frame: false
     })
-    win.loadFile("login.html")
+    //win.loadFile("login.html")
+    signInWithGoogle();
 }
 
 const createPaintWindow = () => {

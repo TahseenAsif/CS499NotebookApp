@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc, signOut } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-
+const { initializeApp } = require("firebase/app");
+const { getAuth, GoogleAuthProvider, signInWithPopup } = require("firebase/auth");
+const { getFirestore, doc, getDoc, setDoc, signOut } = require("firebase/firestore");
+const { getStorage } = require("firebase/storage");
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,16 +16,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebase_app = initializeApp(firebaseConfig);
 
 //Initialize Firebase Authentication and get a reference to the server
-const auth = getAuth(app);
+const auth = getAuth(firebase_app);
 
 //Initialize Firestore
-const db = getFirestore(app)
+const db = getFirestore(firebase_app)
 
 //Initialize Firebase Storage
-const storage = getStorage(app);
+const storage = getStorage(firebase_app);
 
 //Sign in with Google
 const signInWithGoogle = (onSignIn) => {
@@ -63,3 +62,6 @@ const signOutUser = async (onSignOut) => {
       console.log("Error signing out", error);
     }
 }
+module.exports = {
+    signInWithGoogle
+};
