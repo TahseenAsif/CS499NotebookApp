@@ -1,4 +1,6 @@
 body{
+    color: black;
+    background-color: white;
     padding: 0;
     margin: 0;
 }
@@ -45,10 +47,6 @@ body *{
     background: #202020;
     color: #FFF;
     font-size: 10pt;
-}
-
-.windowControlsStyle{
-    
 }
 
 .windowControlsStyle button{
