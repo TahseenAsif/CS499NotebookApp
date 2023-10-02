@@ -35,5 +35,5 @@ const createTestWindow = () => {
 }
 
 app.whenReady().then(() => {
-    createPaintWindow()
+    createLoginWindow()
 })
