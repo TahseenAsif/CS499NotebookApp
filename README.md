@@ -2,6 +2,10 @@
 
 Responsible for the code section of the Codestone Application
 
+Result so far:
+
+![](progress.gif)
+
 ## Version 0.0.2k
 - 10/02/2023
     - improved menu bar interface

@@ -51,7 +51,6 @@ body *{
 
 .windowControlsStyle button{
     color: #FFF;
-    weight: bold;
 }
 
 .windowControlsStyle button:hover{
