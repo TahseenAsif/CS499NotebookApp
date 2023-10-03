@@ -46,7 +46,7 @@ const signInWithGoogle = (onSignIn) => {
             }
         })
         .catch((error) => {
-            console.log(error);
+            console.log("Error signing in", error);
         });
 };
 
@@ -63,5 +63,6 @@ const signOutUser = async (onSignOut) => {
     }
 }
 module.exports = {
-    signInWithGoogle
+    signInWithGoogle,
+    signOutUser
 };
