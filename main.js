@@ -16,8 +16,8 @@ const createLoginWindow = () => {
         height: 600,
         frame: false
     })
-    //win.loadFile("login.html")
-    signInWithGoogle();
+    // win.loadFile("login.html")
+    win.loadFile("test_login.html")
 }
 
 const createPaintWindow = () => {
