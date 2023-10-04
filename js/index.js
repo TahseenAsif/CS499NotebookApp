@@ -18,7 +18,6 @@ $(document).ready(function () {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     
-    const sidePanel = document.getElementById('sidePanel');
     const addNewBook = document.getElementById('addNewBookk');
     const addNewBookContainer = document.getElementById('addNewBookContainer')
     const cancel = document.getElementById('cancel')
@@ -120,17 +119,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             bkTitle = title
         }
 
-        const notebookCon = document.createElement('div');
-        notebookCon.classList.add('notebook')
-        notebookCon.id = `${bkTitle}`
-        notebookCon.innerHTML= `<i class="fa-solid fa-book"></i>
-        <span>${bkTitle}</span>
-        <div><i class="fa-solid fa-ellipsis"></i></div>`
+        // const notebookCon = document.createElement('div');
+        // notebookCon.classList.add('notebook')
+        // notebookCon.id = `${bkTitle}`
+        // notebookCon.innerHTML= `<i class="fa-solid fa-book"></i>
+        // <span>${bkTitle}</span>
+        // <div><i class="fa-solid fa-ellipsis"></i></div>`
 
-        document.querySelector('.notebookContainer').appendChild(notebookCon);
-        addNewBookContainer.style.display = 'none';
-        document.getElementById('bookTitle').value = 'Notebook';
-        event.preventDefault()
+        // document.querySelector('.notebookContainer').appendChild(notebookCon);
+        // addNewBookContainer.style.display = 'none';
+        // document.getElementById('bookTitle').value = 'Notebook';
+        // event.preventDefault()
 
     })
 })

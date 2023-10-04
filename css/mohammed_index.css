@@ -1,4 +1,4 @@
-.sidePanelHead{
+/* .sidePanelHead{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -15,7 +15,7 @@
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
-}
+} */
 
 .notebook{
     padding: 10px;
@@ -173,6 +173,7 @@ label{
     width: 42.5%;
     height: 95vh;
 }
+
 #codeEditor{
     background: black;
 }
