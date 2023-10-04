@@ -1,7 +1,8 @@
 "# CS499NotebookApp" 
 
 **Preview of app:**
-![Screenshot 2023-10-04 151137](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/a5328c49-3a61-466f-b083-26aa8ce225f3)
+![Screenshot 2023-10-04 152747](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/9fbd3529-c712-4398-ae69-01763bbbf01f)
+
 
 **Text Editor**
   Basics of it is done, waiting on database to finish up to connect them together to save notes.
