@@ -1,7 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
-//const fs = require('fs');
 
 let mainWindow;
 
@@ -20,17 +19,8 @@ function createWindow () {
         }
     });
 
-    // ipcMain.handle('create-file', (req, data) => {
-    //     if(!data || !data.title || !data.content){
-    //         return false;
-    //     }
-    //     const filePath = path.join(__dirname, 'notes', `${data.title}.txt`);
-    //     fs.writeFileSync(filePath, data.content);
-    //     return {success: true, filePath};
-    // });
-
     // and load the index.html of the app.
-    mainWindow.loadFile('codeeditor.html');
+    mainWindow.loadFile('index.html');
     // open dev tools
     mainWindow.webContents.openDevTools();
 }
@@ -40,11 +30,6 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
     createWindow();
-    // app.on('activate', function () {
-    //     // On macOS it's common to re-create a window in the app when the
-    //     // dock icon is clicked and there are no other windows open.
-    //     if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    //   })
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -70,4 +55,3 @@ ipcMain.on("winMaximize", () => {
 ipcMain.on("winClose", () => {
     mainWindow.close();
 })
-
