@@ -35,15 +35,20 @@
                     CODESTONE
                 </div>
                 <div class="windowControls windowControlsStyle noSelect">
-                    <button id="minimize" >-</button>
-                    <button id="maximize">[]</button>
-                    <button id="exit">X</button>
+                    <button id="minimize" >
+                        <i class="fa-solid fa-window-minimize"></i>
+                    </button>
+                    <button id="maximize">
+                        <i class="fa-solid fa-maximize"></i>
+                    </button>
+                    <button id="exit">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </button>
                 </div>
 
             </div>
         </div>
-        <!-- sidebar -->
-        <nav class="menuBar">
+        <nav class="menuBar" id="sidebar">
             <ul class="menuBar-nav">
                 <li class="nav-item">
                     <a href="#" role="button" class="btn">
@@ -223,7 +228,6 @@
 
         </main>
 
-        <script src="js/customWindowBar.js"></script>
         <script src="js/index.js"></script>
         
     </body>

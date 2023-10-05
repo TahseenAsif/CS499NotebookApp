@@ -7,10 +7,11 @@ let mainWindow;
 function createWindow () {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 900,
-        height: 800,
-        minHeight: 650,
-        minWidth: 600,
+        width: 1600,
+        height: 900,
+        minWidth: 1200,
+        minHeight: 800,
+        
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
@@ -18,7 +19,6 @@ function createWindow () {
             preload: path.join(__dirname, 'preload.js')
         }
     });
-
     // and load the index.html of the app.
     mainWindow.loadFile('index.html');
     // open dev tools

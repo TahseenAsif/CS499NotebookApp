@@ -15,9 +15,14 @@ $(document).ready(function () {
     });
 });
 
-
 window.addEventListener('DOMContentLoaded', (event) => {
-    
+    //-------- window bar variables
+    //sets the functionality of the buttons shown on the title bar of the window
+    const minimize = document.getElementById("minimize");
+    const maximize = document.getElementById("maximize");
+    const exit = document.getElementById("exit");
+    // ---------------------------------------------------------
+
     const addNewBook = document.getElementById('addNewBookk');
     const addNewBookContainer = document.getElementById('addNewBookContainer')
     const cancel = document.getElementById('cancel')
@@ -32,49 +37,61 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const yellow = document.getElementById('yellow');
     const none = document.getElementById('none');
 
+    minimize.addEventListener("click", () => {
+        api.window.minimize();
+    });
+
+    maximize.addEventListener("click", () => {
+        api.window.maximize();
+    });
+
+    exit.addEventListener("click", () => {
+        api.window.exit();
+    });
+
     //Navbar buttons
     font.addEventListener('change', () => {
         document.getElementById('notepad').style.fontFamily = font.value;
-    })
+    });
 
     bold.addEventListener('click', () => {
         document.execCommand('bold')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
     
     italic.addEventListener('click', () => {
         document.execCommand('italic')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
 
     underline.addEventListener('click', () => {
         document.execCommand('underline')
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
 
     fontColor.addEventListener('input', () => {
         document.execCommand('foreColor', false, fontColor.value)
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
 
     highlight.addEventListener('click', () => {
         var dropdownMenu = document.querySelector('.dropdown-menu')
         var dropdownMenu = document.querySelector('.dropdown-menu');
-        if (dropdownMenu.style.display === 'none'){
+        if(dropdownMenu.style.display === 'none'){
             dropdownMenu.style.display = 'flex'
         }
-        else {
+        else{
             dropdownMenu.style.display = 'none';
         }
-    })
+    });
 
     yellow.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, '#FFFF00')
@@ -82,7 +99,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
 
     none.addEventListener('mousedown', () =>{
         document.execCommand('backcolor', true, 'white');
@@ -90,26 +107,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if(window.getSelection){
             window.getSelection().removeAllRanges();
         }
-    })
+    });
 
     //Adding new Notebook
     var noteBookNum = 0;
 
     addNewBook.addEventListener('click', () =>{
         addNewBookContainer.style.display ='block';
-    })
+    });
 
     cancel.addEventListener('click', event => {
         addNewBookContainer.style.display = 'none';
 
         event.preventDefault();
-    })
+    });
 
     save.addEventListener('click', event => {
         const title = document.getElementById('bookTitle').value;
     
         var bkTitle = '';
-
 
         if(title === 'Notebook'){
             noteBookNum++;
@@ -131,5 +147,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
         // document.getElementById('bookTitle').value = 'Notebook';
         // event.preventDefault()
 
-    })
-})
+    });
+});
