@@ -8,9 +8,9 @@ Progress so far:
 
 ## Version 0.0.2k
 - 10/05/2023
-    - added about (menu bar) functionality to create child window
-    - can minimize, maximize, close about window
-    - moved existing files into their respective folders
+    - added 'about' (the option in menu bar) functionality to create child window
+    - can minimize, maximize, close the 'about' window
+    - moved some existing files into their respective folders
 
 - 10/04/2023 (Branched from main)
     - added text editor
