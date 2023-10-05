@@ -3,8 +3,9 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 
 let mainWindow;
+let childWindow;
 
-function createWindow () {
+function createWindow(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 1600,
@@ -20,9 +21,28 @@ function createWindow () {
         }
     });
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile(path.join(__dirname, './html/index.html'));
     // open dev tools
     mainWindow.webContents.openDevTools();
+};
+
+function createChildWindow(){
+    childWindow = new BrowserWindow({
+        width: 1000,
+        height: 700,
+        modal: true,
+        show: false,
+        frame: false,
+        parent: mainWindow,
+
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolated: false,
+            enableRemoteModule: true,
+            preload: path.join(__dirname, 'preload.js')
+        },
+    });
+    childWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished
@@ -46,12 +66,33 @@ app.on('window-all-closed', () => {
  */
 ipcMain.on("winMinimize", () => {
     mainWindow.minimize();
-})
+});
 
 ipcMain.on("winMaximize", () => {
     mainWindow.maximize();
-})
+});
 
 ipcMain.on("winClose", () => {
     mainWindow.close();
-})
+});
+
+ipcMain.on("runAbout", () => {
+    createChildWindow();
+    childWindow.loadFile(path.join(__dirname, './html/about.html'));
+    childWindow.once("ready-to-show", () => {
+        childWindow.show();
+    });
+});
+
+ipcMain.on("childMinimize", () => {
+    console.log("minimizing");
+    childWindow.minimize();
+});
+
+ipcMain.on("childMaximize", () => {
+    childWindow.maximize();
+});
+
+ipcMain.on("childClose", () => {
+    childWindow.close();
+});

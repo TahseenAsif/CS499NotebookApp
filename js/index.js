@@ -23,10 +23,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const exit = document.getElementById("exit");
     // ---------------------------------------------------------
 
-    const addNewBook = document.getElementById('addNewBookk');
-    const addNewBookContainer = document.getElementById('addNewBookContainer')
-    const cancel = document.getElementById('cancel')
-    const save = document.getElementById('save');
+    //-------- menu bar variables
+    //sets the functionality of the items listed on the side menu bar
+    const about = document.getElementById("about");
+
+    // const addNewBook = document.getElementById('addNewBookk');
+    // const addNewBookContainer = document.getElementById('addNewBookContainer')
+    // const cancel = document.getElementById('cancel')
+    // const save = document.getElementById('save');
 
     const font = document.getElementById('fonts');
     const bold = document.getElementById('bold');
@@ -47,6 +51,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     exit.addEventListener("click", () => {
         api.window.exit();
+    });
+
+    about.addEventListener("click", () => {
+        api.window.about();
     });
 
     //Navbar buttons
@@ -101,7 +109,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    none.addEventListener('mousedown', () =>{
+    none.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, 'white');
         document.querySelector('.dropdown-menu').style.display='none'
         if(window.getSelection){
@@ -112,40 +120,40 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //Adding new Notebook
     var noteBookNum = 0;
 
-    addNewBook.addEventListener('click', () =>{
-        addNewBookContainer.style.display ='block';
-    });
+    // addNewBook.addEventListener('click', () => {
+    //     addNewBookContainer.style.display ='block';
+    // });
 
-    cancel.addEventListener('click', event => {
-        addNewBookContainer.style.display = 'none';
+    // cancel.addEventListener('click', event => {
+    //     addNewBookContainer.style.display = 'none';
 
-        event.preventDefault();
-    });
+    //     event.preventDefault();
+    // });
 
-    save.addEventListener('click', event => {
-        const title = document.getElementById('bookTitle').value;
+    // save.addEventListener('click', event => {
+    //     const title = document.getElementById('bookTitle').value;
     
-        var bkTitle = '';
+    //     var bkTitle = '';
 
-        if(title === 'Notebook'){
-            noteBookNum++;
-            bkTitle += `${title} ${noteBookNum}`
-        }
-        else{
-            bkTitle = title
-        }
+    //     if(title === 'Notebook'){
+    //         noteBookNum++;
+    //         bkTitle += `${title} ${noteBookNum}`
+    //     }
+    //     else{
+    //         bkTitle = title
+    //     }
 
-        // const notebookCon = document.createElement('div');
-        // notebookCon.classList.add('notebook')
-        // notebookCon.id = `${bkTitle}`
-        // notebookCon.innerHTML= `<i class="fa-solid fa-book"></i>
-        // <span>${bkTitle}</span>
-        // <div><i class="fa-solid fa-ellipsis"></i></div>`
+    //     const notebookCon = document.createElement('div');
+    //     notebookCon.classList.add('notebook')
+    //     notebookCon.id = `${bkTitle}`
+    //     notebookCon.innerHTML= `<i class="fa-solid fa-book"></i>
+    //     <span>${bkTitle}</span>
+    //     <div><i class="fa-solid fa-ellipsis"></i></div>`
 
-        // document.querySelector('.notebookContainer').appendChild(notebookCon);
-        // addNewBookContainer.style.display = 'none';
-        // document.getElementById('bookTitle').value = 'Notebook';
-        // event.preventDefault()
+    //     document.querySelector('.notebookContainer').appendChild(notebookCon);
+    //     addNewBookContainer.style.display = 'none';
+    //     document.getElementById('bookTitle').value = 'Notebook';
+    //     event.preventDefault()
 
-    });
+    // });
 });

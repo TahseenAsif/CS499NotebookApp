@@ -7,6 +7,11 @@ Progress so far:
 ![](progress.gif)
 
 ## Version 0.0.2k
+- 10/05/2023
+    - added about (menu bar) functionality to create child window
+    - can minimize, maximize, close about window
+    - moved existing files into their respective folders
+
 - 10/04/2023 (Branched from main)
     - added text editor
     - added fonts, color, highlight, bold, underline, italics
@@ -18,7 +23,7 @@ Progress so far:
 
 ## Version 0.0.1k
 - 09/25/2023
-    - added menu bar (functionally not implemented)
+    - added menu bar
 
 - 09/24/2023
     - added some functions to the window bar (minimize, maximize, close)

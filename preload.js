@@ -5,5 +5,11 @@ contextBridge.exposeInMainWorld("api", {
         minimize: () => ipcRenderer.send("winMinimize"),
         maximize: () => ipcRenderer.send("winMaximize"),
         exit: () => ipcRenderer.send("winClose"),
+        about: () => ipcRenderer.send("runAbout"),
+    },
+    child_window:{
+        minimize: () => ipcRenderer.send("childMinimize"),
+        maximize: () => ipcRenderer.send("childMaximize"),
+        exit: () => ipcRenderer.send("childClose"),
     }
 });
