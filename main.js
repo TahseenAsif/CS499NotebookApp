@@ -36,9 +36,7 @@ function createChildWindow(){
         parent: mainWindow,
 
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolated: false,
-            enableRemoteModule: true,
+            nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         },
     });
