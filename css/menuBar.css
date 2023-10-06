@@ -14,7 +14,7 @@ main{
 }
 
 .menuBar{
-    width: 5rem;
+    width: 3rem;
     height: 100vh;
     position: fixed;
     background-color: var(--bg-primary);
@@ -23,7 +23,7 @@ main{
 }
 
 .menuBar:focus-within, .menuBar:hover{
-    width: 16rem;
+    width: 12rem;
 }
 
 .menuBar:focus-within ~ main, .menuBar:hover ~ main{
@@ -35,6 +35,7 @@ main{
     padding: 0;
     margin: 0;
     display: flex;
+    gap: 10px;
     flex-direction: column;
     align-items: center;
     z-index: inherit;
@@ -62,6 +63,15 @@ main{
     color: var(--text-secondary);
 }
 
+.btn:focus{
+    border: solid;
+    border-color: gold;
+}
+
+.btn:focus svg, .btn:focus .btn-text{
+    fill: gold;
+}
+
 .btn-text{
     display: none;
     margin-left: 1rem;
@@ -69,10 +79,17 @@ main{
 }
 
 .btn svg{
-    min-width: 2rem;
-    margin: 0 1.5rem;
+    min-width: 1rem;
+    margin: 0 1rem;
+    fill: white;
 }
 
 .menuBar:focus-within .btn-text, .menuBar:hover .btn-text{
     display: block;
+    color: gold;
+    font-size: large;
+}
+
+.menuBar:focus-within svg, .menuBar:hover svg{
+    fill: gold;
 }

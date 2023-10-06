@@ -9,7 +9,8 @@ Progress so far:
 ## Version 0.0.2k
 - 10/06/2023
     - menu bar will remain stationary when an option is clicked
-      (menu bar will collapse if it is clicked outside of the bar)
+    - menu bar will collapse if it is clicked outside of the bar
+    - added colors and spacing to improve menu bar interface
 
 - 10/05/2023
     - added 'about' (the option in menu bar) functionality to create child window
