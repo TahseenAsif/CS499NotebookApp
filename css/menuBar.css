@@ -22,11 +22,11 @@ main{
     z-index: 5;
 }
 
-.menuBar:hover{
+.menuBar:focus-within, .menuBar:hover{
     width: 16rem;
 }
 
-.menuBar:hover ~ main{
+.menuBar:focus-within ~ main, .menuBar:hover ~ main{
     opacity: 0.08;
 }
 
@@ -56,7 +56,7 @@ main{
     z-index: inherit;
 }
 
-.btn:hover{
+.btn:focus, .btn:hover{
     filter: grayscale(0%) opacity(1);
     background: var(--bg-secondary);
     color: var(--text-secondary);
@@ -73,6 +73,6 @@ main{
     margin: 0 1.5rem;
 }
 
-.menuBar:hover .btn-text{
+.menuBar:focus-within .btn-text, .menuBar:hover .btn-text{
     display: block;
 }

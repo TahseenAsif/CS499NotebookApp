@@ -7,6 +7,10 @@ Progress so far:
 ![](progress.gif)
 
 ## Version 0.0.2k
+- 10/06/2023
+    - menu bar will remain stationary when an option is clicked
+      (menu bar will collapse if it is clicked outside of the bar)
+
 - 10/05/2023
     - added 'about' (the option in menu bar) functionality to create child window
     - can minimize, maximize, close the 'about' window
