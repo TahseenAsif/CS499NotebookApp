@@ -5,9 +5,9 @@ body{
     margin: 0;
 }
 
-body *{
+/* body *{
     box-sizing: border-box;
-}
+} */
 
 .container{
     height: 100%;

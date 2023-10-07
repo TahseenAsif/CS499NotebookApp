@@ -23,11 +23,12 @@ main{
 }
 
 .menuBar:focus-within, .menuBar:hover{
-    width: 12rem;
+    width: 10rem;
 }
 
 .menuBar:focus-within ~ main, .menuBar:hover ~ main{
-    opacity: 0.08;
+    opacity: 0.05;
+    transition: opacity 200ms ease-in;
 }
 
 .menuBar-nav{
@@ -53,29 +54,18 @@ main{
     color: var(--text-primary);
     text-decoration: none;
     filter: grayscale(100%) opacity(0.7);
-    transition: var(--transition-speed);
     z-index: inherit;
 }
 
-.btn:focus, .btn:hover{
+.btn:hover{
     filter: grayscale(0%) opacity(1);
     background: var(--bg-secondary);
-    color: var(--text-secondary);
-}
-
-.btn:focus{
-    border: solid;
-    border-color: gold;
-}
-
-.btn:focus svg, .btn:focus .btn-text{
-    fill: gold;
 }
 
 .btn-text{
     display: none;
-    margin-left: 1rem;
-    z-index: inherit;
+    white-space: nowrap;
+    /* margin-left: 0.8rem; */
 }
 
 .btn svg{
@@ -84,12 +74,28 @@ main{
     fill: white;
 }
 
-.menuBar:focus-within .btn-text, .menuBar:hover .btn-text{
-    display: block;
+li:focus-within .btn-text, li:hover .btn-text{
     color: gold;
     font-size: large;
+    display: block;
+    animation: fadeInLeft 200ms ease-in;
 }
 
-.menuBar:focus-within svg, .menuBar:hover svg{
+li:hover ~ li:focus > a > svg + text{
+    display: none;
+}
+
+/* a color indication while navigating the menu */
+.menuBar:hover svg{
     fill: gold;
+}
+
+@keyframes fadeInLeft{
+    from{
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to{
+        opacity: 1;
+    }
 }

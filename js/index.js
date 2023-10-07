@@ -26,6 +26,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //-------- menu bar variables
     //sets the functionality of the items listed on the side menu bar
     const sidebar = document.getElementById("sidebar");
+    const nav_items = document.getElementsByClassName("nav-item");
     const files = document.getElementById("files");
     const about = document.getElementById("about");
 
@@ -55,24 +56,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.exit();
     });
 
-    // sidebar.addEventListener("click", () => {
-    //     const items = document.getElementsByTagName("a");
-    //     for(let i = 0; i < items.length; i++){
-    //         items[i].addEventListener("click", () => {
-    //             items[i].style.border = "solid";
-    //             items[i].style.borderColor = "#ffffff";
-    //         });
-    //     }
-    // });
-
     about.addEventListener("click", () => {
         api.window.about();
     });
-
-    // files.addEventListener("click", () => {
-    //     files.style.border = "solid";
-    //     files.style.borderColor = "#ffffff";
-    // });
 
     //Navbar buttons
     font.addEventListener('change', () => {

@@ -7,9 +7,14 @@ Progress so far:
 ![](progress.gif)
 
 ## Version 0.0.2k
+- 10/07/2023
+    - added animation when selecting an option in the menu bar
+    - removed "Log Out" option in favor of "My Account" option
+    - adjusted collapse and expanding width of menu bar to be smaller
+
 - 10/06/2023
-    - menu bar will remain stationary when an option is clicked
-    - menu bar will collapse if it is clicked outside of the bar
+    - menu bar will remain stationary when an option is chosen
+    - menu bar will collapse when clicked outside of the menu
     - added colors and spacing to improve menu bar interface
 
 - 10/05/2023

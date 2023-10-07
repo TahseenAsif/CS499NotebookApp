@@ -8,8 +8,8 @@ let childWindow;
 function createWindow(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 1600,
-        height: 900,
+        width: 2400,
+        height: 1350,
         minWidth: 1200,
         minHeight: 800,
         
