@@ -52,7 +52,7 @@ const signInWithGoogle = (onSignIn) => {
 
 const signOutUser = async (onSignOut) => {
     try {
-      await signOut(auth);
+      await signOut(auth);                      // Something wrong with this call
   
       // Call the onSignOut callback
       if (onSignOut) {
