@@ -63,23 +63,6 @@ const signOutUser = async (onSignOut) => {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function (){
-    const signInButton = document.getElementById('signInButton');
-    const signOutButton = document.getElementById('signOutButton');
-
-    signInButton.addEventListener('click', () => {
-        signInWithGoogle((uid) => {
-            console.log(`Signed in ${uid}`)
-        });
-    });
-
-    signOutButton.addEventListener('click', () => {
-        signOutUser(() => {
-            console.log(`Signed out ${uid}`)
-        });
-    });
-});
-
 module.exports = {
     signInWithGoogle,
     signOutUser

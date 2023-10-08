@@ -1,5 +1,5 @@
-const { app, BrowserWindow } = require('electron');
-const { signInWithGoogle } = require('./firebase-config');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const { signInWithGoogle, signOutUser } = require('./firebase-config.js');
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -17,6 +17,7 @@ const createLoginWindow = () => {
         frame: false
     })
     // win.loadFile("login.html")
+    win.webContents.openDevTools();
     win.loadFile("test_login.html")
 }
 
@@ -37,5 +38,16 @@ const createTestWindow = () => {
 }
 
 app.whenReady().then(() => {
-    createLoginWindow()
+    createLoginWindow();
+
+    ipcMain.on('sign-in', () => {
+        signInWithGoogle((uid) => {
+            console.log(`Signed in ${uid}`);
+        });
+    });
+    ipcMain.on('sign-out', () => {
+        signOutUser(() => {
+            console.log('Signed out');
+        });
+    });
 })
