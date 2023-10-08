@@ -14,7 +14,11 @@ const createLoginWindow = () => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
-        frame: false
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
     })
     // win.loadFile("login.html")
     win.webContents.openDevTools();
