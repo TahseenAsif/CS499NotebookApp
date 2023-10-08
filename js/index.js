@@ -7,10 +7,13 @@ $(document).ready(function () {
         if ($(this).height() != currentHeight) {
             currentHeight = $(this).height();
             var lines = currentHeight / lineHeight;
-            $('.lineNumbers').html('')
+            // var dottedHeight = 20 * lines;
+            $('.lineNumbers').html('');
             for (i = 1; i < lines + 1; i++) {
-                $('.lineNumbers').append('<span>' + i + '</span>')
+                $('.lineNumbers').append('<span>' + i + '</span>');
+                // document.getElementById("verticalDots").style.height = toString(dottedHeight) + "px" ;
             }
+            
         }
     });
 });
@@ -29,6 +32,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const nav_items = document.getElementsByClassName("nav-item");
     const files = document.getElementById("files");
     const about = document.getElementById("about");
+
+    // const dotted = document.getElementById("verticalDots");
 
     // const addNewBook = document.getElementById('addNewBookk');
     // const addNewBookContainer = document.getElementById('addNewBookContainer')

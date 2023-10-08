@@ -9,8 +9,8 @@
 
 main{
     display: flex;
-    margin-left: 5rem;
-    padding: 1rem;
+    margin-left: 1rem;
+    padding: 0.2rem;
 }
 
 .menuBar{
@@ -65,7 +65,6 @@ main{
 .btn-text{
     display: none;
     white-space: nowrap;
-    /* margin-left: 0.8rem; */
 }
 
 .btn svg{

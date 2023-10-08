@@ -15,19 +15,18 @@ Progress so far:
 - 10/06/2023
     - menu bar will remain stationary when an option is chosen
     - menu bar will collapse when clicked outside of the menu
-    - added colors and spacing to improve menu bar interface
+    - added colors and spacing to improve menu bar interaction
 
 - 10/05/2023
-    - added 'about' (the option in menu bar) functionality to create child window
+    - added functionality to the "about" option in the menu bar
     - can minimize, maximize, close the 'about' window
     - moved some existing files into their respective folders
 
 - 10/04/2023 (Branched from main)
     - added text editor
     - added fonts, color, highlight, bold, underline, italics
-    - added transparency to the rest of the window when access menu bar
-    - improved icons on window bar
-
+    - added transparency to the rest of the window when accessing menu bar
+    - improved window icons
 - 10/02/2023
     - improved menu bar interface
 
@@ -55,3 +54,5 @@ Progress so far:
     - learned how to use electronJS, IPC, etc
 - https://youtu.be/biOMz4puGt8?si=Xpiplz6IZYSfeiTD
     - followed to create a menu bar
+- https://codepen.io/codescapegit/pen/eYdMqBb
+    - learned how to do animation in css
