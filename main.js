@@ -17,7 +17,8 @@ const createLoginWindow = () => {
         frame: false,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            nativeWindowOpen: true
         }
     })
     // win.loadFile("login.html")
