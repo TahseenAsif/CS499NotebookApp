@@ -13,25 +13,78 @@ $(document).ready(function () {
                 $('.lineNumbers').append('<span>' + i + '</span>');
                 // document.getElementById("verticalDots").style.height = toString(dottedHeight) + "px" ;
             }
-            
         }
     });
 });
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    //-------- window bar variables
+    /*
+    //  window bar variables and functions
+    */
     //sets the functionality of the buttons shown on the title bar of the window
     const minimize = document.getElementById("minimize");
     const maximize = document.getElementById("maximize");
     const exit = document.getElementById("exit");
+
+    minimize.addEventListener("click", () => {
+        api.window.minimize();
+    });
+
+    maximize.addEventListener("click", () => {
+        api.window.maximize();
+    });
+
+    exit.addEventListener("click", () => {
+        api.window.exit();
+    });
+
     // ---------------------------------------------------------
 
-    //-------- menu bar variables
+    /*
+    //  menu bar variables and functions
+    */
     //sets the functionality of the items listed on the side menu bar
-    const sidebar = document.getElementById("sidebar");
-    const nav_items = document.getElementsByClassName("nav-item");
-    const files = document.getElementById("files");
-    const about = document.getElementById("about");
+    // const sidebar = document.getElementById("sidebar");
+    let menuBtns = document.querySelectorAll(".btn");
+    const files = document.querySelector("#files");
+    const settings = document.querySelector("#settings");
+    const account = document.querySelector("#account");
+    const about = document.querySelector("#about");
+
+    for(var i = 0; i < menuBtns.length; i++){
+        menuBtns[i].addEventListener("click", (e) => {
+            let option = e.target;
+            let option_box = e.target.parentElement;
+            option.classList.toggle("chosen");
+            option_box.classList.toggle("tooltip");
+            //if files is not the chosen option but it was previously chosen
+            if(option != files & files.classList.contains("chosen")){
+                files.classList.toggle("chosen");
+                files.parentElement.classList.toggle("tooltip");
+            }
+            //if settings is not the chosen option but it was previously chosen
+            if(option != settings & settings.classList.contains("chosen")){
+                settings.classList.toggle("chosen");
+                settings.parentElement.classList.toggle("tooltip");
+            }
+            //if account is not the chosen option but it was previously chosen
+            if(option != account & account.classList.contains("chosen")){
+                account.classList.toggle("chosen");
+                account.parentElement.classList.toggle("tooltip");
+            }
+            //if about is not the chosen option but it was previously chosen
+            if(option != about & about.classList.contains("chosen")){
+                about.classList.toggle("chosen");
+                about.parentElement.classList.toggle("tooltip");
+            }
+        });
+    }
+
+    about.addEventListener("click", () => {
+        api.window.about();
+    });
+
+    // ---------------------------------------------------------
 
     // const dotted = document.getElementById("verticalDots");
 
@@ -48,22 +101,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const highlight = document.getElementById('highlight');
     const yellow = document.getElementById('yellow');
     const none = document.getElementById('none');
-
-    minimize.addEventListener("click", () => {
-        api.window.minimize();
-    });
-
-    maximize.addEventListener("click", () => {
-        api.window.maximize();
-    });
-
-    exit.addEventListener("click", () => {
-        api.window.exit();
-    });
-
-    about.addEventListener("click", () => {
-        api.window.about();
-    });
 
     //Navbar buttons
     font.addEventListener('change', () => {

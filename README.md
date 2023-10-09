@@ -7,8 +7,14 @@ Progress so far:
 ![](progress.gif)
 
 ## Version 0.0.2k
+- 10/09/2023
+    - added submenu to the "Files" option of the menu bar
+    - added boarder and its color to the menu bar
+    - "Add Book" is now replaced with "Add Pair" in the submenu of "Files"
+    - minor changes to spacing and coloring of the menu bar
+
 - 10/08/2023
-    - removed the feature and text animation that was applied to the menu bar
+    - removed hovered animations that was applied to the menu bar 
     - when menu bar options are now hovered, it will popup a tooltip regarding the hovered options
 
 - 10/07/2023
@@ -22,8 +28,8 @@ Progress so far:
     - added colors and spacing to improve menu bar interaction
 
 - 10/05/2023
-    - added functionality to the "about" option in the menu bar
-    - can minimize, maximize, close the 'about' window
+    - added functionality to the "About" option in the menu bar
+    - can minimize, maximize, close the "About" window
     - moved some existing files into their respective folders
 
 - 10/04/2023 (Branched from main)
@@ -31,6 +37,7 @@ Progress so far:
     - added fonts, color, highlight, bold, underline, italics
     - added transparency to the rest of the window when accessing menu bar
     - improved window icons
+
 - 10/02/2023
     - improved menu bar interface
 
