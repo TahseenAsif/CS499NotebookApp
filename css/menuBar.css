@@ -9,26 +9,35 @@
 
 main{
     display: flex;
-    margin-left: 1rem;
-    padding: 0.2rem;
+    margin-left: 2rem;
+    padding: 0.5rem;
 }
 
 .menuBar{
-    width: 3rem;
+    width: 3.5rem;
     height: 100vh;
     position: fixed;
     background-color: var(--bg-primary);
-    transition: width 200ms ease;
+    transition: width 200ms ease-in;
     z-index: 5;
 }
 
-.menuBar:focus-within, .menuBar:hover{
+/* .menuBar:focus-within{
     width: 10rem;
-}
+} */
 
-.menuBar:focus-within ~ main, .menuBar:hover ~ main{
+/* .menuBar:focus-within ~ main{
     opacity: 0.05;
     transition: opacity 200ms ease-in;
+} */
+
+/* .menuBar:focus-within svg{
+    margin: 0 1rem;
+} */
+
+/* a color indication while navigating the menu */
+.menuBar:hover svg{
+    fill: gold;
 }
 
 .menuBar-nav{
@@ -62,31 +71,21 @@ main{
     background: var(--bg-secondary);
 }
 
-.btn-text{
+/* .btn-text{
     display: none;
     white-space: nowrap;
-}
+} */
 
-.btn svg{
-    min-width: 1rem;
-    margin: 0 1rem;
+.menuBar svg{
+    margin: auto;
     fill: white;
 }
 
-li:focus-within .btn-text, li:hover .btn-text{
+/* .menuBar:focus-within .btn-text{
     color: gold;
     font-size: large;
     display: block;
     animation: fadeInLeft 200ms ease-in;
-}
-
-li:hover ~ li:focus > a > svg + text{
-    display: none;
-}
-
-/* a color indication while navigating the menu */
-.menuBar:hover svg{
-    fill: gold;
 }
 
 @keyframes fadeInLeft{
@@ -97,4 +96,39 @@ li:hover ~ li:focus > a > svg + text{
     to{
         opacity: 1;
     }
+} */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    left: 110%;
+}
+  
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

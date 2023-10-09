@@ -7,6 +7,10 @@ Progress so far:
 ![](progress.gif)
 
 ## Version 0.0.2k
+- 10/08/2023
+    - removed the feature and text animation that was applied to the menu bar
+    - when menu bar options are now hovered, it will popup a tooltip regarding the hovered options
+
 - 10/07/2023
     - added animation when selecting an option in the menu bar
     - removed "Log Out" option in favor of "My Account" option
@@ -56,3 +60,5 @@ Progress so far:
     - followed to create a menu bar
 - https://codepen.io/codescapegit/pen/eYdMqBb
     - learned how to do animation in css
+- https://www.w3schools.com/css/css_tooltip.asp
+    - learned how to do tooltip
