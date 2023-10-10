@@ -1,13 +1,14 @@
 .editorFrame{
-    width: 49.8%;
-    height: 98.2vh;
+    width: 49.95%;
+    height: calc(100vh - 20px);
     border-top: 3px;
     border-bottom: 3px;
+    box-sizing: border-box;
 }
 
 .separator{
     cursor: col-resize;
-    width: 0.4%;
+    width: 0.1%;
     height: 100vh;
     border-left: solid gray 0.3px;
     border-right: solid gray 0.3px;
@@ -15,6 +16,8 @@
 
 .separator:hover{
     background-color: var(--settings-highlightColor);
+    border-left-color: var(--settings-highlightColor);
+    border-right-color: var(--settings-highlightColor);
     background-repeat: no-repeat;
 }
 
@@ -93,11 +96,3 @@
     min-height: inherit;
     outline: none;
 }
-
-/* #verticalDots{
-    border-left: 2px dotted #999999;
-    left: 50%;
-    top: 10%;
-    bottom: 10%;
-    height: 20px;
-} */

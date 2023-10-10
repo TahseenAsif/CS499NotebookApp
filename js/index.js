@@ -7,11 +7,9 @@ $(document).ready(function () {
         if ($(this).height() != currentHeight) {
             currentHeight = $(this).height();
             var lines = currentHeight / lineHeight;
-            // var dottedHeight = 20 * lines;
             $('.lineNumbers').html('');
             for (i = 1; i < lines + 1; i++) {
                 $('.lineNumbers').append('<span>' + i + '</span>');
-                // document.getElementById("verticalDots").style.height = toString(dottedHeight) + "px" ;
             }
         }
     });
@@ -36,34 +34,44 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.exit();
     });
 
-    // menu bar variables, its functions, and interaction with the main elements
+    // menubar and submenu variables, their functions, and interaction with the main body elements
     //sets the functionality of the items listed on the side menu bar
     let main = document.querySelector(".main");
     let menuBtns = document.querySelectorAll(".btn");
+    let editors = document.querySelectorAll(".editorFrame");
     const files = document.querySelector("#files");
     const settings = document.querySelector("#settings");
     const account = document.querySelector("#account");
     const about = document.querySelector("#about");
+    const swap = document.querySelector("#swap");
 
     //if menu options that are chosen to be focused on
-    for(let i = 0; i < menuBtns.length; i++){
-        const btn = menuBtns[i];
-        btn.addEventListener("click", (e) => {
-            //if main was chosen right before
-            if(main.classList.contains("chosen")){
-                main.classList.toggle("chosen");
+    for(var i = 0; i < menuBtns.length; i++){
+        menuBtns[i].addEventListener("click", (e) => {
+            let option = e.target;
+            let option_box = e.target.parentElement;
+            option.classList.toggle("chosen");
+            option_box.classList.toggle("tooltip");
+            //if files is not the chosen option but it was previously chosen
+            if(option != files & files.classList.contains("chosen")){
+                files.classList.toggle("chosen");
+                files.parentElement.classList.toggle("tooltip");
             }
-            //reset all menu options to default looks
-            for(j = 0; j < menuBtns.length; j++){
-                const temp_btn = menuBtns[j];
-                if(temp_btn.classList.contains("chosen")){
-                    temp_btn.classList.toggle("chosen");
-                    temp_btn.parentElement.classList.toggle("tooltip");
-                }
+            //if settings is not the chosen option but it was previously chosen
+            if(option != settings & settings.classList.contains("chosen")){
+                settings.classList.toggle("chosen");
+                settings.parentElement.classList.toggle("tooltip");
             }
-            //put focus on the clicked option in the menubar
-            e.target.classList.toggle("chosen");
-            e.target.parentElement.classList.toggle("tooltip");
+            //if account is not the chosen option but it was previously chosen
+            if(option != account & account.classList.contains("chosen")){
+                account.classList.toggle("chosen");
+                account.parentElement.classList.toggle("tooltip");
+            }
+            //if about is not the chosen option but it was previously chosen
+            if(option != about & about.classList.contains("chosen")){
+                about.classList.toggle("chosen");
+                about.parentElement.classList.toggle("tooltip");
+            }
         });
     }
 
@@ -71,7 +79,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.about();
     });
 
-    // ----------------------focus interaction--------------------------
+    // -------------interactions between menu and main------------------
     
     //if the focus is menubar, prevent typing in files
     // add eventlistener function here later
@@ -89,6 +97,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
         //give element within main its focus
         if(e.target.classList)
         e.target.classList.toggle("chosen");
+    });
+
+    swap.addEventListener("click", () => {
+        const a = editors[0].innerHTML;
+        const b = editors[1].innerHTML;
+        editors[0].innerHTML = b;
+        editors[1].innerHTML = a;
     });
 
     // -----------------------------------------------------------------
@@ -211,8 +226,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // });
 
     // resizing of editors
-    let editors = document.querySelectorAll(".editorFrame");
-    
     function resizeEditors(resizeBar){
         const first = editors[0];
         const second = editors[1];

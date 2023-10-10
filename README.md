@@ -2,15 +2,17 @@
 
 Responsible for the code section of the Codestone Application
 
-Progress so far (outdated):
+Progress so far (from 0.0.2k):
 
 ![](progress.gif)
 
 ## Version 0.0.3k
 - 10/10/2023
+    - readjusted window's default and minimum sizes
     - changed the apperance of the text editor
     - bigger text editing space
-    - can now resize editors
+    - can now resize and swap position of editors 
+    - **Need To Be Fixed: fuctionality of text file doesn't work after swapping editor's position (maybe check HTML idk)**
 
 ## Version 0.0.2k
 - 10/09/2023
@@ -77,3 +79,5 @@ Progress so far (outdated):
     - learned how to do tooltip
 - https://www.youtube.com/watch?v=ES8vJcUqE7s
     - further assistance in creating a menu bar
+- https://stackoverflow.com/questions/12194469/best-way-to-do-a-split-pane-in-html
+    - used to create split pane to resize editors
