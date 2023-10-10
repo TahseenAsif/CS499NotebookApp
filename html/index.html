@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" href="../css/titleBar.css">
         <link rel="stylesheet" href="../css/menuBar.css">
+        <link rel="stylesheet" href="../css/body-main.css">
         <link rel="stylesheet" href="../css/mohammed_index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -94,31 +95,10 @@
                         <li class="subnav-item">
                             <a href="#" role="button">
                                 <span>Swap Editors</span>
-                                <!-- generate text and code files -->
                             </a>
                         </li>
                     </ul>
                 </li>
-
-                <!-- <li class="nav-item tooltip">
-                    <a href="#" role="button" class="btn" id="new_book">
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fad"
-                            data-icon="file"
-                            role="img"
-                            xmlns="http://www.w3.org/2000/svg" 
-                            viewBox="0 0 512 512">
-                            <path
-                                d=  "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 
-                                    24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
-                                    13.3-10.7 24-24 24s-24-10.7-24-24z"
-                            />
-                        </svg>
-                        <span class="tooltiptext noSelect">Add book</span>
-                    </a>
-                </li> -->
 
                 <li class="nav-item tooltip">
                     <a href="#" role="button" class="btn" id="settings">
@@ -187,62 +167,77 @@
                 </li>
             </ul>
         </nav>
-        <main>
-            <div class="editor" id="textEditor">
-                <div id="navbar">
-                    <select name="Fonts" id="fonts">
-                        <option value="Monospace">Monospace</option>
-                        <option value="Arial">Arial</option>
-                        <option value="'Times New Roman'">Times New Roman</option>
-                        <option value="Impact">Impact</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Cambria">Cambria</option>
-                    </select>
-                    <input type="color" id="fontColor"/>
-                    <div class="dropdown">
-                        <button class="navButton" id="highlight">
-                            <i class="fa-solid fa-highlighter"></i>
+
+        <main class="main">
+            <!-- left editor (default: text editor) -->
+            <!-- <div class="editorFrame left-editor text">
+                <nav class="editor-tab">
+                    <ul class="tab-list">
+                    </ul>
+                </nav> -->
+
+                <div class="editor">
+                    <div id="navbar">
+                        <select name="Fonts" id="fonts">
+                            <option value="Monospace">Monospace</option>
+                            <option value="Arial">Arial</option>
+                            <option value="'Times New Roman'">Times New Roman</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Cambria">Cambria</option>
+                        </select>
+                        <input type="color" id="fontColor"/>
+                        <div class="dropdown">
+                            <button class="navButton" id="highlight">
+                                <i class="fa-solid fa-highlighter"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <div class="items" id="yellow">
+                                    <i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i>
+                                </div>
+                                <div class="items" id="none">
+                                    <i id='h' class="fa-solid fa-ban fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="navButton" id="bold">
+                            <i class="fa-solid fa-bold"></i>
                         </button>
-                        <div class="dropdown-menu">
-                            <div class="items" id="yellow">
-                                <i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i>
+                        <button class="navButton" id="italic">
+                            <i class="fa-solid fa-italic"></i>
+                        </button>
+                        <button class="navButton" id="underline">
+                            <i class="fa-solid fa-underline"></i>
+                        </button>
+                    </div>
+    
+                    <div id="notepadContainer">
+                        <div id="notepad">
+                            <div class="lineNumbers">
+                                <span>1</span>
                             </div>
-                            <div class="items" id="none">
-                                <i id='h' class="fa-solid fa-ban fa-lg"></i>
+                            <!-- <div id="verticalDots"></div> -->
+                            <div class="textareaContainer">
+                                <div class="textarea" contenteditable="true"></div>
                             </div>
+                            
                         </div>
                     </div>
-                    <button class="navButton" id="bold">
-                        <i class="fa-solid fa-bold"></i>
-                    </button>
-                    <button class="navButton" id="italic">
-                        <i class="fa-solid fa-italic"></i>
-                    </button>
-                    <button class="navButton" id="underline">
-                        <i class="fa-solid fa-underline"></i>
-                    </button>
                 </div>
+            <!-- </div> -->
 
-                <div id="notepadContainer">
-                    <div id="notepad">
-                        <div class="lineNumbers">
-                            <span>1</span>
-                        </div>
-                        <!-- <div id="verticalDots"></div> -->
-                        <div class="textareaContainer">
-                            <div class="textarea" contenteditable="true"></div>
-                        </div>
-                        
+            <!-- right editor (default: code editor) -->
+            <!-- <div class="editor-frame right-editor code">
+                <nav class="editor-tab">
+                    <ul class="tab-list">
+                    </ul>
+                </nav> -->
+                <div class="editor" id="code-editor">
+                    <div style="color: white;">
+                        <h1>Code Editor Part</h1>
                     </div>
                 </div>
-
             </div>
-
-            <div class="editor" id="codeEditor">
-                <div style="color: white;">
-                <h1>Code Editor Part</h1></div>
-            </div>
-
         </main>
     </body>
 

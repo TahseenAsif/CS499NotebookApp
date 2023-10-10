@@ -8,12 +8,6 @@
     --border-size: 4px;
 }
 
-main{
-    display: flex;
-    margin-left: 2rem;
-    padding: 0.5rem;
-}
-
 .menuBar{
     width: 3.5rem;
     height: 100vh;

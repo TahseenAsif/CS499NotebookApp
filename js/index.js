@@ -41,42 +41,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // ---------------------------------------------------------
 
     /*
-    //  menu bar variables and functions
+    //  menu bar variables, its functions, and interaction with the main elements
     */
     //sets the functionality of the items listed on the side menu bar
-    // const sidebar = document.getElementById("sidebar");
+    let main = document.querySelector(".main");
     let menuBtns = document.querySelectorAll(".btn");
     const files = document.querySelector("#files");
     const settings = document.querySelector("#settings");
     const account = document.querySelector("#account");
     const about = document.querySelector("#about");
 
-    for(var i = 0; i < menuBtns.length; i++){
-        menuBtns[i].addEventListener("click", (e) => {
-            let option = e.target;
-            let option_box = e.target.parentElement;
-            option.classList.toggle("chosen");
-            option_box.classList.toggle("tooltip");
-            //if files is not the chosen option but it was previously chosen
-            if(option != files & files.classList.contains("chosen")){
-                files.classList.toggle("chosen");
-                files.parentElement.classList.toggle("tooltip");
+    //if menu options that are chosen to be focused on
+    for(let i = 0; i < menuBtns.length; i++){
+        const btn = menuBtns[i];
+        btn.addEventListener("click", (e) => {
+            //if main was chosen right before
+            if(main.classList.contains("chosen")){
+                main.classList.toggle("chosen");
             }
-            //if settings is not the chosen option but it was previously chosen
-            if(option != settings & settings.classList.contains("chosen")){
-                settings.classList.toggle("chosen");
-                settings.parentElement.classList.toggle("tooltip");
+            //reset all menu options to default looks
+            for(j = 0; j < menuBtns.length; j++){
+                const temp_btn = menuBtns[j];
+                if(temp_btn.classList.contains("chosen")){
+                    temp_btn.classList.toggle("chosen");
+                    temp_btn.parentElement.classList.toggle("tooltip");
+                }
             }
-            //if account is not the chosen option but it was previously chosen
-            if(option != account & account.classList.contains("chosen")){
-                account.classList.toggle("chosen");
-                account.parentElement.classList.toggle("tooltip");
-            }
-            //if about is not the chosen option but it was previously chosen
-            if(option != about & about.classList.contains("chosen")){
-                about.classList.toggle("chosen");
-                about.parentElement.classList.toggle("tooltip");
-            }
+            //put focus on the clicked option in the menubar
+            e.target.classList.toggle("chosen");
+            e.target.parentElement.classList.toggle("tooltip");
         });
     }
 
@@ -84,7 +77,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.about();
     });
 
-    // ---------------------------------------------------------
+    // ----------------------interaction------------------------------
+    
+    //if the focus is menubar, prevent typing in files
+    // add eventlistener function here later
+
+    //if the focus is main, remove highlights and close any open submenu
+    main.addEventListener("click", (e) => {
+        //reset all menu options to default looks
+        for(let i = 0; i < menuBtns.length; i++){
+            const btn = menuBtns[i];
+            if(btn.classList.contains("chosen")){
+                btn.classList.toggle("chosen");
+                btn.parentElement.classList.toggle("tooltip");
+            }
+        }
+        //give main the focus
+        if(e.target.classList)
+        e.target.classList.toggle("chosen");
+    });
+
+    // -----------------------------------------------------------------
 
     // const dotted = document.getElementById("verticalDots");
 

@@ -69,3 +69,5 @@ Progress so far:
     - learned how to do animation in css
 - https://www.w3schools.com/css/css_tooltip.asp
     - learned how to do tooltip
+- https://www.youtube.com/watch?v=ES8vJcUqE7s
+    - further assistance in creating a menu bar

@@ -1,9 +1,13 @@
+.editorFrame{
+    
+}
+
 .editor{
     width: 50%;
     height: 90vh;
 }
 
-#codeEditor{
+#code-editor{
     background: black;
 }
 
