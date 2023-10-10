@@ -2,9 +2,15 @@
 
 Responsible for the code section of the Codestone Application
 
-Progress so far:
+Progress so far (outdated):
 
 ![](progress.gif)
+
+## Version 0.0.3k
+- 10/10/2023
+    - changed the apperance of the text editor
+    - bigger text editing space
+    - can now resize editors
 
 ## Version 0.0.2k
 - 10/09/2023

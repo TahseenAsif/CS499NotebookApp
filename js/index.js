@@ -18,9 +18,7 @@ $(document).ready(function () {
 });
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    /*
-    //  window bar variables and functions
-    */
+    // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
     const minimize = document.getElementById("minimize");
     const maximize = document.getElementById("maximize");
@@ -38,11 +36,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.exit();
     });
 
-    // ---------------------------------------------------------
-
-    /*
-    //  menu bar variables, its functions, and interaction with the main elements
-    */
+    // menu bar variables, its functions, and interaction with the main elements
     //sets the functionality of the items listed on the side menu bar
     let main = document.querySelector(".main");
     let menuBtns = document.querySelectorAll(".btn");
@@ -77,7 +71,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         api.window.about();
     });
 
-    // ----------------------interaction------------------------------
+    // ----------------------focus interaction--------------------------
     
     //if the focus is menubar, prevent typing in files
     // add eventlistener function here later
@@ -92,7 +86,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 btn.parentElement.classList.toggle("tooltip");
             }
         }
-        //give main the focus
+        //give element within main its focus
         if(e.target.classList)
         e.target.classList.toggle("chosen");
     });
@@ -106,6 +100,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // const cancel = document.getElementById('cancel')
     // const save = document.getElementById('save');
 
+    // text editor variables and functions
     const font = document.getElementById('fonts');
     const bold = document.getElementById('bold');
     const italic = document.getElementById('italic');
@@ -214,4 +209,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //     event.preventDefault()
 
     // });
+
+    // resizing of editors
+    let editors = document.querySelectorAll(".editorFrame");
+    
+    function resizeEditors(resizeBar){
+        const first = editors[0];
+        const second = editors[1];
+        var mousedown;
+        resizeBar.onmousedown = onMouseDown;
+
+        function onMouseDown(e){
+            mousedown = {e,
+                  offsetLeft:   resizeBar.offsetLeft,
+                  offsetTop:    resizeBar.offsetTop,
+                  firstWidth:   first.offsetWidth,
+                  secondWidth:  second.offsetWidth
+                 };
+            document.onmousemove = onMouseMove;
+            document.onmouseup = () => {
+                document.onmousemove = document.onmouseup = null;
+            }
+        }
+
+        function onMouseMove(e){
+            var delta = {x: e.clientX - mousedown.e.clientX}
+            delta.x = Math.min(Math.max(delta.x, -mousedown.firstWidth), mousedown.secondWidth);
+            resizeBar.style.left = (mousedown.offsetLeft + delta.x) + "px";
+            first.style.width = (mousedown.firstWidth + delta.x) + "px";
+            second.style.width = (mousedown.secondWidth - delta.x) + "px";
+        }
+    }
+
+    resizeEditors(document.querySelector(".separator"));
 });
