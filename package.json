@@ -1,14 +1,14 @@
 {
   "name": "codestone",
-  "version": "1.0.0",
+  "version": "0.0.2k",
   "description": "A notebook for coders.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "author": "",
+  "author": "Koji",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "electron": "^26.2.1"
   }
 }
