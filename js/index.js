@@ -127,6 +127,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const navbar = document.querySelectorAll('.navButton');
     const lists = document.querySelectorAll('.listButton');
     const header = document.querySelector('#formatBlock');
+    const imgInput = document.querySelector('#imgInput');
 
     //Navbar buttons
     font.addEventListener('change', () => {
@@ -192,6 +193,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
         button.addEventListener('click', () => {
             document.execCommand(button.id, false, null);
         })
+    })
+
+    //Image Input
+    const addImage = () => {
+        const img = document.createElement("img");
+        const targetText = document.querySelector('.textarea');
+        var f = document.querySelector('#imgInput').files[0];
+        targetText.append(img);
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            img.src = reader.result;
+        });
+            reader.readAsDataURL(f);
+    }
+
+    imgInput.addEventListener('input', () => {
+        addImage();
     })
 
     //Adding new Notebook
