@@ -127,35 +127,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //Navbar buttons
     font.addEventListener('change', () => {
-        document.getElementById('notepad').style.fontFamily = font.value;
+        document.execCommand('fontName', false, font.value); 
     });
 
     bold.addEventListener('click', () => {
         document.execCommand('bold')
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
     
     italic.addEventListener('click', () => {
         document.execCommand('italic')
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
 
     underline.addEventListener('click', () => {
         document.execCommand('underline')
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
 
     fontColor.addEventListener('input', () => {
         document.execCommand('foreColor', false, fontColor.value)
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
 
     highlight.addEventListener('click', () => {
@@ -172,17 +160,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     yellow.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, '#FFFF00')
         document.querySelector('.dropdown-menu').style.display='none'
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
 
     none.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, 'white');
         document.querySelector('.dropdown-menu').style.display='none'
-        if(window.getSelection){
-            window.getSelection().removeAllRanges();
-        }
     });
 
     //Adding new Notebook
