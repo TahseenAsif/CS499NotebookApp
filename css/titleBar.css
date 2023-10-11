@@ -1,21 +1,3 @@
-body{
-    color: black;
-    background-color: white;
-    padding: 0;
-    margin: 0;
-}
-
-/* body *{
-    box-sizing: border-box;
-} */
-
-.container{
-    height: 100%;
-    padding: 0;
-    display: grid;
-    grid-template-rows: auto 1fr;
-}
-
 .titleBar{
     display: grid;
     grid-template-columns: 1fr auto;

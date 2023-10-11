@@ -8,12 +8,6 @@
     --border-size: 4px;
 }
 
-main{
-    display: flex;
-    margin-left: 2rem;
-    padding: 0.5rem;
-}
-
 .menuBar{
     width: 3.5rem;
     height: 100vh;
@@ -117,7 +111,7 @@ main{
 }
 
 .submenu-nav a:hover span{
-    padding-left: 18px;
+    padding-left: 15px;
     color: var(--settings-highlightColor);
 }
 

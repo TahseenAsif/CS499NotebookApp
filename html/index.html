@@ -7,11 +7,11 @@
 
         <link rel="stylesheet" href="../css/titleBar.css">
         <link rel="stylesheet" href="../css/menuBar.css">
+        <link rel="stylesheet" href="../css/body-main.css">
         <link rel="stylesheet" href="../css/mohammed_index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        
     </head>
 
     <body>
@@ -29,21 +29,19 @@
             </form>
         </div>
     -->
-        <div class="container">
-            <div class="titleBar titleBarStyle">
-                <div class="windowTitle noSelect draggable">CODESTONE</div>
-                <div class="windowControls windowControlsStyle noSelect">
-                    <button id="minimize" >
-                        <i class="fa-solid fa-window-minimize"></i>
-                    </button>
-                    <button id="maximize">
-                        <i class="fa-solid fa-maximize"></i>
-                    </button>
-                    <button id="exit">
-                        <i class="fa-regular fa-circle-xmark"></i>
-                    </button>
-                </div>
-
+    
+        <div class="titleBar titleBarStyle">
+            <div class="windowTitle noSelect draggable">CODESTONE</div>
+            <div class="windowControls windowControlsStyle noSelect">
+                <button id="minimize" >
+                    <i class="fa-solid fa-window-minimize"></i>
+                </button>
+                <button id="maximize">
+                    <i class="fa-solid fa-maximize"></i>
+                </button>
+                <button id="exit">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
             </div>
         </div>
         <nav class="menuBar noSelect" id="sidebar">
@@ -68,7 +66,7 @@
                     <span class="tooltiptext noSelect">Files</span>
                     <ul class="submenu-nav">
                         <li class="subnav-item">
-                            <a href="#" role="button" class="sidebtn" id="newText">
+                            <a href="#" role="button">
                                 <span>New Text</span>
                             </a>
                         </li>
@@ -87,39 +85,18 @@
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button" class="sidebtn" id="open">
-                                <span>Open </span>
+                            <a href="#" role="button">
+                                <span>Open</span>
                             </a>
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="swap">
                                 <span>Swap Editors</span>
-                                <!-- generate text and code files -->
                             </a>
                         </li>
                     </ul>
                 </li>
-
-                <!-- <li class="nav-item tooltip">
-                    <a href="#" role="button" class="btn" id="new_book">
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fad"
-                            data-icon="file"
-                            role="img"
-                            xmlns="http://www.w3.org/2000/svg" 
-                            viewBox="0 0 512 512">
-                            <path
-                                d=  "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 
-                                    24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 
-                                    13.3-10.7 24-24 24s-24-10.7-24-24z"
-                            />
-                        </svg>
-                        <span class="tooltiptext noSelect">Add book</span>
-                    </a>
-                </li> -->
 
                 <li class="nav-item tooltip">
                     <a href="#" role="button" class="btn" id="settings">
@@ -188,65 +165,12 @@
                 </li>
             </ul>
         </nav>
-        <main>
-            <div class="editor" id="textEditor">
-                <div id="navbar">
-                    <select name="Fonts" id="fonts">
-                        <option value="Monospace">Monospace</option>
-                        <option value="Arial">Arial</option>
-                        <option value="'Times New Roman'">Times New Roman</option>
-                        <option value="Impact">Impact</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Cambria">Cambria</option>
-                    </select>
-                    <input type="color" id="fontColor"/>
-                    <div class="dropdown">
-                        <button class="navButton" id="highlight">
-                            <i class="fa-solid fa-highlighter"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <div class="items" id="yellow">
-                                <i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i>
-                            </div>
-                            <div class="items" id="none">
-                                <i id='h' class="fa-solid fa-ban fa-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="navButton" id="bold">
-                        <i class="fa-solid fa-bold"></i>
-                    </button>
-                    <button class="navButton" id="italic">
-                        <i class="fa-solid fa-italic"></i>
-                    </button>
-                    <button class="navButton" id="underline">
-                        <i class="fa-solid fa-underline"></i>
-                    </button>
-                </div>
 
-                <div id="notepadContainer">
-                    <div id="notepad">
-                        <div class="lineNumbers">
-                            <span>1</span>
-                        </div>
-                        <!-- <div id="verticalDots"></div> -->
-                        <div class="textareaContainer">
-                            <div class="textarea" contenteditable="true"></div>
-                        </div>
-                        
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="editor" id="codeEditor">
-                <div style="color: white;">
-                <h1>Code Editor Part</h1></div>
-            </div>
-
+        <main class="main">
+           <tab-group></tab-group>
         </main>
     </body>
 
     <script src="../js/index.js"></script>
-    
+    <script src="../node_modules/electron-tabs/dist/electron-tabs.js"></script>
 </html>

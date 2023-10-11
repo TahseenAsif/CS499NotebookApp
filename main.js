@@ -1,8 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
-const fs = require("fs");
-
 
 let mainWindow;
 let childWindow;
@@ -10,16 +8,17 @@ let childWindow;
 function createWindow(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 2400,
-        height: 1350,
+        width: 1500,
+        height: 900,
         minWidth: 1200,
-        minHeight: 800,
+        minHeight: 700,
         
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
-            nodeIntegration: true,
-            preload: path.join(__dirname, 'preload.js')
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js'),
+            webviewTag: true
         }
     });
     // and load the index.html of the app.

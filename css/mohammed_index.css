@@ -1,11 +1,28 @@
-.editor{
-    width: 50%;
-    height: 90vh;
+.editorFrame{
+    width: 49.95%;
+    height: calc(100vh - 20px);
+    border-top: 3px;
+    border-bottom: 3px;
+    box-sizing: border-box;
 }
 
-#codeEditor{
-    background: black;
+
+
+.separator{
+    cursor: col-resize;
+    width: 0.1%;
+    height: 100vh;
+    border-left: solid gray 0.3px;
+    border-right: solid gray 0.3px;
 }
+
+.separator:hover{
+    background-color: var(--settings-highlightColor);
+    border-left-color: var(--settings-highlightColor);
+    border-right-color: var(--settings-highlightColor);
+    background-repeat: no-repeat;
+}
+
 
 #navbar{
     display: flex;
@@ -24,7 +41,7 @@
     padding: 5px 5px 5px 5px;
     display: none;
     position: absolute;
-    background-color: rgb(218,218,218);
+    background-color: rgb(218, 218, 218);
     justify-content: space-around;
     align-items: center;
     width: 75px;
@@ -37,6 +54,29 @@
 .navButton{
     width: 50px;
     height: 25px;
+    border: 1px, black;
+    border-radius: 0%;
+    background-color: #f0f8ff;
+}
+
+.navButton:hover{
+    background-color: rgb(180, 180, 180);
+}
+
+.listButton{
+    width: 50px;
+    height: 25px;
+    border: 1px, black;
+    border-radius: 0%;
+    background-color: #f0f8ff;
+}
+
+.listButton:hover{
+    background-color: rgb(180, 180, 180);
+}
+
+.active{
+    background-color: rgb(127, 208, 255);
 }
 
 #notepadContainer{
@@ -47,12 +87,12 @@
 }
 
 #notepad{
-    border: 2px solid black;
+    border-top: 2px solid black;
     display: flex;
-    width: 90%;
+    width: 100%;
     height: 95%;
     gap: 10px;
-    padding: 10px;
+    padding: 8px;
     line-height: 21px;
     font-family: monospace;
     font-size: 15px;
@@ -82,10 +122,4 @@
     outline: none;
 }
 
-/* #verticalDots{
-    border-left: 2px dotted #999999;
-    left: 50%;
-    top: 10%;
-    bottom: 10%;
-    height: 20px;
-} */
+
