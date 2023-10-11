@@ -124,6 +124,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const highlight = document.getElementById('highlight');
     const yellow = document.getElementById('yellow');
     const none = document.getElementById('none');
+    const navbar = document.querySelectorAll('.navButton');
+    const lists = document.querySelectorAll('.listButton');
+    const header = document.querySelector('#formatBlock');
 
     //Navbar buttons
     font.addEventListener('change', () => {
@@ -147,7 +150,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     highlight.addEventListener('click', () => {
-        var dropdownMenu = document.querySelector('.dropdown-menu')
         var dropdownMenu = document.querySelector('.dropdown-menu');
         if(dropdownMenu.style.display === 'none'){
             dropdownMenu.style.display = 'flex'
@@ -160,12 +162,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
     yellow.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, '#FFFF00')
         document.querySelector('.dropdown-menu').style.display='none'
+        document.querySelector('#highlight').style.backgroundColor='#FFFF00' //not working
     });
 
     none.addEventListener('mousedown', () => {
         document.execCommand('backcolor', true, 'white');
         document.querySelector('.dropdown-menu').style.display='none'
+        document.querySelector('#highlight').style.backgroundColor='#f0f8ff'
     });
+
+    navbar.forEach(button => {
+        button.addEventListener('click', () => {
+            if(button.id!="highlight"){
+                if(button.classList.contains('active')){
+                    button.classList.remove('active');
+                } else {
+                    button.classList.add('active');
+                }
+            }
+        })
+    })
+
+    header.addEventListener('change', () => {
+        document.execCommand(header.id, false, header.value);
+    })
+
+    //List Buttons
+    lists.forEach(button => {
+        button.addEventListener('click', () => {
+            document.execCommand(button.id, false, null);
+        })
+    })
 
     //Adding new Notebook
     var noteBookNum = 0;
