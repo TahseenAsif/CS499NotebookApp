@@ -1,7 +1,8 @@
 "# CS499NotebookApp" 
 
 **Preview of app:**
-![Screenshot 2023-10-04 152747](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/9fbd3529-c712-4398-ae69-01763bbbf01f)
+![Screenshot 2023-10-12 183005](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/26de86c5-38be-47d6-b6db-1e7e126d8357)
+
 
 
 
