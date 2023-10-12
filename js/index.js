@@ -1,21 +1,4 @@
-
-
 window.addEventListener('DOMContentLoaded', (event) => {
-
-    const tabGroup = document.querySelector('tab-group');
-    tabGroup.addTab({
-        title: "New Page",
-        src: "../editors/index.html",
-        active: true,
-      })
-      tabGroup.addTab({
-        title: "New Page",
-        src: "../editors/index.html",
-        active: true,
-      })
-
-
-
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
     const minimize = document.getElementById("minimize");
@@ -106,6 +89,59 @@ window.addEventListener('DOMContentLoaded', (event) => {
         editors[1].innerHTML = a;
     });
 
+    // -----------------------------------------------------------------
+    //quill text editor
+    var quill = new Quill('#textarea', {
+        modules: {
+            toolbar: [
+                [{ 'header': [false,6,5,4,3,2,1] }],
+                [{ 'font': [] }],
+                [{ 'color': [] }, { 'background': [] }],     
+                ['bold', 'italic', 'underline'],        
+                [{ 'script': 'sub'}, { 'script': 'super' }],    
+                [{ 'align': [] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['image'],
+
+
+            ],            
+        },
+        theme: 'snow'
+      });
+
+
   
-  
+    // resizing of editors
+    function resizeEditors(resizeBar){
+        const first = editors[0];
+        const second = editors[1];
+        var mousedown;
+        resizeBar.onmousedown = onMouseDown;
+
+        function onMouseDown(e){
+            mousedown = {e,
+                  offsetLeft:   resizeBar.offsetLeft,
+                  offsetTop:    resizeBar.offsetTop,
+                  firstWidth:   first.offsetWidth,
+                  secondWidth:  second.offsetWidth
+                 };
+            document.onmousemove = onMouseMove;
+            document.onmouseup = () => {
+                document.onmousemove = document.onmouseup = null;
+            }
+        }
+
+        function onMouseMove(e){
+            var delta = {x: e.clientX - mousedown.e.clientX}
+            delta.x = Math.min(Math.max(delta.x, -mousedown.firstWidth), mousedown.secondWidth);
+            resizeBar.style.left = (mousedown.offsetLeft + delta.x) + "px";
+            first.style.width = (mousedown.firstWidth + delta.x) + "px";
+            second.style.width = (mousedown.secondWidth - delta.x) + "px";
+        }
+    }
+
+    resizeEditors(document.querySelector(".separator"));
+
+
+    
 });

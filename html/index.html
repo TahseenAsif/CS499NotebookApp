@@ -10,8 +10,12 @@
         <link rel="stylesheet" href="../css/body-main.css">
         <link rel="stylesheet" href="../css/mohammed_index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        
     </head>
 
     <body>
@@ -29,7 +33,6 @@
             </form>
         </div>
     -->
-    
         <div class="titleBar titleBarStyle">
             <div class="windowTitle noSelect draggable">CODESTONE</div>
             <div class="windowControls windowControlsStyle noSelect">
@@ -167,10 +170,28 @@
         </nav>
 
         <main class="main">
-           <tab-group></tab-group>
+            <!-- left editor (default: text editor) -->
+            <div class="editorFrame left text">
+              <div id="textarea">
+                
+              </div>
+            </div>
+
+            <div class="separator noSelect"></div>
+
+            <!-- right editor (default: code editor) -->
+            <div class="editorFrame right code">
+                <!-- <nav class="editor-tab">
+                    <ul class="tab-list">
+                    </ul>
+                </nav> -->
+                <div style="color: white; background: black">
+                    <h1>Code Editor Part</h1>
+                </div>
+            </div>
         </main>
     </body>
 
     <script src="../js/index.js"></script>
-    <script src="../node_modules/electron-tabs/dist/electron-tabs.js"></script>
+    
 </html>
