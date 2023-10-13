@@ -7,6 +7,8 @@
 }
 
 .separator{
+
+
     cursor: col-resize;
     width: 0.1%;
     height: 100vh;
@@ -21,4 +23,8 @@
     background-repeat: no-repeat;
 }
 
+.main-swap{
+    display: flex;
+    flex-direction: row-reverse;
+}
 

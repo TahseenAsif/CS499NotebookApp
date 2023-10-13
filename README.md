@@ -8,6 +8,7 @@
 
 **Update 10/12**
   Replaced original Text Editor and implemented the Quill Text Editor
+  Fixed swap editors function
   Working on tabs on both editor sections now
 
 

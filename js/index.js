@@ -83,10 +83,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     swap.addEventListener("click", () => {
-        const a = editors[0].innerHTML;
-        const b = editors[1].innerHTML;
-        editors[0].innerHTML = b;
-        editors[1].innerHTML = a;
+        const main = document.querySelector('.main');
+        if(main.classList.contains('main-swap')){
+            main.classList.remove('main-swap')
+        resizeEditors(document.querySelector(".separator"));
+
+        }
+        else{
+            main.classList.add('main-swap');
+            resizeEditorsSwap(document.querySelector(".separator"));
+
+        }
     });
 
     // -----------------------------------------------------------------
@@ -137,6 +144,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
             resizeBar.style.left = (mousedown.offsetLeft + delta.x) + "px";
             first.style.width = (mousedown.firstWidth + delta.x) + "px";
             second.style.width = (mousedown.secondWidth - delta.x) + "px";
+        }
+    }
+
+    //function only used after swapping editors
+    function resizeEditorsSwap(resizeBar){
+        const first = editors[0];
+        const second = editors[1];
+        var mousedown;
+        resizeBar.onmousedown = onMouseDown;
+
+        function onMouseDown(e){
+            mousedown = {e,
+                  offsetLeft:   resizeBar.offsetLeft,
+                  offsetTop:    resizeBar.offsetTop,
+                  firstWidth:   first.offsetWidth,
+                  secondWidth:  second.offsetWidth
+                 };
+            document.onmousemove = onMouseMove;
+            document.onmouseup = () => {
+                document.onmousemove = document.onmouseup = null;
+            }
+        }
+
+        function onMouseMove(e){
+            var delta = {x: e.clientX - mousedown.e.clientX}
+            delta.x = Math.min(Math.max(delta.x, -mousedown.firstWidth), mousedown.secondWidth);
+            resizeBar.style.left = (mousedown.offsetLeft + delta.x) + "px";
+            first.style.width = (mousedown.firstWidth - delta.x) + "px";
+            second.style.width = (mousedown.secondWidth + delta.x) + "px";
         }
     }
 
