@@ -11,7 +11,7 @@
 -Working on tabs on both editor sections now
 
 
-
+##
 **Text Editor**
   Basics of it is done, waiting on database to finish up to connect them together to save notes.
 
