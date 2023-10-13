@@ -1,7 +1,8 @@
 "# CS499NotebookApp" 
 
 **Preview of app:**
-![Recording 2023-10-12 211722](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/fd2cb07e-62f4-4168-80d0-931634043872)
+![progress gif](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/1b53dfbf-494d-4557-9460-f9decbb844a7)
+
 
 
 
