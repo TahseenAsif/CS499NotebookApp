@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 let mainWindow;
 let childWindow;
@@ -26,10 +27,10 @@ function createWindow(){
     mainWindow.webContents.openDevTools();
 };
 
-function createChildWindow(){
+function createSettingsWindow(){
     childWindow = new BrowserWindow({
-        width: 1000,
-        height: 700,
+        width: 800,
+        height: 600,
         modal: true,
         show: false,
         frame: false,
@@ -41,7 +42,41 @@ function createChildWindow(){
         },
     });
     childWindow.webContents.openDevTools();
-}
+};
+
+function createAboutWindow(){
+    childWindow = new BrowserWindow({
+        width: 500,
+        height: 400,
+        modal: true,
+        show: false,
+        frame: false,
+        parent: mainWindow,
+
+        webPreferences: {
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        },
+    });
+    childWindow.webContents.openDevTools();
+};
+
+function createOpenFileWindow(){
+    childWindow = new BrowserWindow({
+        width: 600,
+        height: 400,
+        modal: true,
+        show: false,
+        frame: false,
+        parent: mainWindow,
+
+        webPreferences: {
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        },
+    });
+    childWindow.webContents.openDevTools();
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -74,9 +109,25 @@ ipcMain.on("winClose", () => {
     mainWindow.close();
 });
 
+ipcMain.on("runSettings", () => {
+    createSettingsWindow();
+    childWindow.loadFile(path.join(__dirname, './html/settings.html'));
+    childWindow.once("ready-to-show", () => {
+        childWindow.show();
+    });
+});
+
 ipcMain.on("runAbout", () => {
-    createChildWindow();
+    createAboutWindow();
     childWindow.loadFile(path.join(__dirname, './html/about.html'));
+    childWindow.once("ready-to-show", () => {
+        childWindow.show();
+    });
+});
+
+ipcMain.on("runOpenFiles", () => {
+    createOpenFileWindow();
+    childWindow.loadFile(path.join(__dirname, './html/open_files.html'));
     childWindow.once("ready-to-show", () => {
         childWindow.show();
     });

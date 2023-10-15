@@ -1,6 +1,6 @@
 {
   "name": "codestone",
-  "version": "0.0.3k",
+  "version": "0.0.4k",
   "description": "A notebook for coders.",
   "main": "main.js",
   "scripts": {

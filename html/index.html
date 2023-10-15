@@ -10,8 +10,12 @@
         <link rel="stylesheet" href="../css/body-main.css">
         <link rel="stylesheet" href="../css/mohammed_index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        
     </head>
 
     <body>
@@ -84,7 +88,7 @@
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="open">
                                 <span>Open</span>
                             </a>
                         </li>
@@ -166,69 +170,17 @@
         </nav>
 
         <main class="main">
-            <!-- left editor (default: text editor) -->
             <div class="editorFrame left text">
-                <!-- <nav class="editor-tab">
-                    <ul class="tab-list">
-                    </ul>
-                </nav> -->
-                <div id="navbar">
-                    <select name="Fonts" id="fonts">
-                        <option value="Monospace">Monospace</option>
-                        <option value="Arial">Arial</option>
-                        <option value="'Times New Roman'">Times New Roman</option>
-                        <option value="Impact">Impact</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Cambria">Cambria</option>
-                    </select>
-                    <input type="color" id="fontColor"/>
-                    <div class="dropdown">
-                        <button class="navButton" id="highlight">
-                            <i class="fa-solid fa-highlighter"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <div class="items" id="yellow">
-                                <i id="h" class="fa-solid fa-square-full fa-lg" style="color: #FFFF00;"></i>
-                            </div>
-                            <div class="items" id="none">
-                                <i id='h' class="fa-solid fa-ban fa-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="navButton" id="bold">
-                        <i class="fa-solid fa-bold"></i>
-                    </button>
-                    <button class="navButton" id="italic">
-                        <i class="fa-solid fa-italic"></i>
-                    </button>
-                    <button class="navButton" id="underline">
-                        <i class="fa-solid fa-underline"></i>
-                    </button>
-                </div>
-    
-                <div id="notepadContainer">
-                    <div id="notepad">
-                        <div class="lineNumbers">
-                            <span>1</span>
-                        </div>
-                        <!-- <div id="verticalDots"></div> -->
-                        <div class="textareaContainer">
-                            <div class="textarea" contenteditable="true"></div>
-                        </div>
-                        
-                    </div>
-                </div>
+              <div id="textarea">
+                
+              </div>
             </div>
 
             <div class="separator noSelect"></div>
 
-            <!-- right editor (default: code editor) -->
             <div class="editorFrame right code">
-                <!-- <nav class="editor-tab">
-                    <ul class="tab-list">
-                    </ul>
-                </nav> -->
-                <div style="color: white; background: black">
+
+                <div style="color: white; background: black;">
                     <h1>Code Editor Part</h1>
                 </div>
             </div>

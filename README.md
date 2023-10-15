@@ -6,13 +6,17 @@ Progress so far (from 0.0.2k):
 
 ![](progress.gif)
 
+## Version 0.0.4k
+- 10/15/2023
+    - changed text editor to use third party software (Quill)
+    - added children window for the 'Settings' and 'Open' options in the menubar
+
 ## Version 0.0.3k
 - 10/10/2023
     - readjusted window's default and minimum sizes
     - changed the apperance of the text editor
     - bigger text editing space
-    - can now resize and swap position of editors 
-    - **Need To Be Fixed: fuctionality of text file doesn't work after swapping editor's position (maybe check HTML idk)**
+    - can now resize and swap position of editors
 
 ## Version 0.0.2k
 - 10/09/2023

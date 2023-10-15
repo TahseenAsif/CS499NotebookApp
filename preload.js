@@ -6,6 +6,8 @@ contextBridge.exposeInMainWorld("api", {
         maximize: () => ipcRenderer.send("winMaximize"),
         exit: () => ipcRenderer.send("winClose"),
         about: () => ipcRenderer.send("runAbout"),
+        settings: () => ipcRenderer.send("runSettings"),
+        open_files: () => ipcRenderer.send("runOpenFiles"),
     },
     child_window:{
         minimize: () => ipcRenderer.send("childMinimize"),
