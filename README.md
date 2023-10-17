@@ -5,15 +5,17 @@
 
 
 
+## Update 10/17/2023
+- Added tab feature in each editor section
+- Working on functionalities such as adding new text, code, and new pair
+
+## Update 10/12/2023
+- Replaced original Text Editor and implemented the Quill Text Editor
+- Fixed swap editors function
+- Working on tabs on both editor sections now
 
 
-**Update 10/12**
-  Replaced original Text Editor and implemented the Quill Text Editor
-  Fixed swap editors function
-  Working on tabs on both editor sections now
-
-
-
+##
 **Text Editor**
   Basics of it is done, waiting on database to finish up to connect them together to save notes.
 

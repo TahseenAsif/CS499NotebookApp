@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^26.2.1"
+  },
+  "dependencies": {
+    "smart-webcomponents": "^16.0.1"
   }
 }

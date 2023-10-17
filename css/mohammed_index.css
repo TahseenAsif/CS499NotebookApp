@@ -28,3 +28,12 @@
     flex-direction: row-reverse;
 }
 
+.tabs{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.tabs .smart-tabs-selection-bar{
+    background: transparent;
+}
