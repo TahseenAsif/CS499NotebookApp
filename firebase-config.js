@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 const { initializeApp } = require("firebase/app");
-const { getAuth, GoogleAuthProvider, signInWithPopup, signOut } = require("firebase/auth");
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require("firebase/auth");
 const { getFirestore, doc, getDoc, setDoc } = require("firebase/firestore");
 const { getStorage } = require("firebase/storage");
 
@@ -27,33 +27,37 @@ const db = getFirestore(firebase_app)
 //Initialize Firebase Storage
 const storage = getStorage(firebase_app);
 
-//Sign in with Google
-const signInWithGoogle = (onSignIn) => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-        .then(async (result) => {
-            const uid = result.user.uid;
-
-            //Check if user exists in db
-            const userDoc = doc(db, "users", uid);
-            const docSnap = await getDoc(userDoc);
-            //If user doesn't exist
-            if(!docSnap.exists()){
-                await setDoc(doc(db, "users", uid), {});
-            }
-            if (onSignIn){
-                onSignIn(uid);
-            }
-        })
-        .catch((error) => {
-            console.log("Error signing in", error);
-        });
+//Sign in with email and password
+const signIn = async (email, password, onSignIn) => {
+    try{
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCred.user
+        console.log(`Signed in as ${user.email}`);
+        if (onSignIn){
+            onSignIn(user.uid);
+        }
+    } catch (error){
+        console.error("Error signing in", error);
+    }
 };
 
-const signOutUser = async (onSignOut) => {
+const signUp = async (email, password, onSignUp) => {
+    try{
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCred.user;
+        console.log(`Signed in as ${user.email}`);
+        if (onSignUp){
+            onSignUp(user.uid);
+        }
+    } catch (error) {
+        console.error("Error signing in", error);
+    }
+};
+
+const mySignOut = async (onSignOut) => {
     try {
       await signOut(auth);
-  
+      console.log("Signed out");
       // Call the onSignOut callback
       if (onSignOut) {
         onSignOut();
@@ -64,6 +68,7 @@ const signOutUser = async (onSignOut) => {
 }
 
 module.exports = {
-    signInWithGoogle,
-    signOutUser
+    signIn,
+    signUp,
+    mySignOut
 };
