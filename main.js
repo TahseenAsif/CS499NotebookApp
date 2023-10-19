@@ -21,9 +21,7 @@ const createLoginWindow = () => {
             nativeWindowOpen: true
         }
     })
-    // win.loadFile("login.html")
-    win.webContents.openDevTools();
-    win.loadFile("test_login.html")
+    win.loadFile("login.html")
 }
 
 const createPaintWindow = () => {
