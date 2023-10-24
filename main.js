@@ -23,7 +23,7 @@ const createPaintWindow = () => {
         width:800,
         height: 600,
     })
-    win.loadFile("paint.html")
+    win.loadFile("html/paint.html")
 }
 
 const createTestWindow = () => {
