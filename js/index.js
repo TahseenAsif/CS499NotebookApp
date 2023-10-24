@@ -274,9 +274,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function validateDark(){
         if(dark){
-            darkButton.innerHTML = "Light Mode";
+            darkButton.children[0].innerHTML = "Light Mode";
         } else {
-            darkButton.innerHTML = "Dark Mode";
+            darkButton.children[0].innerHTML = "Dark Mode";
         }
     }
   
