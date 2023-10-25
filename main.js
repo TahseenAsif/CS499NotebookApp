@@ -1,9 +1,11 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron');
+const { signIn, signUp, mySignOut } = require('./firebase-config.js');
 const path = require('path');
 
 let mainWindow;
 let childWindow;
+let loginWindow;
 
 function createWindow(){
     // Create the browser window.
@@ -26,6 +28,20 @@ function createWindow(){
     mainWindow.webContents.openDevTools();
 };
 
+const createLoginWindow = () => {
+    const loginWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            nativeWindowOpen: true,
+        }
+    })
+    loginWindow.loadFile("login.html")
+}
+
 function createChildWindow(){
     childWindow = new BrowserWindow({
         width: 1000,
@@ -47,7 +63,24 @@ function createChildWindow(){
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
-    createWindow();
+    createLoginWindow();
+    ipcMain.on('sign-in', (event, email, password) => {
+        signIn(email, password, (uid) => {
+            console.log(`Signed in ${uid}`);
+            // win.close();
+        });
+    });
+    ipcMain.on('sign-up', (event, email, password) => {
+        signUp(email, password, (uid) => {
+            console.log(`Signed in ${uid}`);
+            // win.close();
+        });
+    });
+    ipcMain.on('sign-out', () => {
+        mySignOut(() => {
+            console.log('Signed out');
+        });
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

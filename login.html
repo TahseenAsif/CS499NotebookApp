@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="css/login.css">
+    <title>CodeStone</title>
+  </head>
+  <body>
+    <div id="codeTitle">
+        <h1>CodeStone</h1>
+    </div>
+    <div id="loginForm">
+        <form action="">
+          <label for="email">Email:</label>
+          <input type="text" id="email">
+          <label for="password">Password:</label>
+          <input type="password" id="password">
+          <button id="signInButton">Sign In</button>
+          <button id="signUpButton">Sign Up</button>
+          <button id="signOutButton">Sign Out</button>
+        </form>
+    </div>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
