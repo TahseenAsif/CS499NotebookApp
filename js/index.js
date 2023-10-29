@@ -1,3 +1,20 @@
+// let pageContent = document.querySelector("#site").innerHTML;
+// //saving html page locally
+// function saveIndex(){
+//     localStorage.setItem("index", pageContent);
+//     console.log("Saved html in storage!");
+// };
+
+// api.loadIndex((event, message) => {
+//     console.log(message);
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+//     console.log("Loaded html from storage!")
+// })
+
+// window.api.loadIndex((event) => {
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+// });
+
 window.addEventListener('DOMContentLoaded', (event) => {
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
@@ -59,22 +76,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    settings.addEventListener("click", () => {
-        api.window.settings();
-    });
-
-    about.addEventListener("click", () => {
-        api.window.about();
-    });
-
-    open.addEventListener("click", () => {
-        api.window.open_files();
-    });
-
-    // -------------interactions between menu and main------------------
-    
-    //if the focus is menubar, prevent typing in files
-    // add eventlistener function here later
+    //functions that deals with interactions between menu and main
 
     //if the focus is an element within main, remove highlights and close any open submenu
     main.addEventListener("click", (e) => {
@@ -95,13 +97,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const main = document.querySelector('.main');
         if(main.classList.contains('main-swap')){
             main.classList.remove('main-swap')
-        resizeEditors(document.querySelector(".separator"));
-
+            resizeEditors(document.querySelector(".separator"));
         }
         else{
             main.classList.add('main-swap');
             resizeEditorsSwap(document.querySelector(".separator"));
-
         }
     });
 
@@ -119,12 +119,55 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                 ['image'],
 
-
             ],            
         },
         theme: 'snow'
-      });
-  
+    });
+    // -----------------------------------------------------------------
+    // -----------------------------------------------------------------
+    //ace code editor
+    const executeCodeBtn = document.querySelector("#run_code");
+    const resetCodeBtn = document.querySelector("#reset_code");
+
+    // Setup Ace
+    let codeEditor = ace.edit("editor");
+    let defaultCode = 'console.log("Hello World!");';
+    // Configure Ace
+
+    // Theme
+    codeEditor.setTheme("ace/theme/dracula");
+
+    // Set language
+    codeEditor.session.setMode("ace/mode/javascript");
+
+    // Set Options
+    codeEditor.setOptions({
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+    });
+
+    // Set Default Code
+    codeEditor.setValue(defaultCode);
+
+    // Events
+    executeCodeBtn.addEventListener("click", () => {
+        // Get input from the code editor
+        const userCode = codeEditor.getValue();
+
+        // Run the user code
+        try {
+            new Function(userCode)();
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
+    resetCodeBtn.addEventListener("click", () => {
+        // Clear ace editor
+        codeEditor.setValue(defaultCode);
+    });
+    // -----------------------------------------------------------------
+
     // resizing of editors
     function resizeEditors(resizeBar){
         const first = editors[0];
@@ -182,5 +225,169 @@ window.addEventListener('DOMContentLoaded', (event) => {
             second.style.width = (mousedown.secondWidth + delta.x) + "px";
         }
     }
-    resizeEditors(document.querySelector(".separator"));    
+    resizeEditors(document.querySelector(".separator"));
+
+    // //Dark Mode (Will be moved)
+    // const darkButton = document.querySelector("#darkMode"); 
+    // var dark = false;
+    // var styles = `
+    // #textarea {
+    //     background: #202020;
+    // }
+    // .ql-toolbar{
+    //     background: #202020;
+    // }
+    // .ql-picker-label{
+    //     color: #ffffff;
+    // }
+    // .ql-color{
+    //     color: #ffffff;
+    // }
+    // .ql-bold > svg{
+    //     stroke: white;
+    // }
+    // p,li,ul,h1,h2,h3,h4,h5,h6{
+    //     color:white;
+    // }
+    // .ql-snow.ql-toolbar button:hover .ql-fill,
+    // .ql-snow .ql-toolbar button:hover .ql-fill,
+    // .ql-snow.ql-toolbar button:focus .ql-fill,
+    // .ql-snow .ql-toolbar button:focus .ql-fill,
+    // .ql-snow.ql-toolbar button.ql-active .ql-fill,
+    // .ql-snow .ql-toolbar button.ql-active .ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    // .ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+    //     fill: #06c;
+    // }
+    // .ql-snow.ql-toolbar button:hover .ql-stroke,
+    // .ql-snow .ql-toolbar button:hover .ql-stroke,
+    // .ql-snow.ql-toolbar button:focus .ql-stroke,
+    // .ql-snow .ql-toolbar button:focus .ql-stroke,
+    // .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    // .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    // .ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+    // .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+    // .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+    // .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+    // .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+    // .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+    //     stroke: #06c;
+    // }
+    // .ql-snow.ql-toolbar button:hover:not(.ql-active),
+    // .ql-snow .ql-toolbar button:hover:not(.ql-active) {
+    //     color: #06c;
+    // }
+    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
+    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {
+    //     fill: #06c;
+    // }
+    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
+    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {
+    //     stroke: #06c;
+    // }
+    // .ql-snow .ql-stroke {
+    //     fill: none;
+    //     stroke: #ffffff;
+    //     stroke-linecap: round;
+    //     stroke-linejoin: round;
+    //     stroke-width: 2;
+    //   }
+    //   .ql-snow .ql-stroke-miter {
+    //     fill: none;
+    //     stroke: #ffffff;
+    //     stroke-miterlimit: 10;
+    //     stroke-width: 2;
+    //   }
+    //   .ql-snow .ql-fill,
+    //   .ql-snow .ql-stroke.ql-fill {
+    //     fill: #ffffff;
+    //   }
+    //   .ql-snow .ql-picker-options{
+    //     background-color: #202020;
+    //   }
+    //   .ql-snow .ql-picker-options .ql-picker-item{
+    //     color: white;
+    //   }
+    // `
+
+    // validateDark();
+
+    // function darkMode() {
+    //    if(!dark){
+    //         var styleSheet = document.createElement("style");
+    //         styleSheet.setAttribute("class", "dark");
+    //         styleSheet.innerText = styles;
+    //         document.head.appendChild(styleSheet);
+    //         dark = true;
+    //    } else {
+    //         const darkStyle = document.querySelector(".dark");
+    //         darkStyle.remove();
+    //         dark = false;
+    //    }
+    //    validateDark();
+    // }
+
+    // darkButton.addEventListener('click', () => {
+    //     darkMode();
+    // })
+
+    // function validateDark(){
+    //     if(dark){
+    //         darkButton.children[0].innerHTML = "Light Mode";
+    //     } else {
+    //         darkButton.children[0].innerHTML = "Dark Mode";
+    //     }
+    // }
+
+    // // saving and loading htmls
+    // let pageContent = document.querySelector("#showContent").innerHTML;
+    // //save html info locally
+    // function storeHTMLInfo(){
+    //     localStorage.setItem("indexContent", pageContent);
+    //     console.log("Saved html in storage!");
+    // }
+    // function loadHTMLInfo(contentName){
+    //     // pageContent = 
+    // }
+
 });

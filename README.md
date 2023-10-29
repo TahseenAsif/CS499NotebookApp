@@ -6,6 +6,9 @@ Progress so far (from 0.0.2k):
 
 ![](progress.gif)
 
+## Version 0.1.0k
+- Ongoing!!!
+
 ## Version 0.0.4k
 - 10/15/2023
     - changed text editor to use third party software (Quill)

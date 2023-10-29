@@ -1,6 +1,6 @@
 {
   "name": "codestone",
-  "version": "0.0.4k",
+  "version": "0.1.0k",
   "description": "A notebook for coders.",
   "main": "main.js",
   "scripts": {
@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^26.2.1"
+  },
+  "dependencies": {
+    "firebase": "^10.5.0"
   }
 }
