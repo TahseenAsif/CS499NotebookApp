@@ -43,8 +43,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const settings = document.querySelector("#settings");
     const account = document.querySelector("#account");
     const about = document.querySelector("#about");
-    const open = document.querySelector("#open");
     const swap = document.querySelector("#swap");
+    const newText = document.querySelector("#new-text");
+    const newCode = document.querySelector("#new-code");
+    const newPair = document.querySelector("#new-pair");
+    const open = document.querySelector('#open')
+    const textTabs = document.querySelector('#text-editor-tabs')
+    const codeTabs = document.querySelector('#code-editor-tabs')
 
     //if menu options that are chosen to be focused on
     for(var i = 0; i < menuBtns.length; i++){
@@ -105,24 +110,75 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    var numOfTextTabs = 1;
+    var numOfCodeTabs = 1;
+
+    newText.addEventListener('click', () =>{
+        createNewTab('text')
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+    newCode.addEventListener('click', () =>{
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+    newPair.addEventListener('click', () =>{
+        createNewTab('text');
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+
+    //create new tab function
+    function createNewTab(e){
+        const newTab = document.createElement('smart-tab-item');
+        if(e === 'text'){
+            numOfTextTabs++;
+            newTab.label = `Tab ${numOfTextTabs}`; //label will be  changed to text file name once opened
+            const newEditor = document.createElement('div');
+            newEditor.id = `Tab${numOfTextTabs}`;
+            newTab.appendChild(newEditor);
+            textTabs.appendChild(newTab);
+            textTabs.selectedIndex = numOfTextTabs - 1;
+            createTextEditor(`Tab${numOfTextTabs}`);
+        }
+        else if (e === 'code'){
+            numOfCodeTabs++;
+            newTab.label = `Tab ${numOfCodeTabs}`;
+            //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+
+            //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+            codeTabs.appendChild(newTab);
+            codeTabs.selectedIndex = numOfCodeTabs - 1;
+        }
+    }
+
+
+
     // -----------------------------------------------------------------
     //quill text editor
-    var quill = new Quill('#textarea', {
-        modules: {
-            toolbar: [
-                [{ 'header': [false,6,5,4,3,2,1] }],
-                [{ 'font': [] }],
-                [{ 'color': [] }, { 'background': [] }],     
-                ['bold', 'italic', 'underline'],        
-                [{ 'script': 'sub'}, { 'script': 'super' }],    
-                [{ 'align': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['image'],
-
-            ],            
-        },
-        theme: 'snow'
-    });
+    function createTextEditor(id){
+        var quill = new Quill(`#${id}`,{
+            modules: {
+                toolbar: [
+                    [{ 'header': [false,6,5,4,3,2,1] }],
+                    [{ 'font': [] }],
+                    [{ 'color': [] }, { 'background': [] }],     
+                    ['bold', 'italic', 'underline'],        
+                    [{ 'script': 'sub'}, { 'script': 'super' }],    
+                    [{ 'align': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['image'],
+    
+    
+                ],            
+            },
+            theme: 'snow'
+          });
+          
+    }
+    createTextEditor('textarea');
     // -----------------------------------------------------------------
     // -----------------------------------------------------------------
     //ace code editor
