@@ -69,10 +69,10 @@ let childWindow;
 function createApp(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        minWidth: 800,
-        minHeight: 600,
+        width: 600,
+        height: 900,
+        minWidth: 600,
+        minHeight: 900,
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
@@ -83,14 +83,17 @@ function createApp(){
     // load the login.html of the app
     mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
     // open dev tools
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 };
 
 // change window size and html after successful login
 function updateWindowApp(){
     mainWindow.setSize(1500, 900);
     mainWindow.setMinimumSize(1200, 700);
+    mainWindow.moveTop();
+    mainWindow.center();
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
+    mainWindow.webContents.openDevTools();
 }
 
 // maybe used to display code output instead of outputing to devtools when running code
