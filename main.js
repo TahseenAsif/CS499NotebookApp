@@ -81,7 +81,7 @@ function createApp(){
         }
     });
     // load the login.html of the app
-    mainWindow.loadFile(path.join(__dirname, 'html/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
     // open dev tools
     mainWindow.webContents.openDevTools();
 };
