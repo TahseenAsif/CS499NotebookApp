@@ -227,167 +227,167 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
     resizeEditors(document.querySelector(".separator"));
 
-    // //Dark Mode (Will be moved)
-    // const darkButton = document.querySelector("#darkMode"); 
-    // var dark = false;
-    // var styles = `
-    // #textarea {
-    //     background: #202020;
-    // }
-    // .ql-toolbar{
-    //     background: #202020;
-    // }
-    // .ql-picker-label{
-    //     color: #ffffff;
-    // }
-    // .ql-color{
-    //     color: #ffffff;
-    // }
-    // .ql-bold > svg{
-    //     stroke: white;
-    // }
-    // p,li,ul,h1,h2,h3,h4,h5,h6{
-    //     color:white;
-    // }
-    // .ql-snow.ql-toolbar button:hover .ql-fill,
-    // .ql-snow .ql-toolbar button:hover .ql-fill,
-    // .ql-snow.ql-toolbar button:focus .ql-fill,
-    // .ql-snow .ql-toolbar button:focus .ql-fill,
-    // .ql-snow.ql-toolbar button.ql-active .ql-fill,
-    // .ql-snow .ql-toolbar button.ql-active .ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
-    // .ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
-    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
-    //     fill: #06c;
-    // }
-    // .ql-snow.ql-toolbar button:hover .ql-stroke,
-    // .ql-snow .ql-toolbar button:hover .ql-stroke,
-    // .ql-snow.ql-toolbar button:focus .ql-stroke,
-    // .ql-snow .ql-toolbar button:focus .ql-stroke,
-    // .ql-snow.ql-toolbar button.ql-active .ql-stroke,
-    // .ql-snow .ql-toolbar button.ql-active .ql-stroke,
-    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
-    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
-    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
-    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
-    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
-    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
-    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
-    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
-    // .ql-snow.ql-toolbar button:hover .ql-stroke-miter,
-    // .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
-    // .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
-    // .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
-    // .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
-    // .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
-    // .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
-    // .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
-    // .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
-    // .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
-    // .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
-    // .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
-    // .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
-    // .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
-    //     stroke: #06c;
-    // }
-    // .ql-snow.ql-toolbar button:hover:not(.ql-active),
-    // .ql-snow .ql-toolbar button:hover:not(.ql-active) {
-    //     color: #06c;
-    // }
-    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
-    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
-    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
-    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {
-    //     fill: #06c;
-    // }
-    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
-    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
-    // .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
-    // .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {
-    //     stroke: #06c;
-    // }
-    // .ql-snow .ql-stroke {
-    //     fill: none;
-    //     stroke: #ffffff;
-    //     stroke-linecap: round;
-    //     stroke-linejoin: round;
-    //     stroke-width: 2;
-    //   }
-    //   .ql-snow .ql-stroke-miter {
-    //     fill: none;
-    //     stroke: #ffffff;
-    //     stroke-miterlimit: 10;
-    //     stroke-width: 2;
-    //   }
-    //   .ql-snow .ql-fill,
-    //   .ql-snow .ql-stroke.ql-fill {
-    //     fill: #ffffff;
-    //   }
-    //   .ql-snow .ql-picker-options{
-    //     background-color: #202020;
-    //   }
-    //   .ql-snow .ql-picker-options .ql-picker-item{
-    //     color: white;
-    //   }
-    // `
+    //Dark Mode (Will be moved)
+    const darkButton = document.querySelector("#darkMode"); 
+    var dark = false;
+    var styles = `
+    #textarea {
+        background: #202020;
+    }
+    .ql-toolbar{
+        background: #202020;
+    }
+    .ql-picker-label{
+        color: #ffffff;
+    }
+    .ql-color{
+        color: #ffffff;
+    }
+    .ql-bold > svg{
+        stroke: white;
+    }
+    p,li,ul,h1,h2,h3,h4,h5,h6{
+        color:white;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow .ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-fill,
+    .ql-snow .ql-toolbar button:focus .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill,
+    .ql-snow .ql-toolbar button.ql-active .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    .ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+        fill: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow .ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button:focus .ql-stroke,
+    .ql-snow .ql-toolbar button:focus .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+        stroke: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active),
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) {
+        color: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {
+        fill: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {
+        stroke: #06c;
+    }
+    .ql-snow .ql-stroke {
+        fill: none;
+        stroke: #ffffff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+      .ql-snow .ql-stroke-miter {
+        fill: none;
+        stroke: #ffffff;
+        stroke-miterlimit: 10;
+        stroke-width: 2;
+      }
+      .ql-snow .ql-fill,
+      .ql-snow .ql-stroke.ql-fill {
+        fill: #ffffff;
+      }
+      .ql-snow .ql-picker-options{
+        background-color: #202020;
+      }
+      .ql-snow .ql-picker-options .ql-picker-item{
+        color: white;
+      }
+    `
 
-    // validateDark();
+    validateDark();
 
-    // function darkMode() {
-    //    if(!dark){
-    //         var styleSheet = document.createElement("style");
-    //         styleSheet.setAttribute("class", "dark");
-    //         styleSheet.innerText = styles;
-    //         document.head.appendChild(styleSheet);
-    //         dark = true;
-    //    } else {
-    //         const darkStyle = document.querySelector(".dark");
-    //         darkStyle.remove();
-    //         dark = false;
-    //    }
-    //    validateDark();
-    // }
+    function darkMode() {
+       if(!dark){
+            var styleSheet = document.createElement("style");
+            styleSheet.setAttribute("class", "dark");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+            dark = true;
+       } else {
+            const darkStyle = document.querySelector(".dark");
+            darkStyle.remove();
+            dark = false;
+       }
+       validateDark();
+    }
 
-    // darkButton.addEventListener('click', () => {
-    //     darkMode();
-    // })
+    darkButton.addEventListener('click', () => {
+        darkMode();
+    })
 
-    // function validateDark(){
-    //     if(dark){
-    //         darkButton.children[0].innerHTML = "Light Mode";
-    //     } else {
-    //         darkButton.children[0].innerHTML = "Dark Mode";
-    //     }
-    // }
+    function validateDark(){
+        if(dark){
+            darkButton.children[0].innerHTML = "Light Mode";
+        } else {
+            darkButton.children[0].innerHTML = "Dark Mode";
+        }
+    }
 
-    // // saving and loading htmls
-    // let pageContent = document.querySelector("#showContent").innerHTML;
-    // //save html info locally
-    // function storeHTMLInfo(){
-    //     localStorage.setItem("indexContent", pageContent);
-    //     console.log("Saved html in storage!");
-    // }
-    // function loadHTMLInfo(contentName){
-    //     // pageContent = 
-    // }
+    // saving and loading htmls
+    let pageContent = document.querySelector("#showContent").innerHTML;
+    //save html info locally
+    function storeHTMLInfo(){
+        localStorage.setItem("indexContent", pageContent);
+        console.log("Saved html in storage!");
+    }
+    function loadHTMLInfo(contentName){
+        // pageContent = 
+    }
 
 });
