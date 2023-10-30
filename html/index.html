@@ -73,26 +73,26 @@
                     <span class="tooltiptext noSelect">Files</span>
                     <ul class="submenu-nav">
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="new-text">
                                 <span>New Text</span>
                             </a>
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="new-code">
                                 <span>New Code</span>
                             </a>
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="new-pair">
                                 <span>New Pair</span>
                                 <!-- generate text and code files -->
                             </a>
                         </li>
 
                         <li class="subnav-item">
-                            <a href="#" role="button">
+                            <a href="#" role="button" id="open">
                                 <span>Open</span>
                             </a>
                         </li>
@@ -175,13 +175,8 @@
 
         <main class="main">
             <div class="editorFrame left text">
-              <smart-tabs class="tabs" id="textEditor" close-buttons close-button-mode="selected" overflow="auto">
-                <smart-tab-item label="TAB 1" selected>
-                    <div id="textarea">
-
-                    </div>
-                </smart-tab-item>
-                <smart-tab-item label="TAB 2" selected>
+              <smart-tabs class="tabs" id="text-editor-tabs" close-buttons close-button-mode="selected" overflow="auto">
+                <smart-tab-item label="TAB 1" >
                     <div id="textarea">
 
                     </div>
@@ -192,13 +187,8 @@
             <div class="separator noSelect"></div>
 
             <div class="editorFrame right code">
-                <smart-tabs class="tabs" id="codeEditor" close-buttons close-button-mode="selected" overflow="auto">
+                <smart-tabs class="tabs" id="code-editor-tabs" close-buttons close-button-mode="selected" overflow="auto">
                     <smart-tab-item label="TAB 1" selected>
-                        <div style="color: white; background: black;">
-                            <h1>Code Editor Part</h1>
-                        </div>
-                    </smart-tab-item>
-                    <smart-tab-item label="TAB 2" selected>
                         <div style="color: white; background: black;">
                             <h1>Code Editor Part</h1>
                         </div>
