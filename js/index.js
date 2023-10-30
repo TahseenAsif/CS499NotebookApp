@@ -112,6 +112,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     var numOfTextTabs = 1;
     var numOfCodeTabs = 1;
+    var totalTextTabs = 0;
+    var totalCodeTabs = 0;
+
 
     newText.addEventListener('click', () =>{
         createNewTab('text')
@@ -135,25 +138,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const newTab = document.createElement('smart-tab-item');
         if(e === 'text'){
             numOfTextTabs++;
+            totalTextTabs++;
             newTab.label = `Tab ${numOfTextTabs}`; //label will be  changed to text file name once opened
             const newEditor = document.createElement('div');
             newEditor.id = `Tab${numOfTextTabs}`;
             newTab.appendChild(newEditor);
             textTabs.appendChild(newTab);
-            textTabs.selectedIndex = numOfTextTabs - 1;
+            textTabs.selectedIndex = totalTextTabs;
             createTextEditor(`Tab${numOfTextTabs}`);
         }
         else if (e === 'code'){
             numOfCodeTabs++;
+            totalCodeTabs++;
             newTab.label = `Tab ${numOfCodeTabs}`;
             //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
 
             //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
             codeTabs.appendChild(newTab);
-            codeTabs.selectedIndex = numOfCodeTabs - 1;
+            codeTabs.selectedIndex = totalCodeTabs;
         }
     }
 
+
+    textTabs.addEventListener('closing', function (event) {
+        totalTextTabs--;
+	// event handling code goes here.
+    })
+    codeTabs.addEventListener('closing', function (event) {
+        totalTextTabs--;
+	// event handling code goes here.
+    })
 
 
     // -----------------------------------------------------------------
