@@ -1,7 +1,7 @@
 "# CS499NotebookApp" 
 
 **Preview of app:**
-![Screenshot 2023-10-12 183005](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/26de86c5-38be-47d6-b6db-1e7e126d8357)
+![Recording 2023-10-30 182027](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/cdacbfea-b620-41ab-b99e-4b97bd9715a3)
 
 
 ## Update 10/30/2023
@@ -25,3 +25,4 @@
 
 **Layout of App**
   Basic frontend layout of the app, it is subject to change based on styling we agree on. Has functional buttons such as adding new notebook but still waiting on database to finish to connect them
+
