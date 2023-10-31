@@ -6,6 +6,7 @@ const colorBtns = document.querySelectorAll(".colors .option");
 const colorPicker = document.querySelector("#color-picker");
 const clearButton = document.querySelector(".clear-canvas");
 const saveButton = document.querySelector(".save-img");
+const copyButton = document.querySelector(".copy-clip");
 const ctx = canvas.getContext("2d"); 
 
 let prevMouseX;
@@ -15,6 +16,21 @@ let isDrawing = false;
 let brushWidth = 5;
 let selectedTool = "brush";
 let selectedColor = "#000";
+const minimize = document.getElementById("minimize");
+const maximize = document.getElementById("maximize");
+const exit = document.getElementById("exit");
+
+minimize.addEventListener("click", () => {
+    api.window.minimize();
+});
+
+maximize.addEventListener("click", () => {
+    api.window.maximize();
+});
+
+exit.addEventListener("click", () => {
+    api.window.exit();
+});
 
 const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
@@ -129,6 +145,13 @@ saveButton.addEventListener("click", () => {
     link.download = `${Date.now()}.jpg`;
     link.href = canvas.toDataURL();
     link.click();
+})
+
+copyButton.addEventListener("click", () => {
+    canvas.toBlob(function(blob) {
+        const item = new ClipboardItem({ "image/png": blob});
+        navigator.clipboard.write([item]);
+    })
 })
 
 canvas.addEventListener("mouseup", drawingStop);

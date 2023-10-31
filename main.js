@@ -26,6 +26,27 @@ function createWindow(){
     mainWindow.webContents.openDevTools();
 };
 
+function createPaintWindow(){
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        width: 1500,
+        height: 800,
+        minWidth: 1200,
+        minHeight: 700,
+        
+        frame: false,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    // and load the index.html of the app.
+    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
+    // open dev tools
+    mainWindow.webContents.openDevTools();
+};
+
 function createChildWindow(){
     childWindow = new BrowserWindow({
         width: 1000,
@@ -47,7 +68,7 @@ function createChildWindow(){
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
-    createWindow();
+    createPaintWindow();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
