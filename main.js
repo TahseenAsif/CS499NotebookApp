@@ -92,8 +92,12 @@ function updateWindowApp(){
     mainWindow.setMinimumSize(1200, 700);
     mainWindow.moveTop();
     mainWindow.center();
-    mainWindow.loadFile(path.join(__dirname, './html/index.html'));
-    mainWindow.webContents.openDevTools();
+    setTimeout(() => {
+        mainWindow.loadFile(path.join(__dirname, './html/index.html'));
+        mainWindow.webContents.openDevTools();
+    }, 100);
+    // mainWindow.loadFile(path.join(__dirname, './html/index.html'));
+    // mainWindow.webContents.openDevTools();
 }
 
 // maybe used to display code output instead of outputing to devtools when running code
