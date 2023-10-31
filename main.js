@@ -69,10 +69,10 @@ let childWindow;
 function createApp(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 600,
-        height: 900,
-        minWidth: 600,
-        minHeight: 900,
+        width: 800,
+        height: 800,
+        minWidth: 800,
+        minHeight: 800,
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
