@@ -352,23 +352,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     validateDark();
 
-    function darkMode() {
-       if(!dark){
+    darkButton.addEventListener('click', () => {
+        if(!dark){
             var styleSheet = document.createElement("style");
             styleSheet.setAttribute("class", "dark");
             styleSheet.innerText = styles;
             document.head.appendChild(styleSheet);
             dark = true;
-       } else {
+        }
+        else{
             const darkStyle = document.querySelector(".dark");
             darkStyle.remove();
             dark = false;
-       }
-       validateDark();
-    }
-
-    darkButton.addEventListener('click', () => {
-        darkMode();
+        }
+        validateDark();
     })
 
     function validateDark(){
