@@ -69,10 +69,10 @@ let childWindow;
 function createApp(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 600,
-        height: 900,
-        minWidth: 600,
-        minHeight: 900,
+        width: 700,
+        height: 700,
+        minWidth: 700,
+        minHeight: 700,
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
@@ -88,7 +88,7 @@ function createApp(){
 
 // change window size and html after successful login
 function updateWindowApp(){
-    mainWindow.setSize(1500, 900);
+    mainWindow.setSize(1200, 900);
     mainWindow.setMinimumSize(1200, 700);
     mainWindow.moveTop();
     mainWindow.center();
@@ -171,4 +171,8 @@ ipcMain.on("sign-up", (event, email, password) => {
         console.log(`Signed in ${uid}`);
         updateWindowApp();
     });
+})
+
+ipcMain.on("guest", () => {
+    updateWindowApp();
 })
