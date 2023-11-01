@@ -5,10 +5,12 @@ html{
 body{
     height: 100%;
     margin: 0;
-    background: linear-gradient(180deg, rgba(17,17,17,1) 0%, rgba(50,49,49,1) 50%, rgba(43,43,43,1) 100%); 
-    background-repeat: no-repeat;
-    background-position: fixed;
+    background-color: #222427;
     margin-top: 70px;
+}
+
+h1{
+    font-weight: lighter;
 }
 
 #codeTitle{
@@ -53,14 +55,18 @@ input[type=password], select{
 
 #loginForm button {
     width: 100%;
-    background-color: navy;
-    filter: drop-shadow(2px 10px 6px rgba(5, 5, 49, 0.637));
+    background-color: #222427;
+    border-color: #1af71a;
+    /*filter: drop-shadow(2px 10px 6px rgba(5, 5, 49, 0.637));*/
     color: whitesmoke;
     padding: 14px 20px;
     margin: 20px 0;
-    border: none;
-    border-radius: 4px;
+    border-radius: 7px;
     cursor: pointer;
+}
+
+#loginForm button:hover{
+    background-color: #17c717;
 }
 
 #loginForm button{
