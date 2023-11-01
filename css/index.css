@@ -7,6 +7,7 @@ body{
 }
 
 .main{
+    position: fixed;
     left: 0;
     right: 0;
     display: flex;
@@ -67,4 +68,10 @@ body{
     border-left-color: var(--settings-highlightColor);
     border-right-color: var(--settings-highlightColor);
     background-repeat: no-repeat;
+}
+
+.tabs{
+    margin: 0;
+    width: 100%;
+    height: 100%;
 }

@@ -12,7 +12,10 @@
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        
+        <script type="module" src="../node_modules/smart-webcomponents/source/modules/smart.tabs.js"></script>
+        <link rel="stylesheet" type="text/css" href="../node_modules/smart-webcomponents/source/styles/smart.default.css" />
+
+ 
     </head>
 
     <body>
@@ -53,19 +56,19 @@
                         <span class="tooltiptext noSelect">Files</span>
                         <ul class="submenu-nav">
                             <li class="subnav-item">
-                                <a href="#" role="button">
+                                <a href="#" role="button" id="new-text">
                                     <span>New Text</span>
                                 </a>
                             </li>
 
                             <li class="subnav-item">
-                                <a href="#" role="button">
+                                <a href="#" role="button" id="new-code">
                                     <span>New Code</span>
                                 </a>
                             </li>
 
                             <li class="subnav-item">
-                                <a href="#" role="button">
+                                <a href="#" role="button" id="new-pair">
                                     <span>New Pair</span>
                                     <!-- generate text and code files -->
                                 </a>
@@ -161,19 +164,31 @@
 
             <main class="main">
                 <div class="editorFrame">
-                    <div id="textarea"></div>
+                    <smart-tabs class="tabs" id="text-editor-tabs" close-buttons close-button-mode="selected" overflow="auto">
+                        <smart-tab-item label="TAB 1">
+                            <div id="textarea">
+            
+
+                            </div>
+                        </smart-tab-item>
+                    </smart-tabs>
                 </div>
 
                 <div class="separator noSelect"></div>
 
                 <div class="editorFrame">
-                    <div id="codeNavBar">
-                        <button class="codeNavButton" id="run_code">RUN</button>
-                        <button class="codeNavButton" id="reset_code">RESET</button>
-                    </div>
-                    <div class="codeEditorContainer">
-                        <div id="editor">filler text</div>
-                    </div>
+                    <smart-tabs class="tabs" id="code-editor-tabs" close-buttons close-button-mode="selected" overflow="auto">
+                        <smart-tab-item label="TAB 1">
+                            <div id="codeNavBar">
+                                <button class="codeNavButton" id="run_code">RUN</button>
+                                <button class="codeNavButton" id="reset_code">RESET</button>
+                            </div>
+                            <div class="codeEditorContainer">
+                                <div id="editor">filler text</div>
+                            </div>
+                        </smart-tab-item>
+                      </smart-tabs>
+
                 </div>
             </main>
         </span>
