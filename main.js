@@ -88,7 +88,7 @@ function createApp(){
 
 // change window size and html after successful login
 function updateWindowApp(){
-    mainWindow.setSize(1500, 900);
+    mainWindow.setSize(1200, 900);
     mainWindow.setMinimumSize(1200, 700);
     mainWindow.moveTop();
     mainWindow.center();
@@ -171,6 +171,13 @@ ipcMain.on("sign-up", (event, email, password) => {
         console.log(`Signed in ${uid}`);
         updateWindowApp();
     });
+})
+
+ipcMain.on("guest", () => {
+    setTimeout(() => {
+        updateWindowApp();
+    }, 100);
+    // updateWindowApp();
 })
 
 //Used for testing paint functionality, feel free to remove/modify this
