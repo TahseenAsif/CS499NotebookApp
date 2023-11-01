@@ -179,3 +179,24 @@ ipcMain.on("guest", () => {
     }, 100);
     // updateWindowApp();
 })
+
+//Used for testing paint functionality, feel free to remove/modify this
+function createPaintWindow(){
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        width: 1500,
+        height: 800,
+        resizable: false,
+        
+        frame: false,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    // and load the index.html of the app.
+    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
+    // open dev tools
+    mainWindow.webContents.openDevTools();
+};
