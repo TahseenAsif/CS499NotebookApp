@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld("api", {
     login:{
         signInRequest: (email, password) => ipcRenderer.send("sign-in", email, password),
         signUpRequest: (email, password) => ipcRenderer.send("sign-up", email, password),
+        guestRequest: () => ipcRenderer.send("guest"),
     },
     window:{
         minimize: () => ipcRenderer.send("winMinimize"),

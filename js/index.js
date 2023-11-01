@@ -190,7 +190,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             },
             theme: 'snow'
           });
-          
+
     }
     createTextEditor('textarea');
     // -----------------------------------------------------------------

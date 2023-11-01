@@ -70,9 +70,9 @@ function createApp(){
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 800,
         minWidth: 800,
-        minHeight: 600,
+        minHeight: 800,
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
@@ -83,14 +83,17 @@ function createApp(){
     // load the login.html of the app
     mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
     // open dev tools
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 };
 
 // change window size and html after successful login
 function updateWindowApp(){
-    mainWindow.setSize(1500, 900);
+    mainWindow.setSize(1200, 900);
     mainWindow.setMinimumSize(1200, 700);
+    mainWindow.moveTop();
+    mainWindow.center();
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
+    mainWindow.webContents.openDevTools();
 }
 
 // maybe used to display code output instead of outputing to devtools when running code
@@ -115,6 +118,7 @@ function updateWindowApp(){
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
     createApp();
+    // createPaintWindow();
     mainWindow.moveTop();
     mainWindow.center();
 });
@@ -169,3 +173,31 @@ ipcMain.on("sign-up", (event, email, password) => {
         updateWindowApp();
     });
 })
+
+ipcMain.on("guest", () => {
+    setTimeout(() => {
+        updateWindowApp();
+    }, 100);
+    // updateWindowApp();
+})
+
+//Used for testing paint functionality, feel free to remove/modify this
+function createPaintWindow(){
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        width: 1500,
+        height: 800,
+        resizable: false,
+        
+        frame: false,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    // and load the index.html of the app.
+    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
+    // open dev tools
+    mainWindow.webContents.openDevTools();
+};
