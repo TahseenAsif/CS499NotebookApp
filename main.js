@@ -118,6 +118,7 @@ function updateWindowApp(){
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
     createApp();
+    // createPaintWindow();
     mainWindow.moveTop();
     mainWindow.center();
 });
