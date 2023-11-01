@@ -184,8 +184,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     [{ 'align': [] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['image'],
-
-
+    
+    
                 ],            
             },
             theme: 'snow'
