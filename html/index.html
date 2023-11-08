@@ -12,9 +12,105 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Inconsolata|Mirza" rel="stylesheet">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/T-vK/DynamicQuillTools@master/DynamicQuillTools.js"></script>
+
+        <style>
+
+            /* Set droplist names - -item is the currently selected font, -label is the font's appearance in the droplist*/
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='inconsolata']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='inconsolata']::before
+           {
+           content: 'Inconsolata';
+           font-family: 'Inconsolata';
+           }
+           
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='arial']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='arial']::before
+           {
+           content: 'Arial';
+           font-family: Arial, Helvetica, sans-serif;
+           }
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='mirza']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='mirza']::before
+           {
+           content: 'Mirza';
+           font-family: 'Mirza';
+           }
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='roboto']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='roboto']::before
+           {
+           content: 'Roboto';
+           font-family: 'Roboto';
+           }
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='sans-serif']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='sans-serif']::before
+           {
+           content: 'Sans Serif';
+           font-family: sans-serif;
+           }
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='serif']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='serif']::before
+           {
+           content: 'Serif';
+           font-family: serif;
+           }            
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='monospace']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='monospace']::before
+           {
+           content: 'Monospace';
+           font-family: monospace;
+           }
+
+           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='verdana']::before,
+           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='verdana']::before
+           {
+           content: 'Verdana';
+           font-family: Verdana;
+           }
+
+           /****************************************************
+           Set the font-family content used for the HTML content.
+           *****************************************************/
+           .ql-font-arial {
+           font-family: 'Arial';
+           }
+           
+           .ql-font-inconsolata {
+           font-family: 'Inconsolota';
+           }
+
+           .ql-font-mirza {
+           font-family: 'Mirza';
+           }
+
+           .ql-font-roboto {
+           font-family: 'Roboto';
+           }
+
+           .ql-font-sans-serif {
+           font-family: sans-serif;
+           }
+
+           .ql-font-serif {
+           font-family: serif;
+           }
+
+           .ql-font-monospace {
+           font-family: monospace;
+           }
+
+           .ql-font-verdana {
+           font-family: Verdana;
+           }
+         </style>
 
         
     </head>

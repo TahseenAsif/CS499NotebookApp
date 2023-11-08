@@ -100,11 +100,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // -----------------------------------------------------------------
     //quill text editor
+
+    //Adding more Font styles
+    
+    let Font = Quill.import('formats/font');
+    // We do not add Sans Serif since it is the default
+    Font.whitelist = ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana'];
+    Quill.register(Font, true);
+
+    fontOptions = [{'font': ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana']}]
+
     var quill = new Quill('#textarea', {
         modules: {
             toolbar: [
                 [{ 'header': [false,6,5,4,3,2,1] }],
-                [{ 'font': [] }],
+                fontOptions,
                 [{ 'color': [] }, { 'background': [] }],     
                 ['bold', 'italic', 'underline'],        
                 [{ 'script': 'sub'}, { 'script': 'super' }],    
