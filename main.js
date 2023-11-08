@@ -4,6 +4,7 @@ const path = require('path');
 
 let mainWindow;
 let childWindow;
+let paintWindow;
 
 function createWindow(){
     // Create the browser window.
@@ -28,23 +29,24 @@ function createWindow(){
 
 function createPaintWindow(){
     // Create the browser window.
-    mainWindow = new BrowserWindow({
+    paintWindow = new BrowserWindow({
         width: 1500,
         height: 800,
         minWidth: 1200,
         minHeight: 700,
-        
+        modal: true,
+        show: false,
         frame: false,
+        parent: mainWindow,
+        
         webPreferences: {
             //setting true will run into potential security issues
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
-    // and load the index.html of the app.
-    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
     // open dev tools
-    mainWindow.webContents.openDevTools();
+    paintWindow.webContents.openDevTools();
 };
 
 function createChildWindow(){
@@ -68,7 +70,7 @@ function createChildWindow(){
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
-    createPaintWindow();
+    createWindow();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -103,6 +105,15 @@ ipcMain.on("runAbout", () => {
     });
 });
 
+ipcMain.on("runPaint", () => {
+    createPaintWindow();
+    // and load the index.html of the app.
+    paintWindow.loadFile(path.join(__dirname, './html/paint.html'));
+    paintWindow.once("ready-to-show", () => {
+        paintWindow.show();
+    });
+});
+
 ipcMain.on("childMinimize", () => {
     console.log("minimizing");
     childWindow.minimize();
@@ -114,4 +125,17 @@ ipcMain.on("childMaximize", () => {
 
 ipcMain.on("childClose", () => {
     childWindow.close();
+});
+
+ipcMain.on("paintMinimize", () => {
+    console.log("minimizing");
+    paintWindow.minimize();
+});
+
+ipcMain.on("paintMaximize", () => {
+    paintWindow.maximize();
+});
+
+ipcMain.on("paintClose", () => {
+    paintWindow.close();
 });
