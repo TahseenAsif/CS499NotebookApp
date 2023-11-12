@@ -10,10 +10,16 @@ contextBridge.exposeInMainWorld("api", {
         minimize: () => ipcRenderer.send("winMinimize"),
         maximize: () => ipcRenderer.send("winMaximize"),
         exit: () => ipcRenderer.send("winClose"),
+        paint: () => ipcRenderer.send("runPaint"),
     },
-    menuOptions:{
-        about: () => ipcRenderer.send("runAbout"),
-        settings: () => ipcRenderer.send("runSettings"),
-        open_files: () => ipcRenderer.send("runOpenFiles"),
-    }
+    paint_window:{
+        minimize: () => ipcRenderer.send("paintMinimize"),
+        maximize: () => ipcRenderer.send("paintMaximize"),
+        exit: () => ipcRenderer.send("paintClose"),
+    },
+    // menuOptions:{
+    //     about: () => ipcRenderer.send("runAbout"),
+    //     settings: () => ipcRenderer.send("runSettings"),
+    //     open_files: () => ipcRenderer.send("runOpenFiles"),
+    // }
 });

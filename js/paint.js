@@ -21,15 +21,15 @@ const maximize = document.getElementById("maximize");
 const exit = document.getElementById("exit");
 
 minimize.addEventListener("click", () => {
-    api.window.minimize();
+    api.paint_window.minimize();
 });
 
 maximize.addEventListener("click", () => {
-    api.window.maximize();
+    api.paint_window.maximize();
 });
 
 exit.addEventListener("click", () => {
-    api.window.exit();
+    api.paint_window.exit();
 });
 
 const setCanvasBackground = () => {

@@ -1,12 +1,17 @@
 # Codestone Updates (Kevin's Branch)
 
-Responsible for the code section of the Codestone Application
-
 Progress so far:
+
+## Version 0.1.2k
+- 11/12/2023
+    - added paint button to text editor
+    - added paint window and functionalities
+    - image from the paint window can be copied into the text editor
+
+## Version 0.1.1k
 
 ![](img/v0.1.1kprogress.gif)
 
-## Version 0.1.1k
 - 10/30/2023 (Branched from main)
     - added user login screen
     - added dark/light mode toggle for the text editor

@@ -50,21 +50,9 @@ const signUp = async (email, password, onSignUp) => {
     }
 };
 
-// const mySignOut = async (onSignOut) => {
-//     try {
-//       await signOut(auth);
-//       console.log("Signed out");
-//       // Call the onSignOut callback
-//       if (onSignOut) {
-//         onSignOut();
-//       }
-//     } catch (error) {
-//       console.log("Error signing out", error);
-//     }
-// }
-
 let mainWindow;
-let childWindow;
+let paintWindow;
+let termWindow;
 
 function createApp(){
     // Create the browser window.
@@ -82,8 +70,27 @@ function createApp(){
     });
     // load the login.html of the app
     mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
-    // open dev tools
-    // mainWindow.webContents.openDevTools();
+};
+
+function createPaintWindow(){
+    //create the window for paint
+    paintWindow = new BrowserWindow({
+        width: 1500,
+        height: 800,
+        minWidth: 1200,
+        minHeight: 700,
+        modal: true,
+        show: false,
+        frame: false,
+        parent: mainWindow,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    //open dev tools.
+    paintWindow.webContents.openDevTools();
 };
 
 // change window size and html after successful login
@@ -118,7 +125,6 @@ function updateWindowApp(){
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
     createApp();
-    // createPaintWindow();
     mainWindow.moveTop();
     mainWindow.center();
 });
@@ -146,19 +152,6 @@ ipcMain.on("winClose", () => {
     mainWindow.close();
 });
 
-// ipcMain.on("childMinimize", () => {
-//     console.log("minimizing");
-//     childWindow.minimize();
-// });
-
-// ipcMain.on("childMaximize", () => {
-//     childWindow.maximize();
-// });
-
-// ipcMain.on("childClose", () => {
-//     childWindow.close();
-// });
-
 //ipcMain listening for login interactions (signUp, signIn)
 ipcMain.on("sign-in", (event, email, password) => {
     signIn(email, password, (uid) => {
@@ -178,26 +171,26 @@ ipcMain.on("guest", () => {
     setTimeout(() => {
         updateWindowApp();
     }, 100);
-    // updateWindowApp();
 })
 
-//Used for testing paint functionality, feel free to remove/modify this
-function createPaintWindow(){
-    // Create the browser window.
-    mainWindow = new BrowserWindow({
-        width: 1500,
-        height: 800,
-        resizable: false,
-        
-        frame: false,
-        webPreferences: {
-            //setting true will run into potential security issues
-            nodeIntegration: false,
-            preload: path.join(__dirname, 'preload.js')
-        }
+//ipcMain listening for paint interactions (run, minimize, maximize, exit)
+ipcMain.on("runPaint", () => {
+    createPaintWindow();
+    //load paint.html
+    paintWindow.loadFile(path.join(__dirname, "./html/paint.html"));
+    paintWindow.once("ready-to-show", () => {
+        paintWindow.show();
     });
-    // and load the index.html of the app.
-    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
-    // open dev tools
-    mainWindow.webContents.openDevTools();
-};
+});
+
+ipcMain.on("paintMinimize", () => {
+    paintWindow.minimize();
+});
+
+ipcMain.on("paintMaximize", () => {
+    paintWindow.maximize();
+});
+
+ipcMain.on("paintClose", () => {
+    paintWindow.close();
+});
