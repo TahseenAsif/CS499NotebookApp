@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="8">
+        <title>Designer</title>
+        <link rel="stylesheet" href="../css/titleBar.css">
+        <link rel="stylesheet" href="../css/paint.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <script src="../js/paint.js" defer></script>
+
+    </head>
+    <body>
+        <div class="titleBar titleBarStyle">
+            <div class="windowTitle noSelect draggable">CODESTONE</div>
+            <div class="windowControls windowControlsStyle noSelect">
+                <button id="minimize" >
+                    <i class="fa-solid fa-window-minimize"></i>
+                </button>
+                <button id="maximize">
+                    <i class="fa-solid fa-maximize"></i>
+                </button>
+                <button id="exit">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div class="container">
+            <section class="toolbar">
+                <div class="row">
+                    <label class="title">Shapes</label>
+                    <ul class="options">
+                        <li class="option tool" id="rectangle">
+                            <img src="../icons/rectangle.svg" alt="">
+                            <span>Rectangle</span>
+                        </li>
+                        <li class="option tool" id="circle">
+                            <img src="../icons/circle.svg" alt="">
+                            <span>Circle</span>
+                        </li>
+                        <li class="option tool" id="triangle"> 
+                            <img src="../icons/triangle.svg" alt="">
+                            <span>Triangle</span>
+                        </li>
+                        <li class="option">
+                            <input type="checkbox" id="fill-color">
+                            <span>Fill Color</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <label class="title">Options</label>
+                    <ul class="options">
+                        <li class="option active tool" id="brush">
+                            <img src="../icons/brush.svg" alt="">
+                            <span>Brush</span>
+                        </li>
+                        <li class="option tool" id="eraser">
+                            <img src="../icons/eraser.svg" alt="">
+                            <span>Eraser</span>
+                        </li>
+                        <li class="option">
+                            <input type="range" id="size-slider" min="1" max="100" value="5">
+                        </li>
+                    </ul>
+                </div>
+                <div class="row colors">
+                    <label class="title">Colors</label>
+                    <ul class="options">
+                        <li class="option"></li>
+                        <li class="option selected"></li>
+                        <li class="option"></li>
+                        <li class="option"></li>
+                        <li class="option"></li>
+                        <li class="option">
+                            <input type="color" id="color-picker" value="#4a98f7">
+                        </li>
+                    </ul>
+                </div>
+                <div class="row buttons">
+                    <button class="clear-canvas">Clear Canvas</button>
+                    <button class="save-img">Save as Image</button>
+                    <button class="copy-clip">Copy to Clipboard</button>
+                </div>
+            </section>
+            <section class="drawing-board">
+                <canvas></canvas>
+            </section>
+        </div>
+    </body>
+</html>

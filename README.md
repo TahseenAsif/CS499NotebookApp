@@ -1,20 +1,39 @@
 # Codestone Updates (Kevin's Branch)
 
-Responsible for the code section of the Codestone Application
+Progress so far:
 
-Progress so far (from 0.0.2k):
+## Version 0.1.2k
+- 11/12/2023
+    - added paint button to text editor
+    - added paint window and functionalities
+    - image from the paint window can be copied into the text editor
 
-![](progress.gif)
+## Version 0.1.1k
+
+![](img/v0.1.1kprogress.gif)
+
+- 10/30/2023 (Branched from main)
+    - added user login screen
+    - added dark/light mode toggle for the text editor
+    - added code editor
+    - can reset and run codes within the code editor
+
+## Version 0.0.4k
+- 10/15/2023
+    - changed text editor to use third party software (Quill)
+    - added children window for the 'Settings' and 'Open' options in the menubar
 
 ## Version 0.0.3k
 - 10/10/2023
     - readjusted window's default and minimum sizes
     - changed the apperance of the text editor
     - bigger text editing space
-    - can now resize and swap position of editors 
-    - **Need To Be Fixed: fuctionality of text file doesn't work after swapping editor's position (maybe check HTML idk)**
+    - can now resize and swap position of editors
 
 ## Version 0.0.2k
+
+![](img/v0.0.2progress.gif)
+
 - 10/09/2023
     - added submenu to the "Files" option of the menu bar
     - added boarder and its color to the menu bar

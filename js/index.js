@@ -1,3 +1,20 @@
+// let pageContent = document.querySelector("#site").innerHTML;
+// //saving html page locally
+// function saveIndex(){
+//     localStorage.setItem("index", pageContent);
+//     console.log("Saved html in storage!");
+// };
+
+// api.loadIndex((event, message) => {
+//     console.log(message);
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+//     console.log("Loaded html from storage!")
+// })
+
+// window.api.loadIndex((event) => {
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+// });
+
 window.addEventListener('DOMContentLoaded', (event) => {
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
@@ -27,9 +44,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const account = document.querySelector("#account");
     const about = document.querySelector("#about");
     const swap = document.querySelector("#swap");
-    const darkButton = document.querySelector("#darkMode"); 
-    var dark = false;
-
+    const newText = document.querySelector("#new-text");
+    const newCode = document.querySelector("#new-code");
+    const newPair = document.querySelector("#new-pair");
+    const open = document.querySelector('#open')
+    const textTabs = document.querySelector('#text-editor-tabs')
+    const codeTabs = document.querySelector('#code-editor-tabs')
 
     //if menu options that are chosen to be focused on
     for(var i = 0; i < menuBtns.length; i++){
@@ -61,16 +81,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    about.addEventListener("click", () => {
-        api.window.about();
-    });
+    //functions that deals with interactions between menu and main
 
-    // -------------interactions between menu and main------------------
-    
-    //if the focus is menubar, prevent typing in files
-    // add eventlistener function here later
-
-    //if the focus is main, remove highlights and close any open submenu
+    //if the focus is an element within main, remove highlights and close any open submenu
     main.addEventListener("click", (e) => {
         //reset all menu options to default looks
         for(let i = 0; i < menuBtns.length; i++){
@@ -89,38 +102,167 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const main = document.querySelector('.main');
         if(main.classList.contains('main-swap')){
             main.classList.remove('main-swap')
-        resizeEditors(document.querySelector(".separator"));
-
+            resizeEditors(document.querySelector(".separator"));
         }
         else{
             main.classList.add('main-swap');
             resizeEditorsSwap(document.querySelector(".separator"));
-
         }
     });
 
+    var numOfTextTabs = 1;
+    var numOfCodeTabs = 1;
+    var totalTextTabs = 0;
+    var totalCodeTabs = 0;
+
+
+    newText.addEventListener('click', () =>{
+        createNewTab('text')
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+    newCode.addEventListener('click', () =>{
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+    newPair.addEventListener('click', () =>{
+        createNewTab('text');
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+
+    //create new tab function
+    function createNewTab(e){
+        const newTab = document.createElement('smart-tab-item');
+        if(e === 'text'){
+            numOfTextTabs++;
+            totalTextTabs++;
+            newTab.label = `Tab ${numOfTextTabs}`; //label will be  changed to text file name once opened
+            const newEditor = document.createElement('div');
+            newEditor.id = `Tab${numOfTextTabs}`;
+            newTab.appendChild(newEditor);
+            textTabs.appendChild(newTab);
+            textTabs.selectedIndex = totalTextTabs;
+            createTextEditor(`Tab${numOfTextTabs}`);
+        }
+        else if (e === 'code'){
+            numOfCodeTabs++;
+            totalCodeTabs++;
+            newTab.label = `Tab ${numOfCodeTabs}`;
+            //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+
+            //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+            codeTabs.appendChild(newTab);
+            codeTabs.selectedIndex = totalCodeTabs;
+        }
+    }
+
+
+    textTabs.addEventListener('closing', function (event) {
+        totalTextTabs--;
+	// event handling code goes here.
+    })
+    codeTabs.addEventListener('closing', function (event) {
+        totalTextTabs--;
+	// event handling code goes here.
+    })
+
+
     // -----------------------------------------------------------------
     //quill text editor
-    var quill = new Quill('#textarea', {
-        modules: {
-            toolbar: [
-                [{ 'header': [false,6,5,4,3,2,1] }],
-                [{ 'font': [] }],
-                [{ 'color': [] }, { 'background': [] }],     
-                ['bold', 'italic', 'underline'],        
-                [{ 'script': 'sub'}, { 'script': 'super' }],    
-                [{ 'align': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['image'],
+    function createTextEditor(id){
+        var quill = new Quill(`#${id}`,{
+            modules: {
+                toolbar: [
+                    [{ 'header': [false,6,5,4,3,2,1] }],
+                    [{ 'font': [] }],
+                    [{ 'color': [] }, { 'background': [] }],     
+                    ['bold', 'italic', 'underline'],        
+                    [{ 'script': 'sub'}, { 'script': 'super' }],    
+                    [{ 'align': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['image'],
+                ],            
+            },
+            theme: 'snow'
+        });
+        const paintButton = new QuillToolbarButton({
+            icon: 
+                `<svg 
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    style="--darkreader-inline-stroke: #e8e6e3;"
+                    data-darkreader-inline-stroke="">
+                    <circle class="ql-stroke" cx="13.5" cy="6.5" r=".5"></circle>
+                    <circle class="ql-stroke" cx="17.5" cy="10.5" r=".5"></circle>
+                    <circle class="ql-stroke" cx="8.5" cy="7.5" r=".5"></circle>
+                    <circle class="ql-stroke" cx="6.5" cy="12.5" r=".5"></circle>
+                    <path class="ql-stroke" 
+                        d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 
+                           0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 
+                           1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 
+                           6.012 17.461 2 12 2z">
+                    </path>
+                </svg>`
+        });
+        paintButton.attach(quill);
+        paintButton.onClick = function(quill){
+            api.window.paint();
+        }
+    }
+    createTextEditor('textarea');
+    // -----------------------------------------------------------------
+    // -----------------------------------------------------------------
+    //ace code editor
+    const executeCodeBtn = document.querySelector("#run_code");
+    const resetCodeBtn = document.querySelector("#reset_code");
 
+    // Setup Ace
+    let codeEditor = ace.edit("editor");
+    let defaultCode = 'console.log("Hello World!");';
+    // Configure Ace
 
-            ],            
-        },
-        theme: 'snow'
-      });
+    // Theme
+    codeEditor.setTheme("ace/theme/dracula");
 
+    // Set language
+    codeEditor.session.setMode("ace/mode/javascript");
 
-  
+    // Set Options
+    codeEditor.setOptions({
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+    });
+
+    // Set Default Code
+    codeEditor.setValue(defaultCode);
+
+    // Events
+    executeCodeBtn.addEventListener("click", () => {
+        // Get input from the code editor
+        const userCode = codeEditor.getValue();
+
+        // Run the user code
+        try {
+            new Function(userCode)();
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
+    resetCodeBtn.addEventListener("click", () => {
+        // Clear ace editor
+        codeEditor.setValue(defaultCode);
+    });
+    // -----------------------------------------------------------------
+
     // resizing of editors
     function resizeEditors(resizeBar){
         const first = editors[0];
@@ -178,10 +320,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
             second.style.width = (mousedown.secondWidth + delta.x) + "px";
         }
     }
-
     resizeEditors(document.querySelector(".separator"));
 
-    //Dark Mode
+    //Dark Mode (Will be moved)
+    const darkButton = document.querySelector("#darkMode"); 
+    var dark = false;
     var styles = `
     #textarea {
         background: #202020;
@@ -304,23 +447,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     validateDark();
 
-    function darkMode() {
-       if(!dark){
+    darkButton.addEventListener('click', () => {
+        if(!dark){
             var styleSheet = document.createElement("style");
             styleSheet.setAttribute("class", "dark");
             styleSheet.innerText = styles;
             document.head.appendChild(styleSheet);
             dark = true;
-       } else {
+        }
+        else{
             const darkStyle = document.querySelector(".dark");
             darkStyle.remove();
             dark = false;
-       }
-       validateDark();
-    }
-
-    darkButton.addEventListener('click', () => {
-        darkMode();
+        }
+        validateDark();
     })
 
     function validateDark(){
@@ -331,5 +471,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    
+    // saving and loading htmls
+    let pageContent = document.querySelector("#showContent").innerHTML;
+    //save html info locally
+    function storeHTMLInfo(){
+        localStorage.setItem("indexContent", pageContent);
+        console.log("Saved html in storage!");
+    }
+    function loadHTMLInfo(contentName){
+        // pageContent = 
+    }
+
 });
