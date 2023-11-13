@@ -1,3 +1,6 @@
+const minimize = document.getElementById("minimize");
+const maximize = document.getElementById("maximize");
+const exit = document.getElementById("exit");
 const canvas = document.querySelector("canvas");
 const toolbar = document.querySelectorAll(".tool");
 const fillColor = document.querySelector("#fill-color");
@@ -16,9 +19,6 @@ let isDrawing = false;
 let brushWidth = 5;
 let selectedTool = "brush";
 let selectedColor = "#000";
-const minimize = document.getElementById("minimize");
-const maximize = document.getElementById("maximize");
-const exit = document.getElementById("exit");
 
 minimize.addEventListener("click", () => {
     api.paint_window.minimize();

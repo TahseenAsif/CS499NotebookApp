@@ -115,7 +115,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var totalTextTabs = 0;
     var totalCodeTabs = 0;
 
-
     newText.addEventListener('click', () =>{
         createNewTab('text')
         files.classList.toggle("chosen");
@@ -246,15 +245,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // Events
     executeCodeBtn.addEventListener("click", () => {
-        // Get input from the code editor
-        const userCode = codeEditor.getValue();
+        // // Get input from the code editor
+        // const userCode = codeEditor.getValue();
 
-        // Run the user code
-        try {
-            new Function(userCode)();
-        } catch (err) {
-            console.error(err);
-        }
+        // // Run the user code
+        // try {
+        //     new Function(userCode)();
+        // } catch (err) {
+        //     console.error(err);
+        // }
+        api.window.execute();
     });
 
     resetCodeBtn.addEventListener("click", () => {
@@ -444,9 +444,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         color: white;
       }
     `
-
     validateDark();
-
     darkButton.addEventListener('click', () => {
         if(!dark){
             var styleSheet = document.createElement("style");

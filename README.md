@@ -7,6 +7,7 @@ Progress so far:
     - added paint button to text editor
     - added paint window and functionalities
     - image from the paint window can be copied into the text editor
+    - added dependencies and packages for terminal emulation
 
 ## Version 0.1.1k
 

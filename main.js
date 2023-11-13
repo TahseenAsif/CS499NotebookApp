@@ -89,9 +89,28 @@ function createPaintWindow(){
             preload: path.join(__dirname, 'preload.js')
         }
     });
-    //open dev tools.
+    //open dev tools
     paintWindow.webContents.openDevTools();
 };
+
+function createTerminal(){
+    //create terminal
+    termWindow = new BrowserWindow({
+        width: 600,
+        height: 400,
+        modal: true,
+        show: false,
+        frame: false,
+        parent: mainWindow,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    //open dev tools
+    termWindow.webContents.openDevTools();
+}
 
 // change window size and html after successful login
 function updateWindowApp(){
@@ -99,7 +118,7 @@ function updateWindowApp(){
     mainWindow.setMinimumSize(1200, 700);
     mainWindow.moveTop();
     mainWindow.center();
-    mainWindow.loadFile(path.join(__dirname, './html/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'html/index.html'));
     mainWindow.webContents.openDevTools();
 }
 
@@ -137,7 +156,6 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
-
 
 // ipcMain listening for title bar interactions (minimize, maximize, exit)
 ipcMain.on("winMinimize", () => {
@@ -177,7 +195,7 @@ ipcMain.on("guest", () => {
 ipcMain.on("runPaint", () => {
     createPaintWindow();
     //load paint.html
-    paintWindow.loadFile(path.join(__dirname, "./html/paint.html"));
+    paintWindow.loadFile(path.join(__dirname, 'html/paint.html'));
     paintWindow.once("ready-to-show", () => {
         paintWindow.show();
     });
@@ -193,4 +211,26 @@ ipcMain.on("paintMaximize", () => {
 
 ipcMain.on("paintClose", () => {
     paintWindow.close();
+});
+
+//ipcMain listening for terminal interactions
+ipcMain.on("runCode", () => {
+    createTerminal();
+    //load terminal.html
+    termWindow.loadFile(path.join(__dirname, 'html/terminal.html'));
+    termWindow.once("ready-to-show", () => {
+        termWindow.show();
+    });
+});
+
+ipcMain.on("termMinimize", () => {
+    termWindow.minimize();
+});
+
+ipcMain.on("termMaximize", () => {
+    termWindow.maximize();
+});
+
+ipcMain.on("termClose", () => {
+    termWindow.close();
 });
