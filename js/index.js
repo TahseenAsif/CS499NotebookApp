@@ -1,3 +1,20 @@
+// let pageContent = document.querySelector("#site").innerHTML;
+// //saving html page locally
+// function saveIndex(){
+//     localStorage.setItem("index", pageContent);
+//     console.log("Saved html in storage!");
+// };
+
+// api.loadIndex((event, message) => {
+//     console.log(message);
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+//     console.log("Loaded html from storage!")
+// })
+
+// window.api.loadIndex((event) => {
+//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
+// });
+
 window.addEventListener('DOMContentLoaded', (event) => {
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
@@ -34,7 +51,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const textTabs = document.querySelector('#text-editor-tabs')
     const codeTabs = document.querySelector('#code-editor-tabs')
 
-
     //if menu options that are chosen to be focused on
     for(var i = 0; i < menuBtns.length; i++){
         menuBtns[i].addEventListener("click", (e) => {
@@ -65,16 +81,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    about.addEventListener("click", () => {
-        api.window.about();
-    });
+    //functions that deals with interactions between menu and main
 
-    // -------------interactions between menu and main------------------
-    
-    //if the focus is menubar, prevent typing in files
-    // add eventlistener function here later
-
-    //if the focus is main, remove highlights and close any open submenu
+    //if the focus is an element within main, remove highlights and close any open submenu
     main.addEventListener("click", (e) => {
         //reset all menu options to default looks
         for(let i = 0; i < menuBtns.length; i++){
@@ -89,6 +98,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         e.target.classList.toggle("chosen");
     });
 
+    //swapping editors position
     swap.addEventListener("click", () => {
         const main = document.querySelector('.main');
         if(main.classList.contains('main-swap')){
@@ -103,8 +113,50 @@ window.addEventListener('DOMContentLoaded', (event) => {
         files.parentElement.classList.toggle("tooltip");
     });
 
+    //opening files
+    open.addEventListener('click', () => {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.txt, .html, .css, .js, .cpp'
+        input.onchange = () => {
+            var reader = new FileReader();
+            reader.onload = () => {
+                var content = reader.result;
+                let fileName = input.files[0].name;
+                const splitName = fileName.split('.');
+                const fileTitle = splitName[0];
+                const fileType = splitName[1];
+                if(fileType === 'txt'){
+                    const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                    const splitTabLabel = selectedTab.split(' ');
+                    let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+
+                    const textEditor = document.querySelector(`#${id} .ql-editor`);
+                    textEditor.innerHTML = content;
+                    const t = document.querySelector('smart-tabs');
+                    //t.update(textTabs.selectedIndex, fileTitle)
+                    //textEditor.classList.add(`${id}`)
+                    textEditor.label = fileTitle;
+
+                }
+                else{
+                    codeEditor.setValue(content) // this just makes the first tab code editor value, need to implement new code tab first before updating this
+                }
+            };
+            reader.readAsText(input.files[0])
+        };
+        input.click()
+
+
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+
+    //creating new tabs
     var numOfTextTabs = 1;
     var numOfCodeTabs = 1;
+    var totalTextTabs = 0;
+    var totalCodeTabs = 0;
 
     newText.addEventListener('click', () =>{
         createNewTab('text')
@@ -128,36 +180,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const newTab = document.createElement('smart-tab-item');
         if(e === 'text'){
             numOfTextTabs++;
+            totalTextTabs++;
             newTab.label = `Tab ${numOfTextTabs}`; //label will be  changed to text file name once opened
             const newEditor = document.createElement('div');
             newEditor.id = `Tab${numOfTextTabs}`;
             newTab.appendChild(newEditor);
             textTabs.appendChild(newTab);
-            textTabs.selectedIndex = numOfTextTabs - 1;
+            textTabs.selectedIndex = totalTextTabs;
             createTextEditor(`Tab${numOfTextTabs}`);
         }
         else if (e === 'code'){
             numOfCodeTabs++;
+            totalCodeTabs++;
             newTab.label = `Tab ${numOfCodeTabs}`;
-
             //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
-            const newEditor = document.createElement('div');
-            newEditor.style.color = 'white';
-            newEditor.style.background = 'black';
-            const head = document.createElement('h1');
-            head.innerText = 'Code Editor Part';
-            newEditor.appendChild(head);
-            newTab.appendChild(newEditor);
-            //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
 
+            //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
             codeTabs.appendChild(newTab);
-            codeTabs.selectedIndex = numOfCodeTabs - 1;
+            codeTabs.selectedIndex = totalCodeTabs;
         }
     }
 
 
-    open.addEventListener('click', () =>{
-        console.log(textTabs.selectedIndex);
+    textTabs.addEventListener('closing', function (event) {
+        totalTextTabs--;
+	// event handling code goes here.
+    })
+    codeTabs.addEventListener('closing', function (event) {
+        totalCodeTabs--;
+	// event handling code goes here.
     })
 
 
@@ -175,18 +226,100 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     [{ 'align': [] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['image'],
+                    ['paint'],
+                    ['save'],
+
     
     
                 ],            
             },
             theme: 'snow'
           });
-          
+
+          //paint window button
+          const paint = document.querySelectorAll('.ql-paint');
+          for(let i = paint.length - 1 ; i < paint.length; i++){
+            paint[i].addEventListener('click', () =>{
+               api.paint_window.paint();
+            })
+        }
+
+          const save = document.querySelectorAll('.ql-save');
+          for(let i = save.length - 1; i < save.length; i++){
+            save[i].addEventListener('click', (e) =>{
+                //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                //const selectedEditor = document.querySelector(`.Tab1`);
+                //selectedEditor.innerHTML = 'hi'
+
+                
+                const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                const splitTabLabel = selectedTab.split(' ');
+                let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+
+                const textEditor = document.querySelector(`#${id} .ql-editor`);
+                var content = textEditor.innerHTML;
+                if(textEditor.label != null){
+                    api.editor.textSave(content,textEditor.label);
+                }
+                else{
+                    
+                    const blob = new Blob([content], {type: "text/plain"});
+                    const fileUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = fileUrl;
+                    link.download = ' '
+                    link.click();
+                }
+            })
+          }
     }
-    createTextEditor('textarea');
+    createTextEditor('Tab1');
 
+    // -----------------------------------------------------------------
+    // -----------------------------------------------------------------
+    //ace code editor
+    const executeCodeBtn = document.querySelector("#run_code");
+    const resetCodeBtn = document.querySelector("#reset_code");
 
-  
+    // Setup Ace
+    let codeEditor = ace.edit("editor");
+    let defaultCode = 'console.log("Hello World!");';
+    // Configure Ace
+
+    // Theme
+    codeEditor.setTheme("ace/theme/dracula");
+
+    // Set language
+    codeEditor.session.setMode("ace/mode/javascript");
+
+    // Set Options
+    codeEditor.setOptions({
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+    });
+
+    // Set Default Code
+    codeEditor.setValue(defaultCode);
+
+    // Events
+    executeCodeBtn.addEventListener("click", () => {
+        // Get input from the code editor
+        const userCode = codeEditor.getValue();
+
+        // Run the user code
+        try {
+            new Function(userCode)();
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
+    resetCodeBtn.addEventListener("click", () => {
+        // Clear ace editor
+        codeEditor.setValue(defaultCode);
+    });
+    // -----------------------------------------------------------------
+
     // resizing of editors
     function resizeEditors(resizeBar){
         const first = editors[0];
@@ -244,9 +377,169 @@ window.addEventListener('DOMContentLoaded', (event) => {
             second.style.width = (mousedown.secondWidth + delta.x) + "px";
         }
     }
-
     resizeEditors(document.querySelector(".separator"));
 
+    //Dark Mode (Will be moved)
+    const darkButton = document.querySelector("#darkMode"); 
+    var dark = false;
+    var styles = `
+    #textarea {
+        background: #202020;
+    }
+    .ql-toolbar{
+        background: #202020;
+    }
+    .ql-picker-label{
+        color: #ffffff;
+    }
+    .ql-color{
+        color: #ffffff;
+    }
+    .ql-bold > svg{
+        stroke: white;
+    }
+    p,li,ul,h1,h2,h3,h4,h5,h6{
+        color:white;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow .ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-fill,
+    .ql-snow .ql-toolbar button:focus .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill,
+    .ql-snow .ql-toolbar button.ql-active .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+    .ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+        fill: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow .ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button:focus .ql-stroke,
+    .ql-snow .ql-toolbar button:focus .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+        stroke: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active),
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) {
+        color: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {
+        fill: #06c;
+    }
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+    .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {
+        stroke: #06c;
+    }
+    .ql-snow .ql-stroke {
+        fill: none;
+        stroke: #ffffff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+      .ql-snow .ql-stroke-miter {
+        fill: none;
+        stroke: #ffffff;
+        stroke-miterlimit: 10;
+        stroke-width: 2;
+      }
+      .ql-snow .ql-fill,
+      .ql-snow .ql-stroke.ql-fill {
+        fill: #ffffff;
+      }
+      .ql-snow .ql-picker-options{
+        background-color: #202020;
+      }
+      .ql-snow .ql-picker-options .ql-picker-item{
+        color: white;
+      }
+    `
 
-    
+    validateDark();
+
+    function darkMode() {
+       if(!dark){
+            var styleSheet = document.createElement("style");
+            styleSheet.setAttribute("class", "dark");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+            dark = true;
+       } else {
+            const darkStyle = document.querySelector(".dark");
+            darkStyle.remove();
+            dark = false;
+       }
+       validateDark();
+    }
+
+    darkButton.addEventListener('click', () => {
+        darkMode();
+    })
+
+    function validateDark(){
+        if(dark){
+            darkButton.children[0].innerHTML = "Light Mode";
+        } else {
+            darkButton.children[0].innerHTML = "Dark Mode";
+        }
+    }
+
+    // saving and loading htmls
+    let pageContent = document.querySelector("#showContent").innerHTML;
+    //save html info locally
+    function storeHTMLInfo(){
+        localStorage.setItem("indexContent", pageContent);
+        console.log("Saved html in storage!");
+    }
+    function loadHTMLInfo(contentName){
+        // pageContent = 
+    }
+
 });

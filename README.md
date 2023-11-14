@@ -3,6 +3,10 @@
 **Preview of app:**
 ![Recording 2023-10-30 182027](https://github.com/TahseenAsif/CS499NotebookApp/assets/112424887/cdacbfea-b620-41ab-b99e-4b97bd9715a3)
 
+## Update 11/14/2023
+- Added custom button to open paint window
+- Added a way to open files on both text and code editor
+- Added a button onto the quill editor to save txt files
 
 ## Update 10/30/2023
 - Added functionalitly to adding new tabs
