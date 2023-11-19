@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const minimize = document.getElementById("minimize");
     const maximize = document.getElementById("maximize");
     const exit = document.getElementById("exit");
+    var dark = false;
 
     minimize.addEventListener("click", () => {
         api.window.minimize();
@@ -47,9 +48,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const newText = document.querySelector("#new-text");
     const newCode = document.querySelector("#new-code");
     const newPair = document.querySelector("#new-pair");
-    const open = document.querySelector('#open')
-    const textTabs = document.querySelector('#text-editor-tabs')
-    const codeTabs = document.querySelector('#code-editor-tabs')
+    const open = document.querySelector('#open');
+    const textTabs = document.querySelector('#text-editor-tabs');
+    const codeTabs = document.querySelector('#code-editor-tabs');
+    const codeEditors = [];
+    const darkButton = document.querySelector("#darkMode"); 
+
 
     //if menu options that are chosen to be focused on
     for(var i = 0; i < menuBtns.length; i++){
@@ -98,6 +102,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         e.target.classList.toggle("chosen");
     });
 
+    //swapping editors position
     swap.addEventListener("click", () => {
         const main = document.querySelector('.main');
         if(main.classList.contains('main-swap')){
@@ -108,13 +113,58 @@ window.addEventListener('DOMContentLoaded', (event) => {
             main.classList.add('main-swap');
             resizeEditorsSwap(document.querySelector(".separator"));
         }
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
     });
 
+    //opening files
+    open.addEventListener('click', () => {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.txt, .html, .css, .js, .cpp'
+        input.onchange = () => {
+            var reader = new FileReader();
+            reader.onload = () => {
+                var content = reader.result;
+                let fileName = input.files[0].name;
+                const splitName = fileName.split('.');
+                const fileTitle = splitName[0];
+                const fileType = splitName[1];
+                if(fileType === 'txt'){
+                    const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                    const splitTabLabel = selectedTab.split(' ');
+                    let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+
+                    const textEditor = document.querySelector(`#${id} .ql-editor`);
+                    textEditor.innerHTML = content;
+                    const t = document.querySelector('smart-tabs');
+                    //t.update(textTabs.selectedIndex, fileTitle)
+                    //textEditor.classList.add(`${id}`)
+                    textEditor.label = fileTitle;
+
+                }
+                else{
+                    const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                    const splitTabLabel = selectedTab.split(' ');
+                    let id = `${splitTabLabel[1]}`;
+                    codeEditors[id-1].setValue(content) // this just makes the first tab code editor value, need to implement new code tab first before updating this
+
+                }
+            };
+            reader.readAsText(input.files[0])
+        };
+        input.click()
+
+
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    })
+
+    //creating new tabs
     var numOfTextTabs = 1;
     var numOfCodeTabs = 1;
     var totalTextTabs = 0;
     var totalCodeTabs = 0;
-
 
     newText.addEventListener('click', () =>{
         createNewTab('text')
@@ -150,12 +200,43 @@ window.addEventListener('DOMContentLoaded', (event) => {
         else if (e === 'code'){
             numOfCodeTabs++;
             totalCodeTabs++;
-            newTab.label = `Tab ${numOfCodeTabs}`;
-            //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+            newTab.label = `TAB ${numOfCodeTabs}`;
+            // Adding nav bar
+            let navToAdd = document.createElement('div');
+            navToAdd.id = "codeNavBar";
+            let runButton = document.createElement('button');
+            let resetButton = document.createElement('button');
+            let saveButton = document.createElement('button');
+            runButton.classList.add("codeNavButton");
+            resetButton.classList.add("codeNavButton");
+            saveButton.classList.add("codeNavButton");
+            runButton.id="run_code";
+            resetButton.id="reset_code";
+            saveButton.id="save";
+            runButton.innerHTML="RUN";
+            resetButton.innerHTML="RESET";
+            saveButton.innerHTML="SAVE";
+            navToAdd.appendChild(runButton);
+            navToAdd.appendChild(resetButton);
+            navToAdd.appendChild(saveButton);
+            newTab.appendChild(navToAdd);
+            //Adding container
+            let codeContainer = document.createElement('div');
+            codeContainer.classList.add("codeEditorContainer");
+            newTab.appendChild(codeContainer);
+            let codeEditPart = document.createElement('div');
+            codeEditPart.classList.add("codeEditor");
+            codeContainer.appendChild(codeEditPart);
 
+            //--------------------BELOW IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
+            const newEditor = document.createElement('div');
+            newEditor.classList.add("editor");
+            newEditor.id = `TAB${numOfCodeTabs}`;
+            codeContainer.appendChild(newEditor);
             //--------------------ABOVE IS WHERE THE CODE EDITOR WILL BE PLACED----------------------------------------------------------//
             codeTabs.appendChild(newTab);
             codeTabs.selectedIndex = totalCodeTabs;
+            createCodeEditor(`TAB${numOfCodeTabs}`);
         }
     }
 
@@ -165,10 +246,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	// event handling code goes here.
     })
     codeTabs.addEventListener('closing', function (event) {
-        totalTextTabs--;
+        totalCodeTabs--;
 	// event handling code goes here.
     })
 
+    
+    //Adding more Font styles
+    
+    let Font = Quill.import('formats/font');
+    // We do not add Sans Serif since it is the default
+    Font.whitelist = ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana'];
+    Quill.register(Font, true);
+
+    fontOptions = [{'font': ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana']}]
 
     // -----------------------------------------------------------------
     //quill text editor
@@ -177,13 +267,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             modules: {
                 toolbar: [
                     [{ 'header': [false,6,5,4,3,2,1] }],
-                    [{ 'font': [] }],
+                    fontOptions,
                     [{ 'color': [] }, { 'background': [] }],     
                     ['bold', 'italic', 'underline'],        
                     [{ 'script': 'sub'}, { 'script': 'super' }],    
                     [{ 'align': [] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['image'],
+                    ['paint'],
+                    ['save'],
+
     
     
                 ],            
@@ -191,51 +284,166 @@ window.addEventListener('DOMContentLoaded', (event) => {
             theme: 'snow'
           });
 
+          //paint window button
+          const paint = document.querySelectorAll('.ql-paint');
+          for(let i = paint.length - 1 ; i < paint.length; i++){
+            paint[i].addEventListener('click', () =>{
+               api.paint_window.paint();
+            })
+        }
+
+          const save = document.querySelectorAll('.ql-save');
+          for(let i = save.length - 1; i < save.length; i++){
+            save[i].addEventListener('click', (e) =>{
+                //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                //const selectedEditor = document.querySelector(`.Tab1`);
+                //selectedEditor.innerHTML = 'hi'
+
+                
+                const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                const splitTabLabel = selectedTab.split(' ');
+                let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+
+                const textEditor = document.querySelector(`#${id} .ql-editor`);
+                var content = textEditor.innerHTML;
+                //Adding saving for code editor
+                const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                const splitTabLabelCode = selectedTabCode.split(' ');
+                let idCode = `${splitTabLabelCode[1]}`;
+                const codeEditorToSave = document.querySelector(`.ace_text-input`);
+                var codeContent = codeEditors[idCode-1].getValue();
+                console.log(codeContent);
+                `if(textEditor.label != null){
+                    api.editor.textSave(content,textEditor.label);
+                }`
+                    api.editor.codeSave(codeContent, codeEditorToSave.label);
+            })
+          }
     }
-    createTextEditor('textarea');
+    createTextEditor('Tab1');
+
     // -----------------------------------------------------------------
     // -----------------------------------------------------------------
     //ace code editor
-    const executeCodeBtn = document.querySelector("#run_code");
-    const resetCodeBtn = document.querySelector("#reset_code");
+    // const executeCodeBtn = document.querySelector("#run_code");
+    // const resetCodeBtn = document.querySelector("#reset_code");
 
-    // Setup Ace
-    let codeEditor = ace.edit("editor");
-    let defaultCode = 'console.log("Hello World!");';
-    // Configure Ace
+    // // Setup Ace
+    // let codeEditor = ace.edit("editor");
+    // let defaultCode = 'console.log("Hello World!");';
+    // // Configure Ace
 
-    // Theme
-    codeEditor.setTheme("ace/theme/dracula");
+    // // Theme
+    // codeEditor.setTheme("ace/theme/dracula");
 
-    // Set language
-    codeEditor.session.setMode("ace/mode/javascript");
+    // // Set language
+    // codeEditor.session.setMode("ace/mode/javascript");
 
-    // Set Options
-    codeEditor.setOptions({
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true,
-    });
+    // // Set Options
+    // codeEditor.setOptions({
+    //     enableBasicAutocompletion: true,
+    //     enableLiveAutocompletion: true,
+    // });
 
-    // Set Default Code
-    codeEditor.setValue(defaultCode);
+    // // Set Default Code
+    // codeEditor.setValue(defaultCode);
 
-    // Events
-    executeCodeBtn.addEventListener("click", () => {
-        // Get input from the code editor
-        const userCode = codeEditor.getValue();
+    //----------------------------Making a function for creating code editors
+    function createCodeEditor(id){
+        // Setup Ace
+        let codeEditor = ace.edit(id);
+        let defaultCode = 'console.log("Hello World!");';
+        // Configure Ace
 
-        // Run the user code
-        try {
-            new Function(userCode)();
-        } catch (err) {
-            console.error(err);
-        }
-    });
+        // Theme
+        codeEditor.setTheme("ace/theme/dracula");
 
-    resetCodeBtn.addEventListener("click", () => {
-        // Clear ace editor
+        // Set language
+        codeEditor.session.setMode("ace/mode/javascript");
+
+        // Set Options
+        codeEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+        });
+
+        // Set Default Code
         codeEditor.setValue(defaultCode);
-    });
+        
+        // Adding listeners for each new button
+        const executeCodeBtns = document.querySelectorAll("#run_code");
+        if(executeCodeBtns.length == 1){
+            executeCodeBtns[0].addEventListener('click', (e) => {
+                const userCode = codeEditor.getValue();
+                try{
+                    new Function(userCode)();
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+        } else {
+            for(let i = executeCodeBtns.length - 1; i < executeCodeBtns.length; i++){
+                const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                executeCodeBtns[i].addEventListener('click', (e) => {
+                    const userCode = codeEditor.getValue();
+                    try{
+                        new Function(userCode)();
+                    } catch (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        }
+        const resetCodeBtns = document.querySelectorAll("#reset_code");
+        for(let i = resetCodeBtns.length - 1; i < resetCodeBtns.length; i++){
+            resetCodeBtns[i].addEventListener('click', () => {
+                codeEditor.setValue(defaultCode);
+            })
+        }
+
+        `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---
+        const executeCodeBtn = document.querySelector("#run_code");
+        const resetCodeBtn = document.querySelector("#reset_code");
+        // Events
+        executeCodeBtn.addEventListener("click", () => {
+            // Get input from the code editor
+            const userCode = codeEditor.getValue();
+
+            // Run the user code
+            try {
+                new Function(userCode)();
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        resetCodeBtn.addEventListener("click", () => {
+            // Clear ace editor
+            codeEditor.setValue(defaultCode);
+        });`
+        codeEditors.push(codeEditor);
+    }
+    createCodeEditor('TAB1');
+    console.log(codeEditors);
+
+
+    // // Events
+    // executeCodeBtn.addEventListener("click", () => {
+    //     // Get input from the code editor
+    //     const userCode = codeEditor.getValue();
+
+    //     // Run the user code
+    //     try {
+    //         new Function(userCode)();
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // });
+
+    // resetCodeBtn.addEventListener("click", () => {
+    //     // Clear ace editor
+    //     codeEditor.setValue(defaultCode);
+    // });
     // -----------------------------------------------------------------
 
     // resizing of editors
@@ -298,10 +506,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     resizeEditors(document.querySelector(".separator"));
 
     //Dark Mode (Will be moved)
-    const darkButton = document.querySelector("#darkMode"); 
-    var dark = false;
     var styles = `
-    #textarea {
+    .ql-container {
         background: #202020;
     }
     .ql-toolbar{
@@ -418,6 +624,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
       .ql-snow .ql-picker-options .ql-picker-item{
         color: white;
       }
+    .ql-paint:after, .ql-save:after {
+        color: white;
+    }
     `
 
     validateDark();

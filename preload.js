@@ -15,5 +15,15 @@ contextBridge.exposeInMainWorld("api", {
         about: () => ipcRenderer.send("runAbout"),
         settings: () => ipcRenderer.send("runSettings"),
         open_files: () => ipcRenderer.send("runOpenFiles"),
+    },
+    paint_window:{
+        paint: () => ipcRenderer.send("runPaint"),
+        minimize: () => ipcRenderer.send("paintMinimize"),
+        maximize: () => ipcRenderer.send("paintMaximize"),
+        exit: () => ipcRenderer.send("paintClose"),
+    },
+    editor:{
+        textSave: (content,path) => ipcRenderer.send("saveText",content,path),
+        codeSave: (content,path) => ipcRenderer.send("saveCode",content,path),
     }
 });

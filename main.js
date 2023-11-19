@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain} = require('electron');
+const { Notification, app, BrowserWindow, ipcMain} = require('electron');
 const { initializeApp } = require("firebase/app");
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require("firebase/auth");
 const { getFirestore, doc, getDoc, setDoc } = require("firebase/firestore");
@@ -81,9 +81,9 @@ function createApp(){
         }
     });
     // load the login.html of the app
-    mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
+    mainWindow.loadFile(path.join(__dirname, 'html/index.html'));
     // open dev tools
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 };
 
 // change window size and html after successful login
@@ -184,7 +184,7 @@ ipcMain.on("guest", () => {
 //Used for testing paint functionality, feel free to remove/modify this
 function createPaintWindow(){
     // Create the browser window.
-    mainWindow = new BrowserWindow({
+    paintWindow = new BrowserWindow({
         width: 1500,
         height: 800,
         resizable: false,
@@ -197,7 +197,42 @@ function createPaintWindow(){
         }
     });
     // and load the index.html of the app.
-    mainWindow.loadFile(path.join(__dirname, './html/paint.html'));
-    // open dev tools
-    mainWindow.webContents.openDevTools();
+    paintWindow.loadFile(path.join(__dirname, './html/paint.html'));
+
 };
+
+
+//creating paint window
+ipcMain.on('runPaint', () =>{
+    createPaintWindow();
+})
+
+ipcMain.on("paintMinimize", () => {
+    paintWindow.minimize();
+});
+
+ipcMain.on("paintMaximize", () => {
+    paintWindow.maximize();
+});
+
+ipcMain.on("paintClose", () => {
+    paintWindow.close();
+});
+
+ipcMain.on("saveText", (event,content,path) =>{
+    fs.writeFileSync(`C:/Users/bob/Downloads/${path}.txt`,content,'utf-8');
+    console.log(`Saved ${path}.txt file!`);
+    new Notification({
+        title: 'Saved',
+        body: 'Your file have been successfully saved!'
+    }).show();
+})
+
+ipcMain.on("saveCode", (event,content,path) =>{
+    fs.writeFileSync(`C:/Users/bob/Downloads/${path}.js`,content,'utf-8');
+    console.log(`Saved ${path}.js file!`);
+    new Notification({
+        title: 'Saved',
+        body: 'Your file have been successfully saved!'
+    }).show();
+})
