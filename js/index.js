@@ -119,6 +119,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //opening files
     open.addEventListener('click', () => {
+        //----The below implementation is for single files per each tab
+        /*
         let input = document.createElement('input');
         input.type = 'file';
         input.accept = '.txt, .html, .css, .js, .cpp'
@@ -155,10 +157,84 @@ window.addEventListener('DOMContentLoaded', (event) => {
         };
         input.click()
 
-
         files.classList.toggle("chosen");
-        files.parentElement.classList.toggle("tooltip");
+        files.parentElement.classList.toggle("tooltip");\
+        */
+       loadMultipleJSON();
     })
+
+    function loadSingleJSON(){
+        let input = document.createElement('input');
+        var loadData;
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = () => {
+            fetch("../test.json")
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    loadData = data;
+                    console.log(loadData);
+                    console.log(loadData.code);
+                    const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
+                    const splitTabLabelText = selectedTabText.split(' ');
+                    let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
+                    const textEditor = document.querySelector(`#${textid} .ql-editor`);
+                    textEditor.innerHTML=data.text[0];
+                    codeEditors[0].setValue(data.code[0]);
+                });
+        }
+        input.click();
+    }
+
+    function loadMultipleJSON(){
+        let input = document.createElement('input');
+        var loadData;
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = () => {
+            fetch("../test.json")
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    loadData = data;
+                    console.log(loadData);
+                    console.log(loadData.code);
+                    // const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                    // const splitTabLabel = selectedTab.split(' ');
+                    // let id = `${splitTabLabel[1]}`;
+                    // codeEditors[id-1].setValue(data.code.TAB1);
+                    const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
+                    const splitTabLabelText = selectedTabText.split(' ');
+                    let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
+                    const textEditor = document.querySelector(`#${textid} .ql-editor`);
+                    textEditor.innerHTML=data.text[0];
+                    //FOR LOADING MULTIPLE TEXT
+                    for(i = 1; i < data.text.length; i++){
+                        createNewTab('text');
+                        const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
+                        textEditor2.innerHTML = data.text[i];
+                    }
+                    //FOR LOADING MULTIPLE CODE
+                    // (async () => {
+                    //     codeEditors[0].setValue(data.code[0]);
+                    //     console.log(data.code.length);
+                    //     console.log(data.code);
+                    //     await createCodeEditor(`TAB${1}`);
+                    // })()
+                    codeEditors[0].setValue(data.code[0]);
+                    console.log(data.code.length);
+                    console.log(data.code);
+                    for(i = 1; i < data.code.length; i++){
+                        createNewTab('code');
+                        codeEditors[i].setValue(data.code[i]);
+                    }
+                });
+        }
+        input.click();
+    }
 
     //creating new tabs
     var numOfTextTabs = 1;
@@ -306,6 +382,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 const textEditor = document.querySelector(`#${id} .ql-editor`);
                 var content = textEditor.innerHTML;
+                //---This is just to test if data can be saved to JSON (it can)
+                // jsonContent = JSON.stringify(content);
+                // console.log(jsonContent);
                 //Adding saving for code editor
                 const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
                 const splitTabLabelCode = selectedTabCode.split(' ');
@@ -380,6 +459,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 } catch (err) {
                     console.log(err);
                 }
+                //This is just to test if data can be saved as JSON (it can)
+                // const jsonString = JSON.stringify(userCode);
+                // console.log(jsonString);
             });
         } else {
             for(let i = executeCodeBtns.length - 1; i < executeCodeBtns.length; i++){
