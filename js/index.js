@@ -435,7 +435,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         // Configure Ace
 
         // Theme
-        codeEditor.setTheme("ace/theme/dracula");
+        if (dark){
+            codeEditor.setTheme("ace/theme/clouds_midnight");
+        } else{
+            codeEditor.setTheme("ace/theme/github");
+        }
 
         // Set language
         codeEditor.session.setMode("ace/mode/javascript");
@@ -713,6 +717,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     validateDark();
 
+    function codeEditorThemeSwitch() {
+        // const selectedTab = textTabs.getTabLabel(codeTabs.selectedIndex);
+        // const splitTabLabel = selectedTab.split(' ');
+        // let id = `${splitTabLabel[1]}`;
+        // let aceEditor = codeEditors[id-1];
+        // console.log(codeTabs);
+		// if (dark) {
+		// 	aceEditor.setTheme("ace/theme/clouds_midnight");
+		// } else {
+		// 	aceEditor.setTheme("ace/theme/github");
+		// }
+        if(dark){
+            for(i = 0; i < codeEditors.length; i++){
+                codeEditors[i].setTheme("ace/theme/clouds_midnight");
+            }
+        } else {
+            for(i = 0; i < codeEditors.length; i++){
+                codeEditors[i].setTheme("ace/theme/github");
+            }
+        }
+	}
+
     function darkMode() {
        if(!dark){
             var styleSheet = document.createElement("style");
@@ -730,6 +756,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     darkButton.addEventListener('click', () => {
         darkMode();
+        codeEditorThemeSwitch();
     })
 
     function validateDark(){
