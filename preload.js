@@ -25,5 +25,6 @@ contextBridge.exposeInMainWorld("api", {
     editor:{
         textSave: (content,path) => ipcRenderer.send("saveText",content,path),
         codeSave: (content,path) => ipcRenderer.send("saveCode",content,path),
+        allSave: (content,path) => ipcRenderer.send("saveAll",content),
     }
 });

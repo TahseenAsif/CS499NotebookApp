@@ -371,35 +371,59 @@ window.addEventListener('DOMContentLoaded', (event) => {
           const save = document.querySelectorAll('.ql-save');
           for(let i = save.length - 1; i < save.length; i++){
             save[i].addEventListener('click', (e) =>{
-                //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                //const selectedEditor = document.querySelector(`.Tab1`);
-                //selectedEditor.innerHTML = 'hi'
+                // //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                // //const selectedEditor = document.querySelector(`.Tab1`);
+                // //selectedEditor.innerHTML = 'hi'
 
                 
-                const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                const splitTabLabel = selectedTab.split(' ');
-                let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+                // const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                // const splitTabLabel = selectedTab.split(' ');
+                // let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
 
-                const textEditor = document.querySelector(`#${id} .ql-editor`);
-                var content = textEditor.innerHTML;
-                //---This is just to test if data can be saved to JSON (it can)
-                // jsonContent = JSON.stringify(content);
-                // console.log(jsonContent);
-                //Adding saving for code editor
-                const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                const splitTabLabelCode = selectedTabCode.split(' ');
-                let idCode = `${splitTabLabelCode[1]}`;
-                const codeEditorToSave = document.querySelector(`.ace_text-input`);
-                var codeContent = codeEditors[idCode-1].getValue();
-                console.log(codeContent);
-                `if(textEditor.label != null){
-                    api.editor.textSave(content,textEditor.label);
-                }`
-                    api.editor.codeSave(codeContent, codeEditorToSave.label);
+                // const textEditor = document.querySelector(`#${id} .ql-editor`);
+                // var content = textEditor.innerHTML;
+                // //---This is just to test if data can be saved to JSON (it can)
+                // // jsonContent = JSON.stringify(content);
+                // // console.log(jsonContent);
+                // //Adding saving for code editor
+                // const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                // const splitTabLabelCode = selectedTabCode.split(' ');
+                // let idCode = `${splitTabLabelCode[1]}`;
+                // const codeEditorToSave = document.querySelector(`.ace_text-input`);
+                // var codeContent = codeEditors[idCode-1].getValue();
+                // console.log(codeContent);
+                // `if(textEditor.label != null){
+                //     api.editor.textSave(content,textEditor.label);
+                // }`
+                //     api.editor.codeSave(codeContent, codeEditorToSave.label);
+                console.log(numOfTextTabs);
+                const testSave = saveAllJSON();
+                console.log(testSave);
+                api.editor.allSave(testSave)
+                //^^ this doesn't work, apparently the content to send to the api can't be a json object?
             })
           }
     }
     createTextEditor('Tab1');
+
+    function saveAllJSON(){
+        var toSave = {
+            text: [],
+            code: []
+        };
+        for(i = 0; i < numOfTextTabs; i++){
+            const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
+            textToJSON = JSON.stringify(textEditor.innerHTML);
+            //toSave.text.push(textToJSON);
+            toSave.text.push(textEditor.innerHTML);
+        }
+        for(i = 0; i < numOfCodeTabs; i++){
+            codeToJSON = JSON.stringify(codeEditors[i].getValue());
+            //toSave.code.push(codeToJSON);
+            toSave.code.push(codeEditors[i].getValue());
+        }
+        return toSave;
+    }
 
     // -----------------------------------------------------------------
     // -----------------------------------------------------------------

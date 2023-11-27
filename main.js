@@ -236,3 +236,13 @@ ipcMain.on("saveCode", (event,content,path) =>{
         body: 'Your file have been successfully saved!'
     }).show();
 })
+
+ipcMain.on("saveAll", (event, content) => {
+    var toJSON = JSON.stringify(content, null, 2);
+    fs.writeFileSync('C:/Users/bob/Downloads/data.json', toJSON, 'utf-8');
+    console.log('Saved data.json file!');
+    new Notification({
+        title: 'Saved',
+        body: "Your file has been successfully saved!"
+    }).show();
+})
