@@ -449,6 +449,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
 		}
 
 		const languageBoxes = document.querySelectorAll("#language");
+		for (let i = languageBoxes.length - 1; i < languageBoxes.length; i++) {
+			languageBoxes[i].addEventListener("change", (e) => {
+				codeEditor.session.setMode("ace/mode/" + e.target.value);
+			});
+		}
 
 		function handlePLChange(e) {
 			codeEditor.session.setMode("ace/mode/" + e.target.value);
