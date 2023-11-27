@@ -214,6 +214,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			runButton.innerHTML = "RUN";
 			resetButton.innerHTML = "RESET";
 			saveButton.innerHTML = "SAVE";
+
+			//Create array of options to be added
+			const langSettings = ["javascript", "python", "sql", "java"];
+			const langNames = ["Javascript", "Python", "SQL", "Java"];
+
+			//Create and append select list
+			var selectList = document.createElement("select");
+			selectList.setAttribute("id", "language");
+			navToAdd.appendChild(selectList);
+
+			//Create and append the options
+			for (var i = 0; i < 4; i++) {
+				var option = document.createElement("option");
+				option.setAttribute("value", langSettings[i]);
+				option.text = langNames[i];
+				selectList.appendChild(option);
+			}
+
 			navToAdd.appendChild(runButton);
 			navToAdd.appendChild(resetButton);
 			navToAdd.appendChild(saveButton);
@@ -428,6 +446,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			resetCodeBtns[i].addEventListener("click", () => {
 				codeEditor.setValue(defaultCode);
 			});
+		}
+
+		const languageBoxes = document.querySelectorAll("#language");
+
+		function handlePLChange(e) {
+			codeEditor.session.setMode("ace/mode/" + e.target.value);
 		}
 
 		`//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---
