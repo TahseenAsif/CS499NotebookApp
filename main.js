@@ -117,8 +117,8 @@ function updateWindowApp(){
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then( () => {
-    // createApp();
-    createPaintWindow();
+    createApp();
+    // createPaintWindow();
     mainWindow.moveTop();
     mainWindow.center();
 });
