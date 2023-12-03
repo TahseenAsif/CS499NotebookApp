@@ -7,6 +7,6 @@
   "code": [
     "for(i = 0; i < 10; i++){\n    console.log(\"hi\");\n}",
     "for(i = 0; i < 20; i++){\n    console.log(\"hi\");\n}",
-    "for(i = 0; i < 30; i++){\n    console.log(\"hi\");\n}"
+    "for(i = 0; i < 530; i++){\n    console.log(\"hi\");\n}"
   ]
 }
