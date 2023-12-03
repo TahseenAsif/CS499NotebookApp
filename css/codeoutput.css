@@ -1,0 +1,15 @@
+.terminal{
+    background-color: black;
+    width: 400px;
+    margin: 40px;
+    height: 200px;
+    border-radius: 10px;
+    overflow-y: auto;
+    
+}
+
+p{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+}

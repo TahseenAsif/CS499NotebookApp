@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "firebase": "^10.5.0",
+    "python-shell": "^5.0.0",
     "smart-webcomponents": "^17.0.3"
   }
 }

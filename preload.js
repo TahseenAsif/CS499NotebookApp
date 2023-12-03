@@ -26,5 +26,10 @@ contextBridge.exposeInMainWorld("api", {
         textSave: (content,path) => ipcRenderer.send("saveText",content,path),
         codeSave: (content,path) => ipcRenderer.send("saveCode",content,path),
         allSave: (content,path) => ipcRenderer.send("saveAll",content),
+        runCode: (content,path) => ipcRenderer.send("codeRun",content),
+        savePython: (content,path) => ipcRenderer.send("savePyth",content),
+        saveJavascript: (content,path) => ipcRenderer.send("saveJs",content,path),
+        runPython: (path) => ipcRenderer.send("runPyth",path),
+        runJavascript: (path) => ipcRenderer.send("runJs",path),
     }
 });
