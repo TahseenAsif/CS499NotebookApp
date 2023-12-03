@@ -3,9 +3,10 @@ const { Notification, app, BrowserWindow, ipcMain} = require('electron');
 const { initializeApp } = require("firebase/app");
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require("firebase/auth");
 const { getFirestore, doc, getDoc, setDoc } = require("firebase/firestore");
-const { getStorage } = require("firebase/storage");
+const { getStorage, ref, uploadBytes, getMetadata, getDownloadURL } = require("firebase/storage");
 const path = require('path');
 const fs = require('fs');
+const { mkdir } = require('original-fs');
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,6 +24,34 @@ const auth = getAuth(firebase_app);                     //Initialize Firebase Au
 const db = getFirestore(firebase_app)                   //Initialize Firestore
 const storage = getStorage(firebase_app);               //Initialize Firebase Storage
 
+let userID;
+
+/*
+This function was supposed to be used to create folders in firebase databse with the users ID, but mkdir doesn't work in
+firebase. Instead, the way to make folders is just so specify a path, and firebase auto creates the folder. 
+Leave this function as it contains some checks that may need to be used in other functions
+const checkAndCreateFolder = async (userID) =>{
+    const storageRef = ref(storage, `user-files/${userID}`);
+    // If metadata doesn't exist, that means folder doesn't exist and we must create a new one.
+    try {
+        await getMetadata(storageRef);
+    } catch (error) {
+        if (error.code === 'storage/object-not-found') {
+            try {
+                await mkdir(storageRef);
+                console.log(`Folder for ${userID} created`);
+            } catch (error) {
+                console.log(error.code);
+                console.error(`Error creating folder for ${userID}`);
+            }
+        }
+        else {
+            console.error(`Error checking folder for ${userID}`);
+        }
+    }
+};
+*/
+
 //Sign in with email and password
 const signIn = async (email, password, onSignIn) => {
     try{
@@ -32,6 +61,8 @@ const signIn = async (email, password, onSignIn) => {
         if (onSignIn){
             onSignIn(user.uid);
         }
+        userID = user.uid;
+        // await checkAndCreateFolder(userID);
     } catch (error){
         console.error("Error signing in", error);
     }
@@ -45,6 +76,8 @@ const signUp = async (email, password, onSignUp) => {
         if (onSignUp){
             onSignUp(user.uid);
         }
+        userID = user.uid
+        // await checkAndCreateFolder(userID);
     } catch (error) {
         console.error("Error signing in", error);
     }
@@ -81,7 +114,7 @@ function createApp(){
         }
     });
     // load the login.html of the app
-    mainWindow.loadFile(path.join(__dirname, 'html/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
     // open dev tools
     mainWindow.webContents.openDevTools();
 };
@@ -237,10 +270,20 @@ ipcMain.on("saveCode", (event,content,path) =>{
     }).show();
 })
 
-ipcMain.on("saveAll", (event, content) => {
+ipcMain.on("saveAll", async (event, content) => {
+    const storageRef = ref(storage, `user-files/${userID}/data.json`);
     var toJSON = JSON.stringify(content, null, 2);
     fs.writeFileSync('data.json', toJSON, 'utf-8');
     console.log('Saved data.json file!');
+    /*
+    try{
+        uploadBytes(storageRef, 'data.json').then((snapshot) => {
+            console.log('Uploaded!')
+        })
+    } catch (error) {
+        console.error('Error saving to Firebase', error);
+    }
+    */
     new Notification({
         title: 'Saved',
         body: "Your file has been successfully saved!"
