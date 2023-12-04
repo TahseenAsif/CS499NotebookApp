@@ -271,7 +271,7 @@ ipcMain.on("saveCode", (event,content,path) =>{
 })
 
 ipcMain.on("saveAll", async (event, content) => {
-    const storageRef = ref(storage, `user-files/${userID}/data.json`);
+    // const storageRef = ref(storage, `user-files/${userID}/data.json`);
     var toJSON = JSON.stringify(content, null, 2);
     fs.writeFileSync('data.json', toJSON, 'utf-8');
     console.log('Saved data.json file!');
@@ -284,6 +284,9 @@ ipcMain.on("saveAll", async (event, content) => {
         console.error('Error saving to Firebase', error);
     }
     */
+    await setDoc(doc(db, "users", `${userID}`), {
+        json_data: toJSON
+    });
     new Notification({
         title: 'Saved',
         body: "Your file has been successfully saved!"
