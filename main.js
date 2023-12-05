@@ -6,7 +6,6 @@ const { getFirestore, doc, getDoc, setDoc } = require("firebase/firestore");
 const { getStorage, ref, uploadBytes, getMetadata, getDownloadURL } = require("firebase/storage");
 const path = require('path');
 const fs = require('fs');
-const { mkdir } = require('original-fs');
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
