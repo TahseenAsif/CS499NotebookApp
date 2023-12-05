@@ -16,6 +16,35 @@
 // });
 
 window.addEventListener('DOMContentLoaded', (event) => {
+    //IPC TESTING
+    window.api.sendUserID((event, userID) => {
+        console.log(userID);
+        console.log(userID.json_data);
+        console.log(userID.json_data.text);
+        console.log(userID.json_data.code);
+        
+        setTimeout(() => {
+            const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
+            const splitTabLabelText = selectedTabText.split(' ');
+            let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
+            const textEditor = document.querySelector(`#${textid} .ql-editor`);
+            textEditor.innerHTML=userID.json_data.text[0];
+            //FOR LOADING MULTIPLE TEXT
+            for(i = 1; i < userID.json_data.text.length; i++){
+                createNewTab('text');
+                const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
+                textEditor2.innerHTML = userID.json_data.text[i];
+            }
+            //FOR LOADING MULTIPLE CODE
+            codeEditors[0].setValue(userID.json_data.code[0]);
+            console.log(userID.json_data.code.length);
+            console.log(userID.json_data.code);
+            for(i = 1; i < userID.json_data.code.length; i++){
+                createNewTab('code');
+                codeEditors[i].setValue(userID.json_data.code[i]);
+            }
+        }, 100);
+    })
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
     const minimize = document.getElementById("minimize");
@@ -440,6 +469,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             //toSave.code.push(codeToJSON);
             toSave.code.push(codeEditors[i].getValue());
         }
+        console.log(toSave.text);
+        console.log(toSave.code);
         return toSave;
     }
 
@@ -826,5 +857,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
     function loadHTMLInfo(contentName){
         // pageContent = 
     }
-
 });

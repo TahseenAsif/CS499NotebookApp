@@ -52,6 +52,7 @@ const checkAndCreateFolder = async (userID) =>{
 */
 
 //Sign in with email and password
+let docSnap;
 const signIn = async (email, password, onSignIn) => {
     try{
         const userCred = await signInWithEmailAndPassword(auth, email, password);
@@ -65,6 +66,8 @@ const signIn = async (email, password, onSignIn) => {
     } catch (error){
         console.error("Error signing in", error);
     }
+    const docRef = doc(db, "users", `${userID}`);
+    docSnap = await getDoc(docRef);
 };
 
 const signUp = async (email, password, onSignUp) => {
@@ -195,7 +198,15 @@ ipcMain.on("winClose", () => {
 ipcMain.on("sign-in", (event, email, password) => {
     signIn(email, password, (uid) => {
         console.log(`Signed in ${uid}`);
-        updateWindowApp();
+        //I do not belive this setTimeout is needed
+        setTimeout(() => {
+            updateWindowApp();
+        }, 100);
+        //This setTimeout is needed, however. I don't know if it needs to be 400 though
+        setTimeout(() => {
+            mainWindow.webContents.send("sendUserID", docSnap.data());
+            console.log("LOLOL");
+        }, 400);
     });
 })
 
@@ -210,6 +221,10 @@ ipcMain.on("guest", () => {
     setTimeout(() => {
         updateWindowApp();
     }, 100);
+    // setTimeout(() => {
+    //     //This is just for testing, i don't believe this should do anything, though eventually would like to replace "hello" with an actual data json object
+    //     mainWindow.webContents.send("sendUserID", "hello");
+    // }, 1000);
     // updateWindowApp();
 })
 
@@ -284,7 +299,7 @@ ipcMain.on("saveAll", async (event, content) => {
     }
     */
     await setDoc(doc(db, "users", `${userID}`), {
-        json_data: toJSON
+        json_data: content
     });
     new Notification({
         title: 'Saved',

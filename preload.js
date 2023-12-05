@@ -1,6 +1,8 @@
 const {contextBridge, ipcRenderer} = require('electron');
 
 contextBridge.exposeInMainWorld("api", {
+    //Idk why this needs to be out here but it doesn't work otherwise, will look for fix
+    sendUserID: (callback) => ipcRenderer.on("sendUserID",(callback)),
     login:{
         signInRequest: (email, password) => ipcRenderer.send("sign-in", email, password),
         signUpRequest: (email, password) => ipcRenderer.send("sign-up", email, password),
