@@ -21,13 +21,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             })
     }
 
-    function getMessageAgain(){
-        var a = document.body.appendChild(document.createElement('a'));
-        var textToWrite = terminal.innerHTML;
-        a.download = "../message.txt";
-        textToWrite = textToWrite.replace(/\n/g, "%0D%0A"); 
-        a.href = "data:text/plain," + textToWrite;
-        a.click();
-    }
+    // function getMessageAgain(){
+    //     var a = document.body.appendChild(document.createElement('a'));
+    //     var textToWrite = terminal.innerHTML;
+    //     a.download = "../message.txt";
+    //     textToWrite = textToWrite.replace(/\n/g, "%0D%0A"); 
+    //     a.href = "data:text/plain," + textToWrite;
+    //     a.click();
+    // }
     getMessage()
 });

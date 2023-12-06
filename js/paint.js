@@ -65,7 +65,7 @@ const drawing = (e) => {
 
     if(selectedTool==="brush" || selectedTool==="eraser"){
         if(selectedTool==="eraser"){
-            ctx.strokeStyle = "#f5f5f5";
+            ctx.strokeStyle = "#ffffff";
         } 
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();

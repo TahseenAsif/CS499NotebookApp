@@ -507,13 +507,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
             executeCodeBtns[0].addEventListener('click', (e) => {
                 const userCode = codeEditor.getValue();
                 try{
-                    if(codeEditorsLangs[0] == 'python')
-                        api.editor.runPython();
-                    else 
-                        api.editor.runJavascript();
-                    x = new Function(userCode)();
-                    //console.log(x);
-                    api.editor.runCode(x);
+
+                    const toSaveCode = codeEditor.getValue();
+                    console.log(toSaveCode);
+                    console.log(codeEditorsLangs[0])
+                    if(codeEditorsLangs[0] == "python")
+                        api.editor.savePython(toSaveCode);
+                    else if(codeEditorsLangs[0] == "javascript")
+                        api.editor.saveJavascript(toSaveCode);
+                    
+                    //timeout allows time for the test.py or test.js file to save
+                    setTimeout(() => {
+                        if(codeEditorsLangs[0] == 'python')
+                            api.editor.runPython();
+                        else 
+                            api.editor.runJavascript();
+                        x = new Function(userCode)();
+                        //console.log(x);
+                        
+                    }, 200);
+
+                    setTimeout(() => {
+                        api.editor.runCode(x);
+                    }, 800);
+                    
                 } catch (err) {
                     console.log(err);
                 }
@@ -527,7 +544,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 executeCodeBtns[i].addEventListener('click', (e) => {
                     const userCode = codeEditor.getValue();
                     try{
-                        new Function(userCode)();
+
+                        const toSaveCode = codeEditor.getValue();
+                        console.log(toSaveCode);
+                        console.log(codeEditorsLangs[i])
+                        if(codeEditorsLangs[i] == "python")
+                            api.editor.savePython(toSaveCode);
+                        else if(codeEditorsLangs[0] == "javascript")
+                            api.editor.saveJavascript(toSaveCode);
+                    
+                    setTimeout(() => {
+                        if(codeEditorsLangs[i] == 'python')
+                            api.editor.runPython();
+                        else 
+                            api.editor.runJavascript();
+                        //x = new Function(userCode)();
+                        //console.log(x);
+                    }, 200);
+                    setTimeout(() => {
+                        api.editor.runCode(x);
+                    }, 800);
+                        
                     } catch (err) {
                         console.log(err);
                     }

@@ -1,8 +1,3 @@
-console.log("Hello World!");
-console.log("wooaoashdf");
-console.log("Hello World!");
-console.log("wooaoashdf");
-console.log("Hello World!");
-console.log("wooaoashdf");
-console.log("Hello World!");
-console.log("wooaoashdf");
+for(i = 0; i < 10; i++){
+    console.log(i);
+}
