@@ -540,7 +540,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 try{
 
                     const toSaveCode = codeEditor.getValue();
-                    console.log(toSaveCode);
+                    //console.log(toSaveCode);
                     console.log(codeEditorsLangs[0])
                     if(codeEditorsLangs[0] == "python")
                         api.editor.savePython(toSaveCode);
@@ -553,13 +553,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             api.editor.runPython();
                         else 
                             api.editor.runJavascript();
-                        x = new Function(userCode)();
+                        //x = new Function(userCode)();
                         //console.log(x);
                         
                     }, 200);
 
                     setTimeout(() => {
-                        api.editor.runCode(x);
+                        api.editor.runCode();
                     }, 800);
                     
                 } catch (err) {
