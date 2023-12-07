@@ -221,7 +221,7 @@ ipcMain.on("sign-in", (event, email, password) => {
         }, 100);
         //This setTimeout is needed, however. I don't know if it needs to be 400 though
         setTimeout(() => {
-            mainWindow.webContents.send("sendUserID", docSnap.data());
+            mainWindow.webContents.send("sendUserData", docSnap.data());
         }, 400);
     });
 })
@@ -237,10 +237,10 @@ ipcMain.on("guest", () => {
     setTimeout(() => {
         updateWindowApp();
     }, 100);
-    // setTimeout(() => {
-    //     //This is just for testing, i don't believe this should do anything, though eventually would like to replace "hello" with an actual data json object
-    //     mainWindow.webContents.send("sendUserID", "hello");
-    // }, 1000);
+    setTimeout(() => {
+        //This is just for testing, i don't believe this should do anything, though eventually would like to replace "hello" with an actual data json object
+        mainWindow.webContents.send("sendUserData", "guest");
+    }, 1000);
     // updateWindowApp();
 })
 
@@ -283,7 +283,7 @@ ipcMain.on("paintClose", () => {
 });
 
 ipcMain.on("saveText", (event,content,path) =>{
-    fs.writeFileSync(`C:/Users/bob/Downloads/${path}.txt`,content,'utf-8');
+    fs.writeFileSync(`${path}.txt`,content,'utf-8');
     console.log(`Saved ${path}.txt file!`);
     new Notification({
         title: 'Saved',
@@ -292,7 +292,7 @@ ipcMain.on("saveText", (event,content,path) =>{
 })
 
 ipcMain.on("saveCode", (event,content,path) =>{
-    fs.writeFileSync(`C:/Users/bob/Downloads/${path}.js`,content,'utf-8');
+    fs.writeFileSync(`${path}.js`,content,'utf-8');
     console.log(`Saved ${path}.js file!`);
     new Notification({
         title: 'Saved',
@@ -302,9 +302,12 @@ ipcMain.on("saveCode", (event,content,path) =>{
 
 ipcMain.on("saveAll", async (event, content) => {
     // const storageRef = ref(storage, `user-files/${userID}/data.json`);
-    var toJSON = JSON.stringify(content, null, 2);
-    fs.writeFileSync('data.json', toJSON, 'utf-8');
-    console.log('Saved data.json file!');
+    console.log(userID);
+    if(!userID){
+        var toJSON = JSON.stringify(content, null, 2);
+        fs.writeFileSync('data.json', toJSON, 'utf-8');
+        console.log('Saved data.json file!');
+    }
     /*
     try{
         uploadBytes(storageRef, 'data.json').then((snapshot) => {
@@ -314,9 +317,11 @@ ipcMain.on("saveAll", async (event, content) => {
         console.error('Error saving to Firebase', error);
     }
     */
-    await setDoc(doc(db, "users", `${userID}`), {
-        json_data: content
-    });
+    else{
+        await setDoc(doc(db, "users", `${userID}`), {
+            json_data: content
+        });
+    }
     new Notification({
         title: 'Saved',
         body: "Your file has been successfully saved!"
