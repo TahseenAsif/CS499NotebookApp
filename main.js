@@ -6,6 +6,10 @@ const { getFirestore, doc, getDoc, setDoc } = require("firebase/firestore");
 const { getStorage, ref, uploadBytes, getMetadata, getDownloadURL } = require("firebase/storage");
 const path = require('path');
 const fs = require('fs');
+const { eventNames } = require('process');
+const { PythonShell } = require('python-shell');
+//for running CMD from js
+const exec = require('child_process').exec;
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -121,6 +125,19 @@ function createApp(){
     mainWindow.webContents.openDevTools();
 };
 
+function codeoutput(){
+    childWindow = new BrowserWindow({
+        width: 500,
+        height: 500,
+        webPreferences: {
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    childWindow.loadFile(path.join(__dirname, 'html/codeoutput.html'));
+    childWindow.webContents.openDevTools();
+};
+
 // change window size and html after successful login
 function updateWindowApp(){
     mainWindow.setSize(1200, 900);
@@ -205,7 +222,6 @@ ipcMain.on("sign-in", (event, email, password) => {
         //This setTimeout is needed, however. I don't know if it needs to be 400 though
         setTimeout(() => {
             mainWindow.webContents.send("sendUserID", docSnap.data());
-            console.log("LOLOL");
         }, 400);
     });
 })
@@ -306,3 +322,53 @@ ipcMain.on("saveAll", async (event, content) => {
         body: "Your file has been successfully saved!"
     }).show();
 })
+
+ipcMain.on("codeRun", (event, content) => {
+    codeoutput();
+})
+
+ipcMain.on("savePyth", (event, content) => {
+    //The weird indenting here seems necessary
+    const totalPyth =`
+import sys
+old_stdout = sys.stdout
+log_file = open("message.txt","w")
+sys.stdout = log_file
+${content}
+sys.stdout = old_stdout
+log_file.close()
+    `
+    fs.writeFileSync('test.py', totalPyth);
+    console.log('Saved test.py file!');
+    new Notification({
+        title: 'Saved',
+        body: "Your file has been successfully saved!"
+    }).show();
+});
+
+ipcMain.on("saveJs", (event, content) => {
+    fs.writeFileSync("test.js", content)
+    console.log('Saved test.js file!');
+    new Notification({
+        title: 'Saved',
+        body: "Your file has been successfully saved!"
+    }).show();
+});
+
+ipcMain.on("runPyth", (event) => {
+    pyshell = new PythonShell("test.py");
+    pyshell.on('message', function(message){
+        console.log(message);
+    })
+});
+
+ipcMain.on("runJs", (event) => {
+    exec('node test.js > message.txt',
+    function(error, stdout, stderr){
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+             console.log('exec error: ' + error);
+        }
+    });
+});

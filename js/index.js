@@ -81,6 +81,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const textTabs = document.querySelector('#text-editor-tabs');
     const codeTabs = document.querySelector('#code-editor-tabs');
     const codeEditors = [];
+    const codeEditorsLangs = [];
     const darkButton = document.querySelector("#darkMode"); 
 
 
@@ -312,15 +313,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let runButton = document.createElement('button');
             let resetButton = document.createElement('button');
             let saveButton = document.createElement('button');
+            let setButton = document.createElement('button');
             runButton.classList.add("codeNavButton");
             resetButton.classList.add("codeNavButton");
             saveButton.classList.add("codeNavButton");
+            setButton.classList.add("codeNavButton");
             runButton.id="run_code";
             resetButton.id="reset_code";
             saveButton.id="save";
+            setButton.id="set_code";
             runButton.innerHTML="RUN";
             resetButton.innerHTML="RESET";
             saveButton.innerHTML="SAVE";
+            setButton.innerHTML="SET";
 
             //Create array of options to be added
 			const langSettings = ["javascript", "python", "sql", "java"];
@@ -342,6 +347,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             navToAdd.appendChild(runButton);
             navToAdd.appendChild(resetButton);
             navToAdd.appendChild(saveButton);
+            navToAdd.appendChild(setButton);
             newTab.appendChild(navToAdd);
             //Adding container
             let codeContainer = document.createElement('div');
@@ -532,7 +538,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
             executeCodeBtns[0].addEventListener('click', (e) => {
                 const userCode = codeEditor.getValue();
                 try{
-                    new Function(userCode)();
+
+                    const toSaveCode = codeEditor.getValue();
+                    console.log(toSaveCode);
+                    console.log(codeEditorsLangs[0])
+                    if(codeEditorsLangs[0] == "python")
+                        api.editor.savePython(toSaveCode);
+                    else if(codeEditorsLangs[0] == "javascript")
+                        api.editor.saveJavascript(toSaveCode);
+                    
+                    //timeout allows time for the test.py or test.js file to save
+                    setTimeout(() => {
+                        if(codeEditorsLangs[0] == 'python')
+                            api.editor.runPython();
+                        else 
+                            api.editor.runJavascript();
+                        x = new Function(userCode)();
+                        //console.log(x);
+                        
+                    }, 200);
+
+                    setTimeout(() => {
+                        api.editor.runCode(x);
+                    }, 800);
+                    
                 } catch (err) {
                     console.log(err);
                 }
@@ -546,7 +575,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 executeCodeBtns[i].addEventListener('click', (e) => {
                     const userCode = codeEditor.getValue();
                     try{
-                        new Function(userCode)();
+
+                        const toSaveCode = codeEditor.getValue();
+                        console.log(toSaveCode);
+                        console.log(codeEditorsLangs[i])
+                        if(codeEditorsLangs[i] == "python")
+                            api.editor.savePython(toSaveCode);
+                        else if(codeEditorsLangs[0] == "javascript")
+                            api.editor.saveJavascript(toSaveCode);
+                    
+                    setTimeout(() => {
+                        if(codeEditorsLangs[i] == 'python')
+                            api.editor.runPython();
+                        else 
+                            api.editor.runJavascript();
+                        //x = new Function(userCode)();
+                        //console.log(x);
+                    }, 200);
+                    setTimeout(() => {
+                        api.editor.runCode(x);
+                    }, 800);
+                        
                     } catch (err) {
                         console.log(err);
                     }
@@ -559,12 +608,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 codeEditor.setValue(defaultCode);
             })
         }
+        
+        const setCodeBtns = document.querySelectorAll("#set_code");
+        for(let i = setCodeBtns.length - 1; i < setCodeBtns.length; i++){
+            setCodeBtns[i].addEventListener('click', () => {
+                const toSaveCode = codeEditor.getValue();
+                console.log(toSaveCode);
+                if(codeEditorsLangs[i] == "python")
+                    api.editor.savePython(toSaveCode);
+                else if(codeEditorsLangs[i] == "javascript")
+                    api.editor.saveJavascript(toSaveCode);
+            })
+        }
 
         const languageBoxes = document.querySelectorAll("#language");
 		for (let i = languageBoxes.length - 1; i < languageBoxes.length; i++) {
 			languageBoxes[i].addEventListener("change", (e) => {
-				codeEditor.session.setMode("ace/mode/" + e.target.value);
-			});
+                const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                const splitTabLabelCode = selectedTab.split(' ');
+                let idCode = `${splitTabLabelCode[1]}`;
+                codeEditor.session.setMode("ace/mode/" + e.target.value);
+                codeEditorsLangs[idCode-1] = e.target.value;
+                console.log(codeEditorsLangs);
+                console.log(codeEditors);
+            });
 		}
 
         `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---
@@ -588,6 +655,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             codeEditor.setValue(defaultCode);
         });`
         codeEditors.push(codeEditor);
+        codeEditorsLangs.push("javascript");
     }
     createCodeEditor('TAB1');
     console.log(codeEditors);
