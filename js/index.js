@@ -636,7 +636,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         //console.log(x);
                     }, 200);
                     setTimeout(() => {
-                        api.editor.runCode(x);
+                        api.editor.runCode();
                     }, 800);
                         
                     } catch (err) {
