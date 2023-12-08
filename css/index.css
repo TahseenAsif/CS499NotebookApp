@@ -55,6 +55,15 @@ body{
 	width: 100%;
 }
 
+.editor {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+}
+
 .separator{
     cursor: col-resize;
     width: 0.1%;
@@ -71,7 +80,24 @@ body{
 }
 
 .tabs{
-    margin: 0;
+    overflow: auto;
     width: 100%;
     height: 100%;
 }
+
+.ql-container.ql-snow{
+    height: 90%;
+}
+
+.ql-paint:after{
+    font-family: fontAwesome;
+    content: "\f53f\00a0";
+}
+
+.ql-save:after{
+    font-family: fontAwesome;
+    content: '\f0c7\00a0';
+    color: black;
+}
+
+

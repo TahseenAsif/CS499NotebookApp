@@ -3,13 +3,20 @@ const maximize = document.getElementById("maximize");
 const exit = document.getElementById("exit");
 
 minimize.addEventListener("click", () => {
-    api.terminal.minimize();
+    api.term.minimize();
 });
 
 maximize.addEventListener("click", () => {
-    api.terminal.maximize();
+    api.term.maximize();
 });
 
 exit.addEventListener("click", () => {
-    api.terminal.exit();
+    api.term.exit();
+});
+
+console.log("it works here!");
+
+window.api.incomingData((_event, data) => {
+    console.log(data);
+    //termObj.write(data);
 });
