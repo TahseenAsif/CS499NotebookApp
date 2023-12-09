@@ -193,7 +193,43 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //opening files
     open.addEventListener('click', () => {
-       loadMultipleJSON();
+       //loadMultipleJSON();
+        //----The below implementation is for single files per each tab
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.txt, .html, .css, .js, .cpp'
+        input.onchange = () => {
+            var reader = new FileReader();
+            reader.onload = () => {
+                var content = reader.result;
+                let fileName = input.files[0].name;
+                const splitName = fileName.split('.');
+                const fileTitle = splitName[0];
+                const fileType = splitName[1];
+                if(fileType === 'txt' || fileType === 'html'){
+                    const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
+                    const splitTabLabel = selectedTab.split(' ');
+                    let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
+                    const textEditor = document.querySelector(`#${id} .ql-editor`);
+                    textEditor.innerHTML = content;
+                    const t = document.querySelector('smart-tabs');
+                    //t.update(textTabs.selectedIndex, fileTitle)
+                    //textEditor.classList.add(`${id}`)
+                    textEditor.label = fileTitle;
+                }
+                else{
+                    const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                    const splitTabLabel = selectedTab.split(' ');
+                    let id = `${splitTabLabel[1]}`;
+                    codeEditors[id-1].setValue(content) // this just makes the first tab code editor value, need to implement new code tab first before updating this
+                }
+            };
+            reader.readAsText(input.files[0])
+        };
+        input.click()
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+        
     })
 
     saveAll.addEventListener('click', () => {
@@ -437,7 +473,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             save[i].addEventListener('click', () => {
                 const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
                 const content = textEditor.innerHTML;
-                api.editor.textSave(content, `Tab${i}`);
+                api.editor.textSave(content, `Tab${i+1}`);
             })
           }
     }
@@ -618,18 +654,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
             });
 		}
 
-        const saveCodeBtns = document.querySelectorAll(".save");
+        const saveCodeBtns = document.querySelectorAll("#save");
         for(let i = 0; i < saveCodeBtns.length; i++){
             saveCodeBtns[i].addEventListener('click', (e) =>{
                 let content = codeEditors[i].getValue()
-                if(codeEditorsLangs[i] == "python")
-                    api.editor.codeSave(content, `TAB${i}.py`)
-                if(codeEditorsLangs[i] == "javascript")
-                    api.editor.codeSave(content, `TAB${i}.js`)
-                if(codeEditorsLangs[i] == "java")
-                    api.editor.codeSave(content, `TAB${i}.java`)
-                if(codeEditorsLangs[i] == "sql")
-                    api.editor.codeSave(content, `TAB${i}.sql`)
+                if(codeEditorsLangs[i] === "python")
+                    api.editor.codeSave(content, `TAB${i+1}.py`)
+                if(codeEditorsLangs[i] === "javascript")
+                    api.editor.codeSave(content, `TAB${i+1}.js`)
+                if(codeEditorsLangs[i] === "java")
+                    api.editor.codeSave(content, `TAB${i+1}.java`)
+                if(codeEditorsLangs[i] === "sql")
+                    api.editor.codeSave(content, `TAB${i+1}.sql`)
             });
         }
 
