@@ -121,9 +121,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const newCode = document.querySelector("#new-code");
     const newPair = document.querySelector("#new-pair");
     const open = document.querySelector('#open');
+    const saveAll = document.querySelector('#saveAll');
     const textTabs = document.querySelector('#text-editor-tabs');
     const codeTabs = document.querySelector('#code-editor-tabs');
-    const codeEditors = [];
+    let codeEditors = [];
     const codeEditorsLangs = [];
     const darkButton = document.querySelector("#darkMode"); 
 
@@ -192,48 +193,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //opening files
     open.addEventListener('click', () => {
-        //----The below implementation is for single files per each tab
-        /*
-        let input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.txt, .html, .css, .js, .cpp'
-        input.onchange = () => {
-            var reader = new FileReader();
-            reader.onload = () => {
-                var content = reader.result;
-                let fileName = input.files[0].name;
-                const splitName = fileName.split('.');
-                const fileTitle = splitName[0];
-                const fileType = splitName[1];
-                if(fileType === 'txt'){
-                    const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                    const splitTabLabel = selectedTab.split(' ');
-                    let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
-
-                    const textEditor = document.querySelector(`#${id} .ql-editor`);
-                    textEditor.innerHTML = content;
-                    const t = document.querySelector('smart-tabs');
-                    //t.update(textTabs.selectedIndex, fileTitle)
-                    //textEditor.classList.add(`${id}`)
-                    textEditor.label = fileTitle;
-
-                }
-                else{
-                    const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                    const splitTabLabel = selectedTab.split(' ');
-                    let id = `${splitTabLabel[1]}`;
-                    codeEditors[id-1].setValue(content) // this just makes the first tab code editor value, need to implement new code tab first before updating this
-
-                }
-            };
-            reader.readAsText(input.files[0])
-        };
-        input.click()
-
-        files.classList.toggle("chosen");
-        files.parentElement.classList.toggle("tooltip");\
-        */
        loadMultipleJSON();
+    })
+
+    saveAll.addEventListener('click', () => {
+        console.log(numOfTextTabs);
+        const testSave = saveAllJSON();
+        console.log(testSave);
+        api.editor.allSave(testSave)
     })
 
     function loadSingleJSON(){
@@ -304,7 +271,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         createNewTab('code');
                         codeEditors[i].setValue(data.code[i]);
                     }
-                });
+            }
+            reader.readAsText(event.target.files[0]);
         }
         input.click();
     }
@@ -465,38 +433,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
 
           const save = document.querySelectorAll('.ql-save');
+          //Remove this, replace with single doc saving
           for(let i = save.length - 1; i < save.length; i++){
             save[i].addEventListener('click', (e) =>{
-                // //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                // //const selectedEditor = document.querySelector(`.Tab1`);
-                // //selectedEditor.innerHTML = 'hi'
-
-                
-                // const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                // const splitTabLabel = selectedTab.split(' ');
-                // let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
-
-                // const textEditor = document.querySelector(`#${id} .ql-editor`);
-                // var content = textEditor.innerHTML;
-                // //---This is just to test if data can be saved to JSON (it can)
-                // // jsonContent = JSON.stringify(content);
-                // // console.log(jsonContent);
-                // //Adding saving for code editor
-                // const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                // const splitTabLabelCode = selectedTabCode.split(' ');
-                // let idCode = `${splitTabLabelCode[1]}`;
-                // const codeEditorToSave = document.querySelector(`.ace_text-input`);
-                // var codeContent = codeEditors[idCode-1].getValue();
-                // console.log(codeContent);
-                // `if(textEditor.label != null){
-                //     api.editor.textSave(content,textEditor.label);
-                // }`
-                //     api.editor.codeSave(codeContent, codeEditorToSave.label);
                 console.log(numOfTextTabs);
                 const testSave = saveAllJSON();
                 console.log(testSave);
                 api.editor.allSave(testSave)
-                //^^ this doesn't work, apparently the content to send to the api can't be a json object?
             })
           }
     }
