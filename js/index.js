@@ -271,8 +271,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         createNewTab('code');
                         codeEditors[i].setValue(data.code[i]);
                     }
-            }
-            reader.readAsText(event.target.files[0]);
+                });
         }
         input.click();
     }
@@ -426,7 +425,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
           //paint window button
           const paint = document.querySelectorAll('.ql-paint');
-          for(let i = paint.length - 1 ; i < paint.length; i++){
+          for(let i = 0 ; i < paint.length; i++){
             paint[i].addEventListener('click', () =>{
                api.paint_window.paint();
             })
@@ -434,12 +433,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
           const save = document.querySelectorAll('.ql-save');
           //Remove this, replace with single doc saving
-          for(let i = save.length - 1; i < save.length; i++){
-            save[i].addEventListener('click', (e) =>{
-                console.log(numOfTextTabs);
-                const testSave = saveAllJSON();
-                console.log(testSave);
-                api.editor.allSave(testSave)
+          for(let i = 0; i < save.length; i++){
+            save[i].addEventListener('click', () => {
+                const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
+                const content = textEditor.innerHTML;
+                api.editor.textSave(content, `Tab${i}`);
             })
           }
     }
@@ -619,6 +617,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 console.log(codeEditors);
             });
 		}
+
+        const saveCodeBtns = document.querySelectorAll(".save");
+        for(let i = 0; i < saveCodeBtns.length; i++){
+            saveCodeBtns[i].addEventListener('click', (e) =>{
+                let content = codeEditors[i].getValue()
+                if(codeEditorsLangs[i] == "python")
+                    api.editor.codeSave(content, `TAB${i}.py`)
+                if(codeEditorsLangs[i] == "javascript")
+                    api.editor.codeSave(content, `TAB${i}.js`)
+                if(codeEditorsLangs[i] == "java")
+                    api.editor.codeSave(content, `TAB${i}.java`)
+                if(codeEditorsLangs[i] == "sql")
+                    api.editor.codeSave(content, `TAB${i}.sql`)
+            });
+        }
 
         `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---
         const executeCodeBtn = document.querySelector("#run_code");

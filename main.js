@@ -283,7 +283,7 @@ ipcMain.on("paintClose", () => {
 });
 
 ipcMain.on("saveText", (event,content,path) =>{
-    fs.writeFileSync(`${path}.txt`,content,'utf-8');
+    fs.writeFileSync(`savedfiles/${path}.txt`,content,'utf-8');
     console.log(`Saved ${path}.txt file!`);
     new Notification({
         title: 'Saved',
@@ -292,8 +292,8 @@ ipcMain.on("saveText", (event,content,path) =>{
 })
 
 ipcMain.on("saveCode", (event,content,path) =>{
-    fs.writeFileSync(`${path}.js`,content,'utf-8');
-    console.log(`Saved ${path}.js file!`);
+    fs.writeFileSync(`savedfiles/${path}`,content,'utf-8');
+    console.log(`Saved ${path} file!`);
     new Notification({
         title: 'Saved',
         body: 'Your file have been successfully saved!'
