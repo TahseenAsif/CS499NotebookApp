@@ -669,6 +669,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             else if(languageType === 'javascript'){
                 defaultCode = 'console.log("Hello World!");';
                 codeEditor.session.setValue(defaultCode);
+            } else if(languageType === 'java'){
+                defaultCode = 'System.out.println("Hello World!");';
+                codeEditor.session.setValue(defaultCode);
+            } else if (languageType === 'sql'){
+                defaultCode = 'select "Hello World!;';
+                codeEditor.session.setValue(defaultCode);
             }
         }
 
