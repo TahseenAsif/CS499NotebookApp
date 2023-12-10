@@ -37,16 +37,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             console.log(userData.json_data.code);
             
             setTimeout(() => {
-                const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
-                const splitTabLabelText = selectedTabText.split(' ');
-                let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
-                const textEditor = document.querySelector(`#${textid} .ql-editor`);
-                textEditor.innerHTML=userData.json_data.text[0];
-                //FOR LOADING MULTIPLE TEXT
-                for(i = 1; i < userData.json_data.text.length; i++){
-                    api.editor.newTextTab();
-                    const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
-                    textEditor2.innerHTML = userData.json_data.text[i];
+                for(let i = 0; i < data.text.length; i++){
+                    api.text_editor.load(data.text[i]);
                 }
                 //FOR LOADING MULTIPLE CODE
                 codeEditors[0].setValue(userData.json_data.code[0]);
