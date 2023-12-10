@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     const display = document.querySelector("#output");
-    const container = document.querySelector(".terminal");
+    const terminal = document.querySelector(".terminal");
 
     //execution resulted in errors, show errors only
     window.api.onErrorMsg((event, err) => {
@@ -15,7 +15,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //execution resulted in no errors, show output
     window.api.noErrorMsg((event, msg) => {
-        console.log(msg);
         getMessage();
     })
 
@@ -45,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 break;
             case 1:
                 exitID = "exitStatus1";
-                exitMsg = "File terminated! (returns 1)";
+                exitMsg = "Execution terminated! (returns 1)";
                 break;
         }
         exitMsg = exitMsg.concat("</br>Press any key to exit the terminal...");
@@ -58,7 +57,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const wrap = document.createElement("samp");
         wrap.innerHTML = content;
         newLine.appendChild(wrap);
-        container.appendChild(newLine);
+        terminal.appendChild(newLine);
     }
 });
 

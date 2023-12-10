@@ -189,6 +189,10 @@ function openTerminal(error, msg){
         else{
             termWindow.webContents.send("noErrors", msg);
         }
+        //focuses to terminal
+        setTimeout(() => {
+            termWindow.focus();
+        }, 500);
     });
 }
 
@@ -373,31 +377,32 @@ function executePython(){
         errorMsg += stderr + "\n";
     });
     pyshell.on('pythonError', () => {
-        // console.log("File executed and terminated with a non-zero exit code!");
         errorExit = true;
     });
-    // for(i = 0; i < errorArray.length; i++){
-    //     console.log(errorArray[i]);
-    // }
+    //give some time for execution
     setTimeout(() => {
         if(!errorExit){
-            errorMsg = 0;
+            errorMsg = "0";
         }
         openTerminal(errorExit, errorMsg);
     }, 400);
 }
 
 function executeJavascript(){
+    var errorExit = false;
+    var errorMsg = "";
     exec('node test.js > message.txt',
     function(error, stdout, stderr){
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
+        errorMsg = stderr;
         if(error !== null){
-            console.log('exec error: ' + error);
+            errorExit = true;
         }
     });
     //give some time for execution
     setTimeout(() => {
-        openTerminal();
+        if(!errorExit){
+            errorMsg = "0";
+        }
+        openTerminal(errorExit, errorMsg);
     }, 400);
 }
