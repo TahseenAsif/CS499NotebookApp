@@ -1,6 +1,22 @@
-window.addEventListener('DOMContentLoaded', (event) => {
-    const terminal = document.querySelector("#output"); 
-    const overTerminal = document.querySelector(".terminal");  
+window.addEventListener('DOMContentLoaded', () => {
+    const minimize = document.getElementById("minimize");
+    const maximize = document.getElementById("maximize");
+    const exit = document.getElementById("exit");
+
+    const display = document.querySelector("#output");
+    const container = document.querySelector(".terminal");
+
+    minimize.addEventListener("click", () => {
+        api.terminal.minimize();
+    });
+    
+    maximize.addEventListener("click", () => {
+        api.terminal.maximize();
+    });
+    
+    exit.addEventListener("click", () => {
+        api.terminal.exit();
+    });
 
     async function getMessage() {
         // const response = (await fetch('../messageJs.txt')).text();
@@ -16,7 +32,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const toAdd = document.createElement("p");
                     toAdd.id = "output";
                     toAdd.innerHTML = x[i];
-                    overTerminal.appendChild(toAdd);
+                    container.appendChild(toAdd);
                 }
             })
     }

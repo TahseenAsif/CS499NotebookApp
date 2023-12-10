@@ -1,20 +1,3 @@
-// let pageContent = document.querySelector("#site").innerHTML;
-// //saving html page locally
-// function saveIndex(){
-//     localStorage.setItem("index", pageContent);
-//     console.log("Saved html in storage!");
-// };
-
-// api.loadIndex((event, message) => {
-//     console.log(message);
-//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
-//     console.log("Loaded html from storage!")
-// })
-
-// window.api.loadIndex((event) => {
-//     document.querySelector("#site").innerHTML = localStorage.getItem("index");
-// });
-
 window.addEventListener('DOMContentLoaded', (event) => {
     //IPC TESTING
     window.api.sendUserData((event, userData) => {
@@ -490,32 +473,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         return toSave;
     }
 
-    // -----------------------------------------------------------------
-    // -----------------------------------------------------------------
-    //ace code editor
-    // const executeCodeBtn = document.querySelector("#run_code");
-    // const resetCodeBtn = document.querySelector("#reset_code");
-
-    // // Setup Ace
-    // let codeEditor = ace.edit("editor");
-    // let defaultCode = 'console.log("Hello World!");';
-    // // Configure Ace
-
-    // // Theme
-    // codeEditor.setTheme("ace/theme/dracula");
-
-    // // Set language
-    // codeEditor.session.setMode("ace/mode/javascript");
-
-    // // Set Options
-    // codeEditor.setOptions({
-    //     enableBasicAutocompletion: true,
-    //     enableLiveAutocompletion: true,
-    // });
-
-    // // Set Default Code
-    // codeEditor.setValue(defaultCode);
-
     //----------------------------Making a function for creating code editors
     function createCodeEditor(id){
         // Setup Ace
@@ -936,15 +893,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
             darkButton.children[0].innerHTML = "Dark Mode";
         }
     }
-
-    // // saving and loading htmls
-    // let pageContent = document.querySelector("#showContent").innerHTML;
-    // //save html info locally
-    // function storeHTMLInfo(){
-    //     localStorage.setItem("indexContent", pageContent);
-    //     console.log("Saved html in storage!");
-    // }
-    // function loadHTMLInfo(contentName){
-    //     // pageContent = 
-    // }
 });

@@ -27,10 +27,15 @@ contextBridge.exposeInMainWorld("api", {
         textSave:      (content,path) => ipcRenderer.send("saveText",content,path),
         codeSave:      (content,path) => ipcRenderer.send("saveCode",content,path),
         allSave:       (content,path) => ipcRenderer.send("saveAll",content),
-        runCode:       (content,path) => ipcRenderer.send("codeRun",content),
         savePython:    (content,path) => ipcRenderer.send("save_as_Py",content),
         saveJavascript:(content,path) => ipcRenderer.send("save_as_Js",content,path),
+        runCode:       () => ipcRenderer.send("codeRun"),
         runPython:     () => ipcRenderer.send("runPyth"),
         runJavascript: () => ipcRenderer.send("runJs"),
+    },
+    terminal:{
+        minimize:      () => ipcRenderer.send("termMinimize"),
+        maximize:      () => ipcRenderer.send("termMaximize"),
+        exit:          () => ipcRenderer.send("termClose"),
     }
 });

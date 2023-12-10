@@ -22,7 +22,7 @@ const firebaseConfig = {
     measurementId: "G-DW8W1X0TLK"
 };
 
-const firebase_app = initializeApp(firebaseConfig);     // Initialize Firebase
+const firebase_app = initializeApp(firebaseConfig);     //Initialize Firebase
 const auth = getAuth(firebase_app);                     //Initialize Firebase Authentication and get a reference to the server
 const db = getFirestore(firebase_app)                   //Initialize Firestore
 const storage = getStorage(firebase_app);               //Initialize Firebase Storage
@@ -89,21 +89,21 @@ const signUp = async (email, password, onSignUp) => {
     }
 };
 
-const mySignOut = async (onSignOut) => {
-    try {
-      await signOut(auth);
-      console.log("Signed out");
-      // Call the onSignOut callback
-      if (onSignOut) {
-        onSignOut();
-      }
-    } catch (error) {
-      console.log("Error signing out", error);
-    }
-}
+// const mySignOut = async (onSignOut) => {
+//     try {
+//       await signOut(auth);
+//       console.log("Signed out");
+//       // Call the onSignOut callback
+//       if (onSignOut) {
+//         onSignOut();
+//       }
+//     } catch (error) {
+//       console.log("Error signing out", error);
+//     }
+// }
 
 let mainWindow;
-let childWindow;
+let termWindow;
 
 function createApp(){
     // Create the browser window.
@@ -122,21 +122,24 @@ function createApp(){
     // load the login.html of the app
     mainWindow.loadFile(path.join(__dirname, 'html/login.html'));
     // open dev tools
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 };
 
-function codeoutput(){
-    childWindow = new BrowserWindow({
-        width: 500,
-        height: 500,
+function createTerminalWindow(){
+    termWindow = new BrowserWindow({
+        width: 900,
+        height: 600,
         resizable: false,
+        modal: true,
+        show: false,
+        frame: false,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
-    childWindow.loadFile(path.join(__dirname, 'html/codeoutput.html'));
+    termWindow.loadFile(path.join(__dirname, 'html/terminal.html'));
     //childWindow.webContents.openDevTools();
 };
 
@@ -147,7 +150,6 @@ function createPaintWindow(){
         width: 1500,
         height: 800,
         resizable: false,
-        
         frame: false,
         webPreferences: {
             //setting true will run into potential security issues
@@ -169,23 +171,6 @@ function updateWindowApp(){
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
     mainWindow.webContents.openDevTools();
 }
-
-// maybe used to display code output instead of outputing to devtools when running code
-// function createChildWindow(){
-//     childWindow = new BrowserWindow({
-//         width: 1000,
-//         height: 700,
-//         modal: true,
-//         show: false,
-//         frame: false,
-//         parent: mainWindow,
-//         webPreferences: {
-//             nodeIntegration: false,
-//             preload: path.join(__dirname, 'preload.js')
-//         },
-//     });
-//     childWindow.webContents.openDevTools();
-// }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -220,19 +205,6 @@ ipcMain.on("winClose", () => {
     mainWindow.close();
 });
 
-// ipcMain.on("childMinimize", () => {
-//     console.log("minimizing");
-//     childWindow.minimize();
-// });
-
-// ipcMain.on("childMaximize", () => {
-//     childWindow.maximize();
-// });
-
-// ipcMain.on("childClose", () => {
-//     childWindow.close();
-// });
-
 //ipcMain listening for login interactions (signUp, signIn)
 ipcMain.on("sign-in", (event, email, password) => {
     signIn(email, password, (uid) => {
@@ -265,7 +237,7 @@ ipcMain.on("guest", () => {
 })
 
 //creating paint window
-ipcMain.on('runPaint', () =>{
+ipcMain.on('runPaint', () => {
     createPaintWindow();
 })
 
@@ -327,9 +299,32 @@ ipcMain.on("saveAll", async (event, content) => {
     }).show();
 })
 
-ipcMain.on("codeRun", (event, content) => {
-    codeoutput();
+ipcMain.on("codeRun", () => {
+    //if terminal already exist
+    if(termWindow){
+        //move top to show user
+        termWindow.moveTop();
+    }
+    else{
+        createTerminalWindow();
+        termWindow.once('ready-to-show', () => {
+            termWindow.show();
+        })
+    }
+    // codeoutput();
 })
+
+ipcMain.on("termMinimize", () => {
+    termWindow.minimize();
+});
+
+ipcMain.on("termMaximize", () => {
+    termWindow.maximize();
+});
+
+ipcMain.on("termClose", () => {
+    termWindow.close();
+});
 
 ipcMain.on("save_as_Py", (event, content) => {
     //The weird indenting here seems necessary
