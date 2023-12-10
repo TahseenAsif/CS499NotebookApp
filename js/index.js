@@ -28,10 +28,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     loadData = data;
                     console.log(loadData);
                     console.log(loadData.code);
-                    // const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                    // const splitTabLabel = selectedTab.split(' ');
-                    // let id = `${splitTabLabel[1]}`;
-                    // codeEditors[id-1].setValue(data.code.TAB1);
                     const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
                     const splitTabLabelText = selectedTabText.split(' ');
                     let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
@@ -44,12 +40,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         textEditor2.innerHTML = data.text[i];
                     }
                     //FOR LOADING MULTIPLE CODE
-                    // (async () => {
-                    //     codeEditors[0].setValue(data.code[0]);
-                    //     console.log(data.code.length);
-                    //     console.log(data.code);
-                    //     await createCodeEditor(`TAB${1}`);
-                    // })()
                     codeEditors[0].setValue(data.code[0]);
                     console.log(data.code.length);
                     console.log(data.code);
@@ -125,7 +115,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const textTabs = document.querySelector('#text-editor-tabs');
     const codeTabs = document.querySelector('#code-editor-tabs');
     let codeEditors = [];
-    const codeEditorsLangs = [];
+    let codeEditorsLangs = [];
     const darkButton = document.querySelector("#darkMode"); 
 
 
@@ -341,7 +331,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if(e === 'text'){
             numOfTextTabs++;
             totalTextTabs++;
-            newTab.label = `Tab ${numOfTextTabs}`; //label will be  changed to text file name once opened
+            newTab.label = `Tab ${numOfTextTabs}`;
             const newEditor = document.createElement('div');
             newEditor.id = `Tab${numOfTextTabs}`;
             newTab.appendChild(newEditor);
@@ -461,7 +451,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
           //paint window button
           const paint = document.querySelectorAll('.ql-paint');
-          for(let i = 0 ; i < paint.length; i++){
+          for(let i = paint.length - 1 ; i < paint.length; i++){
             paint[i].addEventListener('click', () =>{
                api.paint_window.paint();
             })
@@ -469,7 +459,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
           const save = document.querySelectorAll('.ql-save');
           //Remove this, replace with single doc saving
-          for(let i = 0; i < save.length; i++){
+          for(let i = save.length - 1; i < save.length; i++){
             save[i].addEventListener('click', () => {
                 const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
                 const content = textEditor.innerHTML;
@@ -901,16 +891,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     validateDark();
 
     function codeEditorThemeSwitch() {
-        // const selectedTab = textTabs.getTabLabel(codeTabs.selectedIndex);
-        // const splitTabLabel = selectedTab.split(' ');
-        // let id = `${splitTabLabel[1]}`;
-        // let aceEditor = codeEditors[id-1];
-        // console.log(codeTabs);
-		// if (dark) {
-		// 	aceEditor.setTheme("ace/theme/clouds_midnight");
-		// } else {
-		// 	aceEditor.setTheme("ace/theme/github");
-		// }
         if(dark){
             for(i = 0; i < codeEditors.length; i++){
                 codeEditors[i].setTheme("ace/theme/clouds_midnight");
@@ -950,14 +930,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    // saving and loading htmls
-    let pageContent = document.querySelector("#showContent").innerHTML;
-    //save html info locally
-    function storeHTMLInfo(){
-        localStorage.setItem("indexContent", pageContent);
-        console.log("Saved html in storage!");
-    }
-    function loadHTMLInfo(contentName){
-        // pageContent = 
-    }
+    // // saving and loading htmls
+    // let pageContent = document.querySelector("#showContent").innerHTML;
+    // //save html info locally
+    // function storeHTMLInfo(){
+    //     localStorage.setItem("indexContent", pageContent);
+    //     console.log("Saved html in storage!");
+    // }
+    // function loadHTMLInfo(contentName){
+    //     // pageContent = 
+    // }
 });

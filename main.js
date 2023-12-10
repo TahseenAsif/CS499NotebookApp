@@ -138,6 +138,26 @@ function codeoutput(){
     childWindow.webContents.openDevTools();
 };
 
+//Used for testing paint functionality, feel free to remove/modify this
+function createPaintWindow(){
+    // Create the browser window.
+    paintWindow = new BrowserWindow({
+        width: 1500,
+        height: 800,
+        resizable: false,
+        
+        frame: false,
+        webPreferences: {
+            //setting true will run into potential security issues
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    // and load the paint.html of the app.
+    paintWindow.loadFile(path.join(__dirname, './html/paint.html'));
+
+};
+
 // change window size and html after successful login
 function updateWindowApp(){
     mainWindow.setSize(1200, 900);
@@ -215,7 +235,7 @@ ipcMain.on("winClose", () => {
 ipcMain.on("sign-in", (event, email, password) => {
     signIn(email, password, (uid) => {
         console.log(`Signed in ${uid}`);
-        //I do not belive this setTimeout is needed
+        //I do not know if this setTimeout is needed
         setTimeout(() => {
             updateWindowApp();
         }, 100);
@@ -238,32 +258,9 @@ ipcMain.on("guest", () => {
         updateWindowApp();
     }, 100);
     setTimeout(() => {
-        //This is just for testing, i don't believe this should do anything, though eventually would like to replace "hello" with an actual data json object
         mainWindow.webContents.send("sendUserData", "guest");
     }, 1000);
-    // updateWindowApp();
 })
-
-//Used for testing paint functionality, feel free to remove/modify this
-function createPaintWindow(){
-    // Create the browser window.
-    paintWindow = new BrowserWindow({
-        width: 1500,
-        height: 800,
-        resizable: false,
-        
-        frame: false,
-        webPreferences: {
-            //setting true will run into potential security issues
-            nodeIntegration: false,
-            preload: path.join(__dirname, 'preload.js')
-        }
-    });
-    // and load the index.html of the app.
-    paintWindow.loadFile(path.join(__dirname, './html/paint.html'));
-
-};
-
 
 //creating paint window
 ipcMain.on('runPaint', () =>{
@@ -332,7 +329,7 @@ ipcMain.on("codeRun", (event, content) => {
     codeoutput();
 })
 
-ipcMain.on("savePyth", (event, content) => {
+ipcMain.on("save_as_Py", (event, content) => {
     //The weird indenting here seems necessary
     const totalPyth =`
 import sys
@@ -351,7 +348,7 @@ log_file.close()
     }).show();
 });
 
-ipcMain.on("saveJs", (event, content) => {
+ipcMain.on("save_as_Js", (event, content) => {
     fs.writeFileSync("test.js", content)
     console.log('Saved test.js file!');
     new Notification({

@@ -1,3 +1,8 @@
+/* need to style body if other css don't style body */
+body{
+    margin: 0;
+}
+
 .titleBar{
     display: grid;
     grid-template-columns: 1fr auto;
