@@ -182,10 +182,13 @@ function updateWindowApp(){
 function openTerminal(error, msg){
     createTerminalWindow();
     termWindow.once('ready-to-show', () => {
+        termWindow.show();
         if(error){
             termWindow.webContents.send("sendErrorMsg", msg);
         }
-        termWindow.show();
+        else{
+            termWindow.webContents.send("noErrors", msg);
+        }
     });
 }
 
@@ -357,7 +360,7 @@ ipcMain.on("save_as_Js", (event, content) => {
 
 function executePython(){
     var errorExit = false;
-    var errorMsg;
+    var errorMsg = "";
     pyshell = new PythonShell("test.py");
     pyshell.on('error', () => {
         //List of possible events that triggered the event:
@@ -367,14 +370,19 @@ function executePython(){
         console.log("An error occurred!");
     });
     pyshell.on('stderr', (stderr) => {
-        // console.log(stderr);
-        errorMsg = stderr;
+        errorMsg += stderr + "\n";
     });
     pyshell.on('pythonError', () => {
-        console.log("File executed and terminated with a non-zero exit code!");
+        // console.log("File executed and terminated with a non-zero exit code!");
         errorExit = true;
     });
+    // for(i = 0; i < errorArray.length; i++){
+    //     console.log(errorArray[i]);
+    // }
     setTimeout(() => {
+        if(!errorExit){
+            errorMsg = 0;
+        }
         openTerminal(errorExit, errorMsg);
     }, 400);
 }

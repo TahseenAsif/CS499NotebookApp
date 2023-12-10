@@ -17,6 +17,7 @@ body{
 #error{
     color: crimson;
     font-size: inherit;
+    white-space: pre-wrap;
 }
 
 #exitStatus1 samp{

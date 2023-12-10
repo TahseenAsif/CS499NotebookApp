@@ -1,13 +1,14 @@
 const {contextBridge, ipcRenderer} = require('electron');
 
 contextBridge.exposeInMainWorld("api", {
-    sendUserData: (callback) => ipcRenderer.on("sendUserData", (callback)),
-    onErrorMsg: (callback) => ipcRenderer.on("sendErrorMsg", (callback)),
+    sendUserData:       (callback) => ipcRenderer.on("sendUserData", (callback)),
+    onErrorMsg:         (callback) => ipcRenderer.on("sendErrorMsg", (callback)),
+    noErrorMsg:         (callback) => ipcRenderer.on("noErrors", (callback)),
     login:{
-        signInRequest: (email, password) => ipcRenderer.send("sign-in", email, password),
-        signUpRequest: (email, password) => ipcRenderer.send("sign-up", email, password),
-        guestRequest:  () => ipcRenderer.send("guest"),
-        signOutRequest:() => ipcRenderer.send("sign-out"),
+        signInRequest:  (email, password) => ipcRenderer.send("sign-in", email, password),
+        signUpRequest:  (email, password) => ipcRenderer.send("sign-up", email, password),
+        guestRequest:   () => ipcRenderer.send("guest"),
+        signOutRequest: () => ipcRenderer.send("sign-out"),
     },
     window:{
         minimize:       () => ipcRenderer.send("winMinimize"),

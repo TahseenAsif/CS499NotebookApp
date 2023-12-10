@@ -1,17 +1,25 @@
 window.addEventListener('DOMContentLoaded', () => {
     const display = document.querySelector("#output");
     const container = document.querySelector(".terminal");
-    var error = false;
 
+    //execution resulted in errors, show errors only
     window.api.onErrorMsg((event, err) => {
-        error = true;
-        console.log(err);
+        x = err.split('\n');
+        for(i = 0; i < x.length; i++){
+            if(x[i] != ""){
+                displayOnTerminal("error", x[i]);
+            }
+        }
+        exitStatus(1);
     });
 
+    //execution resulted in no errors, show output
+    window.api.noErrorMsg((event, msg) => {
+        console.log(msg);
+        getMessage();
+    })
+
     async function getMessage(){
-        // const response = (await fetch('../messageJs.txt')).text();
-        // console.log(response);
-        // console.log(response[2]);
         fetch('../message.txt')
             .then((res) => res.text())
             .then((text) => {
@@ -25,7 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
                 exitStatus(0);
             })
-
     }
 
     async function exitStatus(value){
@@ -34,11 +41,11 @@ window.addEventListener('DOMContentLoaded', () => {
         switch(value){
             case 0:
                 exitID = "exitStatus0";
-                exitMsg = "File executed returns zero!";
+                exitMsg = "File executed! (returns 0)";
                 break;
             case 1:
                 exitID = "exitStatus1";
-                exitMsg = "File executed returns non-zero!";
+                exitMsg = "File terminated! (returns 1)";
                 break;
         }
         exitMsg = exitMsg.concat("</br>Press any key to exit the terminal...");
@@ -53,17 +60,6 @@ window.addEventListener('DOMContentLoaded', () => {
         newLine.appendChild(wrap);
         container.appendChild(newLine);
     }
-
-    async function runTerminal(){
-        if(error){
-            showError();
-        }
-        else{
-            getMessage();
-        }
-    }
-
-    runTerminal();
 });
 
 window.addEventListener('keydown', (e) => {
