@@ -89,18 +89,18 @@ const signUp = async (email, password, onSignUp) => {
     }
 };
 
-// const mySignOut = async (onSignOut) => {
-//     try {
-//       await signOut(auth);
-//       console.log("Signed out");
-//       // Call the onSignOut callback
-//       if (onSignOut) {
-//         onSignOut();
-//       }
-//     } catch (error) {
-//       console.log("Error signing out", error);
-//     }
-// }
+const mySignOut = async (onSignOut) => {
+    try {
+        await signOut(auth);
+        console.log("Signed out");
+        // Call the onSignOut callback
+        if (onSignOut) {
+            onSignOut();
+        }
+    } catch (error) {
+        console.log("Error signing out", error);
+    }
+}
 
 ipcMain.on("sign-out", () => {
     mySignOut();
