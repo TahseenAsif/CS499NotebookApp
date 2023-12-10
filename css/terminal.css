@@ -1,29 +1,30 @@
 body{
-    background-color: gray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: black;
 }
 
 .terminal{
-    background-color: black;
-    width: 98vw;
-    margin: 5px;
-    height: 92vh;
-    border-radius: 8px;
+    width: 96vw;
+    height: 90vh;
+    margin-left: 10px;
+    font-size: 14px;
 }
 
 #output samp{
-    margin-left: 8px;
     color: white;
-    /* padding-top: 12px; */
+    font-size: inherit;
 }
 
 #error{
     color: crimson;
+    font-size: inherit;
 }
 
-samp{
+#exitStatus1 samp{
+    color: crimson;
+    font-size: inherit;
+}
+
+#exitStatus0 samp{
     color: lime;
-    font-size: 14px;
+    font-size: inherit;
 }

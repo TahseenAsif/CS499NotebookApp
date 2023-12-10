@@ -1,8 +1,14 @@
 window.addEventListener('DOMContentLoaded', () => {
     const display = document.querySelector("#output");
     const container = document.querySelector(".terminal");
+    var error = false;
 
-    async function getMessage() {
+    window.api.onErrorMsg((event, err) => {
+        error = true;
+        console.log(err);
+    });
+
+    async function getMessage(){
         // const response = (await fetch('../messageJs.txt')).text();
         // console.log(response);
         // console.log(response[2]);
@@ -14,34 +20,52 @@ window.addEventListener('DOMContentLoaded', () => {
                 console.log(x);
                 for(i = 0; i < x.length; i++){
                     if(x[i] != ""){
-                        const toAdd = document.createElement("p");
-                        toAdd.id = "output";
-                        const styleOutput = document.createElement("samp");
-                        styleOutput.innerHTML = x[i];
-                        toAdd.appendChild(styleOutput);
-                        container.appendChild(toAdd);
+                        displayOnTerminal("output", x[i]);
                     }
                 }
-                exitMessage();
+                exitStatus(0);
             })
+
     }
 
-    async function exitMessage(){
-        const exitWrap = document.createElement("p");
-        const wrapType = document.createElement("samp");
-        const exitMsg = 'File executed successfully! <br/>Press any key to exit...';
-        wrapType.innerHTML = exitMsg;
-        exitWrap.appendChild(wrapType);
-        container.appendChild(exitWrap);
+    async function exitStatus(value){
+        var exitMsg;
+        var exitID;
+        switch(value){
+            case 0:
+                exitID = "exitStatus0";
+                exitMsg = "File executed returns zero!";
+                break;
+            case 1:
+                exitID = "exitStatus1";
+                exitMsg = "File executed returns non-zero!";
+                break;
+        }
+        exitMsg = exitMsg.concat("</br>Press any key to exit the terminal...");
+        displayOnTerminal(exitID, exitMsg);
     }
 
-    // function getMessageAgain(){
-    //     var a = document.body.appendChild(document.createElement('a'));
-    //     var textToWrite = terminal.innerHTML;
-    //     a.download = "../message.txt";
-    //     textToWrite = textToWrite.replace(/\n/g, "%0D%0A"); 
-    //     a.href = "data:text/plain," + textToWrite;
-    //     a.click();
-    // }
-    getMessage();
+    async function displayOnTerminal(parentID, content){
+        const newLine = document.createElement("p");
+        newLine.id = parentID;
+        const wrap = document.createElement("samp");
+        wrap.innerHTML = content;
+        newLine.appendChild(wrap);
+        container.appendChild(newLine);
+    }
+
+    async function runTerminal(){
+        if(error){
+            showError();
+        }
+        else{
+            getMessage();
+        }
+    }
+
+    runTerminal();
 });
+
+window.addEventListener('keydown', (e) => {
+    api.terminal.exit();
+})

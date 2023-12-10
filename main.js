@@ -179,9 +179,12 @@ function updateWindowApp(){
     mainWindow.webContents.openDevTools();
 }
 
-function openTerminal(){
+function openTerminal(error, msg){
     createTerminalWindow();
     termWindow.once('ready-to-show', () => {
+        if(error){
+            termWindow.webContents.send("sendErrorMsg", msg);
+        }
         termWindow.show();
     });
 }
@@ -313,14 +316,6 @@ ipcMain.on("saveAll", async (event, content) => {
     }).show();
 })
 
-ipcMain.on("termMinimize", () => {
-    termWindow.minimize();
-});
-
-ipcMain.on("termMaximize", () => {
-    termWindow.maximize();
-});
-
 ipcMain.on("termClose", () => {
     termWindow.close();
 });
@@ -361,10 +356,26 @@ ipcMain.on("save_as_Js", (event, content) => {
 });
 
 function executePython(){
+    var errorExit = false;
+    var errorMsg;
     pyshell = new PythonShell("test.py");
-    //give some time for execution
+    pyshell.on('error', () => {
+        //List of possible events that triggered the event:
+        //The process could not be spawned
+        //The process could not be killed
+        //Sending a message to the child process failed
+        console.log("An error occurred!");
+    });
+    pyshell.on('stderr', (stderr) => {
+        // console.log(stderr);
+        errorMsg = stderr;
+    });
+    pyshell.on('pythonError', () => {
+        console.log("File executed and terminated with a non-zero exit code!");
+        errorExit = true;
+    });
     setTimeout(() => {
-        openTerminal();
+        openTerminal(errorExit, errorMsg);
     }, 400);
 }
 
@@ -373,7 +384,7 @@ function executeJavascript(){
     function(error, stdout, stderr){
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
-        if (error !== null) {
+        if(error !== null){
             console.log('exec error: ' + error);
         }
     });

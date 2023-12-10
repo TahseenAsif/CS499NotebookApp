@@ -2,7 +2,7 @@ const {contextBridge, ipcRenderer} = require('electron');
 
 contextBridge.exposeInMainWorld("api", {
     sendUserData: (callback) => ipcRenderer.on("sendUserData", (callback)),
-    sendErrorMsg: (callback) => ipcRenderer.on("displayError", (callback)),
+    onErrorMsg: (callback) => ipcRenderer.on("sendErrorMsg", (callback)),
     login:{
         signInRequest: (email, password) => ipcRenderer.send("sign-in", email, password),
         signUpRequest: (email, password) => ipcRenderer.send("sign-up", email, password),
@@ -33,8 +33,6 @@ contextBridge.exposeInMainWorld("api", {
         saveAndRunJS:   (content,path) => ipcRenderer.send("save_as_Js",content,path),
     },
     terminal:{
-        minimize:       () => ipcRenderer.send("termMinimize"),
-        maximize:       () => ipcRenderer.send("termMaximize"),
         exit:           () => ipcRenderer.send("termClose"),
     }
 });
