@@ -18,101 +18,98 @@
         <script type="module" src="../node_modules/smart-webcomponents/source/modules/smart.tabs.js"></script>
 
         <style>
-
             /* Set droplist names - -item is the currently selected font, -label is the font's appearance in the droplist*/
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='inconsolata']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='inconsolata']::before
-           {
-           content: 'Inconsolata';
-           font-family: 'Inconsolata';
-           }
-           
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='arial']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='arial']::before
-           {
-           content: 'Arial';
-           font-family: Arial, Helvetica, sans-serif;
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='inconsolata']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='inconsolata']::before
+            {
+            content: 'Inconsolata';
+            font-family: 'Inconsolata';
+            }
+            
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='arial']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='arial']::before
+            {
+            content: 'Arial';
+            font-family: Arial, Helvetica, sans-serif;
+            }
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='mirza']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='mirza']::before
-           {
-           content: 'Mirza';
-           font-family: 'Mirza';
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='mirza']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='mirza']::before
+            {
+            content: 'Mirza';
+            font-family: 'Mirza';
+            }
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='roboto']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='roboto']::before
-           {
-           content: 'Roboto';
-           font-family: 'Roboto';
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='roboto']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='roboto']::before
+            {
+            content: 'Roboto';
+            font-family: 'Roboto';
+            }
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='sans-serif']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='sans-serif']::before
-           {
-           content: 'Sans Serif';
-           font-family: sans-serif;
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='sans-serif']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='sans-serif']::before
+            {
+            content: 'Sans Serif';
+            font-family: sans-serif;
+            }
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='serif']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='serif']::before
-           {
-           content: 'Serif';
-           font-family: serif;
-           }            
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='serif']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='serif']::before
+            {
+            content: 'Serif';
+            font-family: serif;
+            }            
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='monospace']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='monospace']::before
-           {
-           content: 'Monospace';
-           font-family: monospace;
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='monospace']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='monospace']::before
+            {
+            content: 'Monospace';
+            font-family: monospace;
+            }
 
-           .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='verdana']::before,
-           .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='verdana']::before
-           {
-           content: 'Verdana';
-           font-family: Verdana;
-           }
+            .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='verdana']::before,
+            .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='verdana']::before
+            {
+            content: 'Verdana';
+            font-family: Verdana;
+            }
 
-           /****************************************************
-           Set the font-family content used for the HTML content.
-           *****************************************************/
-           .ql-font-arial {
-           font-family: 'Arial';
-           }
-           
-           .ql-font-inconsolata {
-           font-family: 'Inconsolota';
-           }
+            /****************************************************
+            Set the font-family content used for the HTML content.
+            *****************************************************/
+            .ql-font-arial {
+            font-family: 'Arial';
+            }
+            
+            .ql-font-inconsolata {
+            font-family: 'Inconsolota';
+            }
 
-           .ql-font-mirza {
-           font-family: 'Mirza';
-           }
+            .ql-font-mirza {
+            font-family: 'Mirza';
+            }
 
-           .ql-font-roboto {
-           font-family: 'Roboto';
-           }
+            .ql-font-roboto {
+            font-family: 'Roboto';
+            }
 
-           .ql-font-sans-serif {
-           font-family: sans-serif;
-           }
+            .ql-font-sans-serif {
+            font-family: sans-serif;
+            }
 
-           .ql-font-serif {
-           font-family: serif;
-           }
+            .ql-font-serif {
+            font-family: serif;
+            }
 
-           .ql-font-monospace {
-           font-family: monospace;
-           }
+            .ql-font-monospace {
+            font-family: monospace;
+            }
 
-           .ql-font-verdana {
-           font-family: Verdana;
-           }
-         </style>
-         
- 
+            .ql-font-verdana {
+            font-family: Verdana;
+            }
+        </style>
     </head>
 
     <body>
@@ -168,6 +165,12 @@
                                 <a href="#" role="button" id="new-pair">
                                     <span>New Pair</span>
                                     <!-- generate text and code files -->
+                                </a>
+                            </li>
+
+                            <li class="subnav-item">
+                                <a href="#" role="button" id="save-all">
+                                    <span>Save All</span>
                                 </a>
                             </li>
 
@@ -280,8 +283,8 @@
                                 <select id="language">
                                     <option value="javascript" selected>Javascript</option>
                                     <option value="python">Python</option>
-                                    <option value="sql">SQL</option>
-                                    <option value="java">Java</option>
+                                    <!-- <option value="sql">SQL</option>
+                                    <option value="java">Java</option> -->
                                 </select>
                                 <button class="codeNavButton" id="run_code">RUN</button>
                                 <button class="codeNavButton" id="reset_code">RESET</button>
@@ -300,6 +303,7 @@
     </body>
 
     <script src="../js/index.js"></script>
+    <script src="../js/textEditor.js"></script>
     <script src="../js/ace-src/ace.js"></script>
 	<script src="../js/ace-src/mode-javascript.js"></script>
 	<script src="../js/ace-src/ext-language_tools.js"></script>

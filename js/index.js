@@ -1,34 +1,64 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-    //load the content from database of the user
-    window.api.sendUserID((event, userID) => {
-        console.log(userID);
-        console.log(userID.json_data);
-        console.log(userID.json_data.text);
-        console.log(userID.json_data.code);
-        
-        setTimeout(() => {
-            const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
-            const splitTabLabelText = selectedTabText.split(' ');
-            let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
-            const textEditor = document.querySelector(`#${textid} .ql-editor`);
-            textEditor.innerHTML=userID.json_data.text[0];
-            //FOR LOADING MULTIPLE TEXT
-            for(i = 1; i < userID.json_data.text.length; i++){
-                createNewTab('text');
-                const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
-                textEditor2.innerHTML = userID.json_data.text[i];
-            }
-            //FOR LOADING MULTIPLE CODE
-            codeEditors[0].setValue(userID.json_data.code[0]);
-            console.log(userID.json_data.code.length);
-            console.log(userID.json_data.code);
-            for(i = 1; i < userID.json_data.code.length; i++){
-                createNewTab('code');
-                codeEditors[i].setValue(userID.json_data.code[i]);
-            }
-        }, 100);
-    })
-
+    window.api.loadUserData((event, userData) => {
+        // console.log(userData);
+        if(userData === "guest"){
+            fetch("../data.json")
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    loadData = data;
+                    // console.log(loadData);
+                    // console.log(loadData.code);
+                    for(let i = 0; i < data.text.length; i++){
+                        api.text_editor.load(data.text[i]);
+                    }
+                    //FOR LOADING MULTIPLE CODE
+                    // (async () => {
+                    //     codeEditors[0].setValue(data.code[0]);
+                    //     console.log(data.code.length);
+                    //     console.log(data.code);
+                    //     await createCodeEditor(`TAB${1}`);
+                    // })()
+                    codeEditors[0].setValue(data.code[0]);
+                    console.log(data.code.length);
+                    console.log(data.code);
+                    for(i = 1; i < data.code.length; i++){
+                        createNewTab('code');
+                        codeEditors[i].setValue(data.code[i]);
+                    }
+                })
+                .catch((error) => console.log(error));
+        }
+        else{
+            console.log(userData);
+            console.log(userData.json_data);
+            console.log(userData.json_data.text);
+            console.log(userData.json_data.code);
+            
+            setTimeout(() => {
+                const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
+                const splitTabLabelText = selectedTabText.split(' ');
+                let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
+                const textEditor = document.querySelector(`#${textid} .ql-editor`);
+                textEditor.innerHTML=userData.json_data.text[0];
+                //FOR LOADING MULTIPLE TEXT
+                for(i = 1; i < userData.json_data.text.length; i++){
+                    api.editor.newTextTab();
+                    const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
+                    textEditor2.innerHTML = userData.json_data.text[i];
+                }
+                //FOR LOADING MULTIPLE CODE
+                codeEditors[0].setValue(userData.json_data.code[0]);
+                console.log(userData.json_data.code.length);
+                console.log(userData.json_data.code);
+                for(i = 1; i < userData.json_data.code.length; i++){
+                    createNewTab('code');
+                    codeEditors[i].setValue(userData.json_data.code[i]);
+                }
+            }, 100);
+        }
+    });
     // window bar variables and functions
     //sets the functionality of the buttons shown on the title bar of the window
     const minimize = document.getElementById("minimize");
@@ -61,12 +91,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const newText = document.querySelector("#new-text");
     const newCode = document.querySelector("#new-code");
     const newPair = document.querySelector("#new-pair");
+    const saveAll = document.querySelector("#save-all");
     const open = document.querySelector('#open');
-    const textTabs = document.querySelector('#text-editor-tabs');
+    //
     const codeTabs = document.querySelector('#code-editor-tabs');
+    //
     const codeEditors = [];
     const codeEditorsLangs = [];
     const darkButton = document.querySelector("#darkMode"); 
+
 
     //if menu options that are chosen to be focused on
     for(var i = 0; i < menuBtns.length; i++){
@@ -129,6 +162,58 @@ window.addEventListener('DOMContentLoaded', (event) => {
         files.classList.toggle("chosen");
         files.parentElement.classList.toggle("tooltip");
     });
+
+    //creates a new tab within the text editor
+    newText.addEventListener('click', () => {
+        api.text_editor.newTab();
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    });
+
+    //creates a new tab within the code editor
+    newCode.addEventListener('click', () => {
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    });
+
+    //creates a new tab within both text and code editors
+    newPair.addEventListener('click', () => {
+        api.text_editor.newTab();
+        createNewTab('code');
+        files.classList.toggle("chosen");
+        files.parentElement.classList.toggle("tooltip");
+    });
+
+    //saves contents from all the tabs in text and code editors
+    saveAll.addEventListener('click', () => {
+        const save = document.querySelectorAll('.ql-save');
+        console.log(save.length);
+        for(let i = 0; i < save.length; i++){
+            api.text_editor.saveRequest(i);
+        }
+        //api.code_editor.requestSave();
+        // var toSave = {
+        //     text: [],
+        //     code: []
+        // };
+        // api.editors.saveAll();
+
+        // for(i = 0; i < numOfTextTabs; i++){
+        //     const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
+        //     textToJSON = JSON.stringify(textEditor.innerHTML);
+        //     //toSave.text.push(textToJSON);
+        //     toSave.text.push(textEditor.innerHTML);
+        // }
+        // for(i = 0; i < numOfCodeTabs; i++){
+        //     codeToJSON = JSON.stringify(codeEditors[i].getValue());
+        //     //toSave.code.push(codeToJSON);
+        //     toSave.code.push(codeEditors[i].getValue());
+        // }
+        // console.log(toSave.text);
+        // console.log(toSave.code);
+        // return toSave;
+    })
 
     //opening files
     open.addEventListener('click', () => {
@@ -207,7 +292,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         input.type = 'file';
         input.accept = '.json';
         input.onchange = () => {
-            fetch("../test.json")
+            fetch("../data.json")
                 .then((res) => {
                     return res.json();
                 })
@@ -215,16 +300,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     loadData = data;
                     console.log(loadData);
                     console.log(loadData.code);
-                    const selectedTabText = textTabs.getTabLabel(textTabs.selectedIndex);
-                    const splitTabLabelText = selectedTabText.split(' ');
-                    let textid = `${splitTabLabelText[0]}${splitTabLabelText[1]}`;
-                    const textEditor = document.querySelector(`#${textid} .ql-editor`);
-                    textEditor.innerHTML=data.text[0];
-                    //FOR LOADING MULTIPLE TEXT
-                    for(i = 1; i < data.text.length; i++){
-                        createNewTab('text');
-                        const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
-                        textEditor2.innerHTML = data.text[i];
+                    // const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                    // const splitTabLabel = selectedTab.split(' ');
+                    // let id = `${splitTabLabel[1]}`;
+                    // codeEditors[id-1].setValue(data.code.TAB1);
+                    for(let i = 0; i < data.text.length; i++){
+                        api.text_editor.load(data.text[i]);
                     }
                     //FOR LOADING MULTIPLE CODE
                     // (async () => {
@@ -246,44 +327,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     //creating new tabs
-    var numOfTextTabs = 1;
     var numOfCodeTabs = 1;
-    var totalTextTabs = 0;
     var totalCodeTabs = 0;
 
-    newText.addEventListener('click', () =>{
-        createNewTab('text')
-        files.classList.toggle("chosen");
-        files.parentElement.classList.toggle("tooltip");
-    })
-    newCode.addEventListener('click', () =>{
-        createNewTab('code');
-        files.classList.toggle("chosen");
-        files.parentElement.classList.toggle("tooltip");
-    })
-    newPair.addEventListener('click', () =>{
-        createNewTab('text');
-        createNewTab('code');
-        files.classList.toggle("chosen");
-        files.parentElement.classList.toggle("tooltip");
-    })
-
-    //create new tab function
+    //creates a new tab
     function createNewTab(e){
         const newTab = document.createElement('smart-tab-item');
-        if(e === 'text'){
-            numOfTextTabs++;
-            totalTextTabs++;
-            //label will be changed to text file name once opened
-            newTab.label = `Tab ${numOfTextTabs}`;
-            const newEditor = document.createElement('div');
-            newEditor.id = `Tab${numOfTextTabs}`;
-            newTab.appendChild(newEditor);
-            textTabs.appendChild(newTab);
-            textTabs.selectedIndex = totalTextTabs;
-            createTextEditor(`Tab${numOfTextTabs}`);
-        }
-        else if (e === 'code'){
+        //new tab within code editor
+        if(e === 'code'){
             numOfCodeTabs++;
             totalCodeTabs++;
             newTab.label = `TAB ${numOfCodeTabs}`;
@@ -293,15 +344,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let runButton = document.createElement('button');
             let resetButton = document.createElement('button');
             let saveButton = document.createElement('button');
+            let setButton = document.createElement('button');
             runButton.classList.add("codeNavButton");
             resetButton.classList.add("codeNavButton");
             saveButton.classList.add("codeNavButton");
+            setButton.classList.add("codeNavButton");
             runButton.id="run_code";
             resetButton.id="reset_code";
             saveButton.id="save";
+            setButton.id="set_code";
             runButton.innerHTML="RUN";
             resetButton.innerHTML="RESET";
             saveButton.innerHTML="SAVE";
+            setButton.innerHTML="SET";
 
             //Create array of options to be added
 			const langSettings = ["javascript", "python", "sql", "java"];
@@ -323,6 +378,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             navToAdd.appendChild(runButton);
             navToAdd.appendChild(resetButton);
             navToAdd.appendChild(saveButton);
+            navToAdd.appendChild(setButton);
             newTab.appendChild(navToAdd);
             //Adding container
             let codeContainer = document.createElement('div');
@@ -342,113 +398,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
             codeTabs.selectedIndex = totalCodeTabs;
             createCodeEditor(`TAB${numOfCodeTabs}`);
         }
-    }
+    };
 
-    textTabs.addEventListener('closing', function (event) {
-        totalTextTabs--;
-	// event handling code goes here.
-    })
+    //close a tab within code editor
     codeTabs.addEventListener('closing', function (event) {
         totalCodeTabs--;
-	// event handling code goes here.
-    })
+	    // event handling code goes here.
+    });
 
-    
-    //Adding more Font styles
-    let Font = Quill.import('formats/font');
-    // We do not add Sans Serif since it is the default
-    Font.whitelist = ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana'];
-    Quill.register(Font, true);
-
-    fontOptions = [{'font': ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana']}]
+    // function saveAllJSON(){
+    //     var toSave = {
+    //         text: [],
+    //         code: []
+    //     };
+    //     for(i = 0; i < numOfTextTabs; i++){
+    //         const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
+    //         textToJSON = JSON.stringify(textEditor.innerHTML);
+    //         //toSave.text.push(textToJSON);
+    //         toSave.text.push(textEditor.innerHTML);
+    //     }
+    //     for(i = 0; i < numOfCodeTabs; i++){
+    //         codeToJSON = JSON.stringify(codeEditors[i].getValue());
+    //         //toSave.code.push(codeToJSON);
+    //         toSave.code.push(codeEditors[i].getValue());
+    //     }
+    //     console.log(toSave.text);
+    //     console.log(toSave.code);
+    //     return toSave;
+    // }
 
     // -----------------------------------------------------------------
-    //quill text editor
-    function createTextEditor(id){
-        var quill = new Quill(`#${id}`,{
-            modules: {
-                toolbar: [
-                    [{ 'header': [false,6,5,4,3,2,1] }],
-                    fontOptions,
-                    [{ 'color': [] }, { 'background': [] }],     
-                    ['bold', 'italic', 'underline'],        
-                    [{ 'script': 'sub'}, { 'script': 'super' }],    
-                    [{ 'align': [] }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['image'],
-                    ['paint'],
-                    ['save'],    
-                ],            
-            },
-            theme: 'snow'
-        });
-
-        //paint window button
-        const paint = document.querySelectorAll('.ql-paint');
-        for(let i = paint.length - 1 ; i < paint.length; i++){
-            paint[i].addEventListener('click', () => {
-                api.paint_window.paint();
-            });
-        }
-
-        const save = document.querySelectorAll('.ql-save');
-        for(let i = save.length - 1; i < save.length; i++){
-            save[i].addEventListener('click', (e) =>{
-                // //const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                // //const selectedEditor = document.querySelector(`.Tab1`);
-                // //selectedEditor.innerHTML = 'hi'
-
-                
-                // const selectedTab = textTabs.getTabLabel(textTabs.selectedIndex);
-                // const splitTabLabel = selectedTab.split(' ');
-                // let id = `${splitTabLabel[0]}${splitTabLabel[1]}`;
-
-                // const textEditor = document.querySelector(`#${id} .ql-editor`);
-                // var content = textEditor.innerHTML;
-                // //---This is just to test if data can be saved to JSON (it can)
-                // // jsonContent = JSON.stringify(content);
-                // // console.log(jsonContent);
-                // //Adding saving for code editor
-                // const selectedTabCode = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                // const splitTabLabelCode = selectedTabCode.split(' ');
-                // let idCode = `${splitTabLabelCode[1]}`;
-                // const codeEditorToSave = document.querySelector(`.ace_text-input`);
-                // var codeContent = codeEditors[idCode-1].getValue();
-                // console.log(codeContent);
-                // `if(textEditor.label != null){
-                //     api.editor.textSave(content,textEditor.label);
-                // }`
-                //     api.editor.codeSave(codeContent, codeEditorToSave.label);
-                console.log(numOfTextTabs);
-                const testSave = saveAllJSON();
-                console.log(testSave);
-                api.editor.allSave(testSave)
-                //^^ this doesn't work, apparently the content to send to the api can't be a json object?
-            })
-        }
-    }
-    createTextEditor('Tab1');
-
-    function saveAllJSON(){
-        var toSave = {
-            text: [],
-            code: []
-        };
-        for(i = 0; i < numOfTextTabs; i++){
-            const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
-            textToJSON = JSON.stringify(textEditor.innerHTML);
-            //toSave.text.push(textToJSON);
-            toSave.text.push(textEditor.innerHTML);
-        }
-        for(i = 0; i < numOfCodeTabs; i++){
-            codeToJSON = JSON.stringify(codeEditors[i].getValue());
-            //toSave.code.push(codeToJSON);
-            toSave.code.push(codeEditors[i].getValue());
-        }
-        console.log(toSave.text);
-        console.log(toSave.code);
-        return toSave;
-    }
 
     //----------------------------Making a function for creating code editors
     function createCodeEditor(id){
@@ -480,31 +459,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const executeCodeBtns = document.querySelectorAll("#run_code");
         if(executeCodeBtns.length == 1){
             executeCodeBtns[0].addEventListener('click', (e) => {
-                //const userCode = codeEditor.getValue();
+                const userCode = codeEditor.getValue();
                 try{
-                    //save the content
+
                     const toSaveCode = codeEditor.getValue();
-                    console.log(toSaveCode);
-                    console.log(codeEditorsLangs[0]);
-                    //save to the appropriate file type
-                    if(codeEditorsLangs[0] == "python"){
+                    //console.log(toSaveCode);
+                    console.log(codeEditorsLangs[0])
+                    if(codeEditorsLangs[0] == "python")
                         api.editor.savePython(toSaveCode);
-                    }
-                    else if(codeEditorsLangs[0] == "javascript"){
+                    else if(codeEditorsLangs[0] == "javascript")
                         api.editor.saveJavascript(toSaveCode);
-                    }
                     
-                    //timeout allows time for the file to save
+                    //timeout allows time for the test.py or test.js file to save
                     setTimeout(() => {
-                        if(codeEditorsLangs[0] == 'python'){
+                        if(codeEditorsLangs[0] == 'python')
                             api.editor.runPython();
-                        }
-                        else{
+                        else 
                             api.editor.runJavascript();
-                        }
-                    }, 500);
-                }
-                catch(err){
+                        //x = new Function(userCode)();
+                        //console.log(x);
+                        
+                    }, 200);
+
+                    setTimeout(() => {
+                        api.editor.runCode();
+                    }, 800);
+                    
+                } catch (err) {
                     console.log(err);
                 }
                 //This is just to test if data can be saved as JSON (it can)
@@ -514,98 +495,68 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         else{
             for(let i = executeCodeBtns.length - 1; i < executeCodeBtns.length; i++){
-                // const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
+                const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
                 executeCodeBtns[i].addEventListener('click', (e) => {
-                    //const userCode = codeEditor.getValue();
+                    const userCode = codeEditor.getValue();
                     try{
-                        //save the content
+
                         const toSaveCode = codeEditor.getValue();
                         console.log(toSaveCode);
-                        console.log(codeEditorsLangs[i]);
-                        //save to the appropriate file type
-                        if(codeEditorsLangs[i] == "python"){
+                        console.log(codeEditorsLangs[i])
+                        if(codeEditorsLangs[i] == "python")
                             api.editor.savePython(toSaveCode);
-                        }
-                        else if(codeEditorsLangs[0] == "javascript"){
+                        else if(codeEditorsLangs[0] == "javascript")
                             api.editor.saveJavascript(toSaveCode);
-                        }
-
-                        //timeout allows time for the file to save
-                        setTimeout(() => {
-                            if(codeEditorsLangs[i] == 'python'){
-                                api.editor.runPython();
-                            }
-                            else{
-                                api.editor.runJavascript();
-                            }
-                        }, 200);
-                    }
-                    catch(err){
+                    
+                    setTimeout(() => {
+                        if(codeEditorsLangs[i] == 'python')
+                            api.editor.runPython();
+                        else 
+                            api.editor.runJavascript();
+                        //x = new Function(userCode)();
+                        //console.log(x);
+                    }, 200);
+                    setTimeout(() => {
+                        api.editor.runCode();
+                    }, 800);
+                        
+                    } catch (err) {
                         console.log(err);
                     }
                 });
             }
         }
-
         const resetCodeBtns = document.querySelectorAll("#reset_code");
         for(let i = resetCodeBtns.length - 1; i < resetCodeBtns.length; i++){
             resetCodeBtns[i].addEventListener('click', () => {
                 codeEditor.setValue(defaultCode);
             });
         }
-
+        
         const setCodeBtns = document.querySelectorAll("#set_code");
         for(let i = setCodeBtns.length - 1; i < setCodeBtns.length; i++){
             setCodeBtns[i].addEventListener('click', () => {
                 const toSaveCode = codeEditor.getValue();
                 console.log(toSaveCode);
-                if(codeEditorsLangs[i] == "python"){
+                if(codeEditorsLangs[i] == "python")
                     api.editor.savePython(toSaveCode);
-                }
-                else if(codeEditorsLangs[i] == "javascript"){
+                else if(codeEditorsLangs[i] == "javascript")
                     api.editor.saveJavascript(toSaveCode);
-                }
-            });
+            })
         }
 
-        //should also consider if user want to save file prior to change
         const languageBoxes = document.querySelectorAll("#language");
-		if(languageBoxes.length == 1){
-            languageBoxes[0].addEventListener("change", (e) => {
+		for (let i = languageBoxes.length - 1; i < languageBoxes.length; i++) {
+			languageBoxes[i].addEventListener("change", (e) => {
                 const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
                 const splitTabLabelCode = selectedTab.split(' ');
                 let idCode = `${splitTabLabelCode[1]}`;
                 codeEditor.session.setMode("ace/mode/" + e.target.value);
                 codeEditorsLangs[idCode-1] = e.target.value;
-                changeLanguageContent(e.target.value);
-                // console.log(codeEditorsLangs);
-                // console.log(codeEditors);
+                console.log(codeEditorsLangs);
+                console.log(codeEditors);
             });
-        }
-        else{
-            for(let i = languageBoxes.length - 1; i < languageBoxes.length; i++){
-                languageBoxes[i].addEventListener("change", (e) => {
-                    const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
-                    const splitTabLabelCode = selectedTab.split(' ');
-                    let idCode = `${splitTabLabelCode[1]}`;
-                    codeEditor.session.setMode("ace/mode/" + e.target.value);
-                    codeEditorsLangs[idCode-1] = e.target.value;
-                    changeLanguageContent(e.target.value);
-                });
-            }
-        }
-
-        //change content to correspond with the language change
-        function changeLanguageContent(languageType){
-            if(languageType === 'python'){
-                defaultCode = 'print("Hello World!")';
-                codeEditor.session.setValue(defaultCode);
-            }
-            else if(languageType === 'javascript'){
-                defaultCode = 'console.log("Hello World!");';
-                codeEditor.session.setValue(defaultCode);
-            }
-        }
+		}
 
         `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---
         const executeCodeBtn = document.querySelector("#run_code");
@@ -628,9 +579,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
             codeEditor.setValue(defaultCode);
         });`
         codeEditors.push(codeEditor);
+        codeEditorsLangs.push("javascript");
     }
     createCodeEditor('TAB1');
     console.log(codeEditors);
+
+
+    // // Events
+    // executeCodeBtn.addEventListener("click", () => {
+    //     // Get input from the code editor
+    //     const userCode = codeEditor.getValue();
+
+    //     // Run the user code
+    //     try {
+    //         new Function(userCode)();
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // });
+
+    // resetCodeBtn.addEventListener("click", () => {
+    //     // Clear ace editor
+    //     codeEditor.setValue(defaultCode);
+    // });
+    // -----------------------------------------------------------------
 
     // resizing of editors
     function resizeEditors(resizeBar){
@@ -640,13 +612,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         resizeBar.onmousedown = onMouseDown;
 
         function onMouseDown(e){
-            mousedown = {
-                e,
-                offsetLeft:   resizeBar.offsetLeft,
-                offsetTop:    resizeBar.offsetTop,
-                firstWidth:   first.offsetWidth,
-                secondWidth:  second.offsetWidth
-            };
+            mousedown = {e,
+                  offsetLeft:   resizeBar.offsetLeft,
+                  offsetTop:    resizeBar.offsetTop,
+                  firstWidth:   first.offsetWidth,
+                  secondWidth:  second.offsetWidth
+                 };
             document.onmousemove = onMouseMove;
             document.onmouseup = () => {
                 document.onmousemove = document.onmouseup = null;
@@ -670,13 +641,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         resizeBar.onmousedown = onMouseDown;
 
         function onMouseDown(e){
-            mousedown = {
-                e,
-                offsetLeft:   resizeBar.offsetLeft,
-                offsetTop:    resizeBar.offsetTop,
-                firstWidth:   first.offsetWidth,
-                secondWidth:  second.offsetWidth
-            };
+            mousedown = {e,
+                  offsetLeft:   resizeBar.offsetLeft,
+                  offsetTop:    resizeBar.offsetTop,
+                  firstWidth:   first.offsetWidth,
+                  secondWidth:  second.offsetWidth
+                 };
             document.onmousemove = onMouseMove;
             document.onmouseup = () => {
                 document.onmousemove = document.onmouseup = null;
@@ -820,6 +790,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
     validateDark();
 
     function codeEditorThemeSwitch(){
+        // const selectedTab = textTabs.getTabLabel(codeTabs.selectedIndex);
+        // const splitTabLabel = selectedTab.split(' ');
+        // let id = `${splitTabLabel[1]}`;
+        // let aceEditor = codeEditors[id-1];
+        // console.log(codeTabs);
+		// if (dark) {
+		// 	aceEditor.setTheme("ace/theme/clouds_midnight");
+		// } else {
+		// 	aceEditor.setTheme("ace/theme/github");
+		// }
         if(dark){
             for(i = 0; i < codeEditors.length; i++){
                 codeEditors[i].setTheme("ace/theme/clouds_midnight");
@@ -851,13 +831,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     darkButton.addEventListener('click', () => {
         darkMode();
         codeEditorThemeSwitch();
-    });
+    })
 
     function validateDark(){
         if(dark){
             darkButton.children[0].innerHTML = "Light Mode";
-        }
-        else{
+        } else {
             darkButton.children[0].innerHTML = "Dark Mode";
         }
     }
