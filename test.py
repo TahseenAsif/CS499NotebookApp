@@ -1,9 +1,9 @@
 
 import sys
 old_stdout = sys.stdout
-log_file = open("message.txt","w")
+log_file = open("message.txt", "w+")
 sys.stdout = log_file
-print("Hello World!")
+print("Hello World! plz show change")
 sys.stdout = old_stdout
 log_file.close()
     

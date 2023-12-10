@@ -510,7 +510,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             executeCodeBtns[0].addEventListener('click', (e) => {
                 const userCode = codeEditor.getValue();
                 try{
-
                     const toSaveCode = codeEditor.getValue();
                     //console.log(toSaveCode);
                     console.log(codeEditorsLangs[0])
@@ -521,19 +520,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     
                     //timeout allows time for the test.py or test.js file to save
                     setTimeout(() => {
-                        if(codeEditorsLangs[0] == 'python')
+                        if(codeEditorsLangs[0] == 'python'){
                             api.editor.runPython();
-                        else 
+                        }
+                        else{
                             api.editor.runJavascript();
+                        }   
                         //x = new Function(userCode)();
                         //console.log(x);
-                        
                     }, 200);
 
-                    setTimeout(() => {
-                        api.editor.runCode();
-                    }, 800);
-                    
+                    // setTimeout(() => {
+                    //     api.editor.runCode();
+                    // }, 800);
                 } catch (err) {
                     console.log(err);
                 }
@@ -545,29 +544,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
             for(let i = executeCodeBtns.length - 1; i < executeCodeBtns.length; i++){
                 const selectedTab = codeTabs.getTabLabel(codeTabs.selectedIndex);
                 executeCodeBtns[i].addEventListener('click', (e) => {
-                    const userCode = codeEditor.getValue();
                     try{
-
                         const toSaveCode = codeEditor.getValue();
                         console.log(toSaveCode);
                         console.log(codeEditorsLangs[i])
-                        if(codeEditorsLangs[i] == "python")
+                        if(codeEditorsLangs[i] == "python"){
                             api.editor.savePython(toSaveCode);
-                        else if(codeEditorsLangs[0] == "javascript")
+                        }
+                        else if(codeEditorsLangs[0] == "javascript"){
                             api.editor.saveJavascript(toSaveCode);
-                    
-                    setTimeout(() => {
-                        if(codeEditorsLangs[i] == 'python')
-                            api.editor.runPython();
-                        else 
-                            api.editor.runJavascript();
-                        //x = new Function(userCode)();
-                        //console.log(x);
-                    }, 200);
-                    setTimeout(() => {
-                        api.editor.runCode();
-                    }, 800);
-                        
+                        }
+                        setTimeout(() => {
+                            if(codeEditorsLangs[i] == 'python'){
+                                api.editor.runPython();
+                            }
+                            else 
+                                api.editor.runJavascript();
+                        }, 200);
+                        setTimeout(() => {
+                            api.editor.runCode();
+                        }, 800);
                     } catch (err) {
                         console.log(err);
                     }

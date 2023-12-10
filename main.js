@@ -140,13 +140,14 @@ function createTerminalWindow(){
         show: false,
         frame: false,
         autoHideMenuBar: true,
+        parent: mainWindow,
         webPreferences: {
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
     termWindow.loadFile(path.join(__dirname, 'html/terminal.html'));
-    //childWindow.webContents.openDevTools();
+    termWindow.webContents.openDevTools();
 };
 
 //Used for testing paint functionality, feel free to remove/modify this
@@ -176,6 +177,13 @@ function updateWindowApp(){
     mainWindow.center();
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
     mainWindow.webContents.openDevTools();
+}
+
+function openTerminal(){
+    createTerminalWindow();
+    termWindow.once('ready-to-show', () => {
+        termWindow.show();
+    });
 }
 
 // This method will be called when Electron has finished
@@ -305,21 +313,6 @@ ipcMain.on("saveAll", async (event, content) => {
     }).show();
 })
 
-ipcMain.on("codeRun", () => {
-    //if terminal already exist
-    if(termWindow){
-        //move top to show user
-        termWindow.moveTop();
-    }
-    else{
-        createTerminalWindow();
-        termWindow.once('ready-to-show', () => {
-            termWindow.show();
-        })
-    }
-    // codeoutput();
-})
-
 ipcMain.on("termMinimize", () => {
     termWindow.minimize();
 });
@@ -337,7 +330,7 @@ ipcMain.on("save_as_Py", (event, content) => {
     const totalPyth =`
 import sys
 old_stdout = sys.stdout
-log_file = open("message.txt","w")
+log_file = open("message.txt", "w+")
 sys.stdout = log_file
 ${content}
 sys.stdout = old_stdout
@@ -349,6 +342,10 @@ log_file.close()
         title: 'Saved',
         body: "Your file has been successfully saved!"
     }).show();
+    setTimeout(() => {
+        executePython();
+    }, 200);
+    
 });
 
 ipcMain.on("save_as_Js", (event, content) => {
@@ -358,22 +355,33 @@ ipcMain.on("save_as_Js", (event, content) => {
         title: 'Saved',
         body: "Your file has been successfully saved!"
     }).show();
+    setTimeout(() => {
+        executeJavascript();
+    }, 200);
 });
 
-ipcMain.on("runPyth", (event) => {
+function executePython(){
     pyshell = new PythonShell("test.py");
     pyshell.on('message', function(message){
         console.log(message);
     })
-});
+    //give some time for execution
+    setTimeout(() => {
+        openTerminal();
+    }, 400);
+}
 
-ipcMain.on("runJs", (event) => {
+function executeJavascript(){
     exec('node test.js > message.txt',
     function(error, stdout, stderr){
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
-             console.log('exec error: ' + error);
+            console.log('exec error: ' + error);
         }
     });
-});
+    //give some time for execution
+    setTimeout(() => {
+        openTerminal();
+    }, 400);
+}
