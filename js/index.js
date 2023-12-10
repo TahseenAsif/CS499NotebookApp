@@ -349,19 +349,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let runButton = document.createElement('button');
             let resetButton = document.createElement('button');
             let saveButton = document.createElement('button');
-            let setButton = document.createElement('button');
+            //let setButton = document.createElement('button');
             runButton.classList.add("codeNavButton");
             resetButton.classList.add("codeNavButton");
             saveButton.classList.add("codeNavButton");
-            setButton.classList.add("codeNavButton");
+            //setButton.classList.add("codeNavButton");
             runButton.id="run_code";
             resetButton.id="reset_code";
             saveButton.id="save";
-            setButton.id="set_code";
+            //setButton.id="set_code";
             runButton.innerHTML="RUN";
             resetButton.innerHTML="RESET";
             saveButton.innerHTML="SAVE";
-            setButton.innerHTML="SET";
+            //setButton.innerHTML="SET";
 
             //Create array of options to be added
 			const langSettings = ["javascript", "python", "sql", "java"];
@@ -383,7 +383,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             navToAdd.appendChild(runButton);
             navToAdd.appendChild(resetButton);
             navToAdd.appendChild(saveButton);
-            navToAdd.appendChild(setButton);
+            //navToAdd.appendChild(setButton);
             newTab.appendChild(navToAdd);
             //Adding container
             let codeContainer = document.createElement('div');
@@ -616,18 +616,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         for(let i = resetCodeBtns.length - 1; i < resetCodeBtns.length; i++){
             resetCodeBtns[i].addEventListener('click', () => {
                 codeEditor.setValue(defaultCode);
-            })
-        }
-        
-        const setCodeBtns = document.querySelectorAll("#set_code");
-        for(let i = setCodeBtns.length - 1; i < setCodeBtns.length; i++){
-            setCodeBtns[i].addEventListener('click', () => {
-                const toSaveCode = codeEditor.getValue();
-                console.log(toSaveCode);
-                if(codeEditorsLangs[i] == "python")
-                    api.editor.savePython(toSaveCode);
-                else if(codeEditorsLangs[i] == "javascript")
-                    api.editor.saveJavascript(toSaveCode);
             })
         }
 
