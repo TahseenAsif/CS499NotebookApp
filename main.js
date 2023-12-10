@@ -102,6 +102,12 @@ const signUp = async (email, password, onSignUp) => {
 //     }
 // }
 
+ipcMain.on("sign-out", () => {
+    mySignOut();
+    mainWindow.close();
+    createApp();
+})
+
 let mainWindow;
 let termWindow;
 
