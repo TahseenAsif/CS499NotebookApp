@@ -517,22 +517,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         api.editor.savePython(toSaveCode);
                     else if(codeEditorsLangs[0] == "javascript")
                         api.editor.saveJavascript(toSaveCode);
-                    
-                    //timeout allows time for the test.py or test.js file to save
-                    setTimeout(() => {
-                        if(codeEditorsLangs[0] == 'python'){
-                            api.editor.runPython();
-                        }
-                        else{
-                            api.editor.runJavascript();
-                        }   
-                        //x = new Function(userCode)();
-                        //console.log(x);
-                    }, 200);
-
-                    // setTimeout(() => {
-                    //     api.editor.runCode();
-                    // }, 800);
                 } catch (err) {
                     console.log(err);
                 }
@@ -554,16 +538,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         else if(codeEditorsLangs[0] == "javascript"){
                             api.editor.saveJavascript(toSaveCode);
                         }
-                        setTimeout(() => {
-                            if(codeEditorsLangs[i] == 'python'){
-                                api.editor.runPython();
-                            }
-                            else 
-                                api.editor.runJavascript();
-                        }, 200);
-                        setTimeout(() => {
-                            api.editor.runCode();
-                        }, 800);
                     } catch (err) {
                         console.log(err);
                     }
