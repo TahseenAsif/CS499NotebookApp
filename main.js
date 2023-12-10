@@ -362,9 +362,6 @@ ipcMain.on("save_as_Js", (event, content) => {
 
 function executePython(){
     pyshell = new PythonShell("test.py");
-    pyshell.on('message', function(message){
-        console.log(message);
-    })
     //give some time for execution
     setTimeout(() => {
         openTerminal();
