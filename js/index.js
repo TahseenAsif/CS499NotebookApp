@@ -639,6 +639,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 let idCode = `${splitTabLabelCode[1]}`;
                 codeEditor.session.setMode("ace/mode/" + e.target.value);
                 codeEditorsLangs[idCode-1] = e.target.value;
+                changeLanguageContent(e.target.value);
                 console.log(codeEditorsLangs);
                 console.log(codeEditors);
             });
@@ -657,6 +658,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 if(codeEditorsLangs[i] === "sql")
                     api.editor.codeSave(content, `TAB${i+1}.sql`)
             });
+        }
+
+        //change content to correspond with the language change
+        function changeLanguageContent(languageType){
+            if(languageType === 'python'){
+                defaultCode = 'print("Hello World!")';
+                codeEditor.session.setValue(defaultCode);
+            }
+            else if(languageType === 'javascript'){
+                defaultCode = 'console.log("Hello World!");';
+                codeEditor.session.setValue(defaultCode);
+            }
         }
 
         `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---

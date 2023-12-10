@@ -129,13 +129,15 @@ function codeoutput(){
     childWindow = new BrowserWindow({
         width: 500,
         height: 500,
+        resizable: false,
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js')
         }
     });
     childWindow.loadFile(path.join(__dirname, 'html/codeoutput.html'));
-    childWindow.webContents.openDevTools();
+    //childWindow.webContents.openDevTools();
 };
 
 //Used for testing paint functionality, feel free to remove/modify this
