@@ -102,6 +102,12 @@ const mySignOut = async (onSignOut) => {
     }
 }
 
+ipcMain.on("sign-out", () => {
+    mySignOut();
+    mainWindow.close();
+    createApp();
+})
+
 let mainWindow;
 let childWindow;
 

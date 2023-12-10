@@ -112,6 +112,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const newPair = document.querySelector("#new-pair");
     const open = document.querySelector('#open');
     const saveAll = document.querySelector('#saveAll');
+    const signOut = document.querySelector('#signOut');
     const textTabs = document.querySelector('#text-editor-tabs');
     const codeTabs = document.querySelector('#code-editor-tabs');
     let codeEditors = [];
@@ -227,6 +228,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const testSave = saveAllJSON();
         console.log(testSave);
         api.editor.allSave(testSave)
+    })
+
+    signOut.addEventListener('click', () => {
+        api.login.signOutRequest();
     })
 
     function loadSingleJSON(){
