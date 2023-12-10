@@ -1,9 +1,8 @@
-.wrapper{
-    height: 94vh;
+body{
+    background-color: gray;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gray;
 }
 
 .terminal{
@@ -11,15 +10,20 @@
     width: 98vw;
     margin: 5px;
     height: 92vh;
-    border-radius: 20px;
-    overflow-y: hidden;
-    
+    border-radius: 8px;
 }
 
-span{
+#output samp{
+    margin-left: 8px;
     color: white;
-    font-family: 'Cascadia Code', Courier, monospace;
+    /* padding-top: 12px; */
+}
+
+#error{
+    color: crimson;
+}
+
+samp{
+    color: lime;
     font-size: 14px;
-    padding: 1px;
-    margin-top: 5px;
 }
