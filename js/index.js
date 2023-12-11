@@ -24,6 +24,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
                         textEditor2.innerHTML = data.text[i];
                     }
+                    textTabs.selectedIndex = totalTextTabs;
                     //FOR LOADING MULTIPLE CODE
                     codeEditors[0].setValue(data.code[0]);
                     console.log(data.code.length);
@@ -52,6 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
                     textEditor2.innerHTML = userData.json_data.text[i];
                 }
+                textTabs.selectedIndex = totalTextTabs;
                 //FOR LOADING MULTIPLE CODE
                 codeEditors[0].setValue(userData.json_data.code[0]);
                 console.log(userData.json_data.code.length);
@@ -300,6 +302,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     newText.addEventListener('click', () =>{
         createNewTab('text')
+        textTabs.selectedIndex = totalTextTabs;
         files.classList.toggle("chosen");
         files.parentElement.classList.toggle("tooltip");
     })
@@ -310,6 +313,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
     newPair.addEventListener('click', () =>{
         createNewTab('text');
+        textTabs.selectedIndex = totalTextTabs;
         createNewTab('code');
         files.classList.toggle("chosen");
         files.parentElement.classList.toggle("tooltip");
@@ -326,7 +330,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             newEditor.id = `Tab${numOfTextTabs}`;
             newTab.appendChild(newEditor);
             textTabs.appendChild(newTab);
-            textTabs.selectedIndex = totalTextTabs;
             createTextEditor(`Tab${numOfTextTabs}`);
         }
         else if (e === 'code'){
