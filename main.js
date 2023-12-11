@@ -251,6 +251,7 @@ ipcMain.on("sign-up", (event, email, password) => {
 })
 
 ipcMain.on("guest", () => {
+    userID = null;
     setTimeout(() => {
         updateWindowApp();
     }, 100);
@@ -339,10 +340,6 @@ log_file.close()
     `
     fs.writeFileSync('test.py', totalPyth);
     console.log('Saved test.py file!');
-    new Notification({
-        title: 'Saved',
-        body: "Your file has been successfully saved!"
-    }).show();
     setTimeout(() => {
         executePython();
     }, 200);
@@ -352,10 +349,6 @@ log_file.close()
 ipcMain.on("save_as_Js", (event, content) => {
     fs.writeFileSync("test.js", content)
     console.log('Saved test.js file!');
-    new Notification({
-        title: 'Saved',
-        body: "Your file has been successfully saved!"
-    }).show();
     setTimeout(() => {
         executeJavascript();
     }, 200);

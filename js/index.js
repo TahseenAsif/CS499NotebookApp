@@ -492,12 +492,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         };
         for(i = 0; i < numOfTextTabs; i++){
             const textEditor = document.querySelector(`#Tab${i+1} .ql-editor`);
-            textToJSON = JSON.stringify(textEditor.innerHTML);
+            //textToJSON = JSON.stringify(textEditor.innerHTML);
             //toSave.text.push(textToJSON);
             toSave.text.push(textEditor.innerHTML);
         }
         for(i = 0; i < numOfCodeTabs; i++){
-            codeToJSON = JSON.stringify(codeEditors[i].getValue());
+            //codeToJSON = JSON.stringify(codeEditors[i].getValue());
             //toSave.code.push(codeToJSON);
             toSave.code.push(codeEditors[i].getValue());
         }
@@ -589,7 +589,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 let idCode = `${splitTabLabelCode[1]}`;
                 codeEditor.session.setMode("ace/mode/" + e.target.value);
                 codeEditorsLangs[idCode-1] = e.target.value;
-                changeLanguageContent(e.target.value);
+                const content = codeEditor.session.getValue();
+                checkContentChange(content, e.target.value);
                 console.log(codeEditorsLangs);
                 console.log(codeEditors);
             });
@@ -610,22 +611,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
             });
         }
 
-        //change content to correspond with the language change
-        function changeLanguageContent(languageType){
-            if(languageType === 'python'){
-                defaultCode = 'print("Hello World!")';
-                codeEditor.session.setValue(defaultCode);
+        function checkContentChange(currentContent, targetLanguage){
+            const defaultPrints = ['console.log("Hello World!");', 'print("Hello World!")', 'System.out.println("Hello World!");', 'select "Hello World!;']; 
+            for(i = 0; i < defaultPrints.length; i++){
+                //if it has default content, change the default content
+                if(currentContent === defaultPrints[i]){
+                    if(targetLanguage === 'python'){
+                        currentContent = defaultPrints[1];
+                    }
+                    else if(targetLanguage === 'javascript'){
+                        currentContent = defaultPrints[0];
+                    }
+                    else if(targetLanguage === 'java'){
+                        currentContent = defaultPrints[2];
+                    }
+                    else if(targetLanguage === 'sql'){
+                        currentContent = defaultPrints[3];
+                    }
+                }
             }
-            else if(languageType === 'javascript'){
-                defaultCode = 'console.log("Hello World!");';
-                codeEditor.session.setValue(defaultCode);
-            } else if(languageType === 'java'){
-                defaultCode = 'System.out.println("Hello World!");';
-                codeEditor.session.setValue(defaultCode);
-            } else if (languageType === 'sql'){
-                defaultCode = 'select "Hello World!;';
-                codeEditor.session.setValue(defaultCode);
-            }
+            codeEditor.session.setValue(currentContent);
         }
 
         //for auto save
