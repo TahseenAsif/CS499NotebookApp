@@ -147,7 +147,7 @@ function createTerminalWindow(){
         }
     });
     termWindow.loadFile(path.join(__dirname, 'html/terminal.html'));
-    termWindow.webContents.openDevTools();
+    //termWindow.webContents.openDevTools();
 };
 
 //Used for testing paint functionality, feel free to remove/modify this
@@ -176,7 +176,7 @@ function updateWindowApp(){
     mainWindow.moveTop();
     mainWindow.center();
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 }
 
 function openTerminal(error, msg){
