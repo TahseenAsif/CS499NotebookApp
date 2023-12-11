@@ -1,7 +1,9 @@
 window.addEventListener('DOMContentLoaded', (event) => {
+    var user; // need this variable for auto save
     //IPC TESTING
     window.api.sendUserData((event, userData) => {
         console.log(userData);
+        user = userData;
         if(userData === "guest"){
             fetch("../data.json")
                 .then((res) => {
@@ -22,6 +24,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
                         textEditor2.innerHTML = data.text[i];
                     }
+                    textTabs.selectedIndex = totalTextTabs;
                     //FOR LOADING MULTIPLE CODE
                     codeEditors[0].setValue(data.code[0]);
                     console.log(data.code.length);
@@ -50,6 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const textEditor2 = document.querySelector(`#Tab${numOfTextTabs} .ql-editor`);
                     textEditor2.innerHTML = userData.json_data.text[i];
                 }
+                textTabs.selectedIndex = totalTextTabs;
                 //FOR LOADING MULTIPLE CODE
                 codeEditors[0].setValue(userData.json_data.code[0]);
                 console.log(userData.json_data.code.length);
@@ -298,6 +302,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     newText.addEventListener('click', () =>{
         createNewTab('text')
+        textTabs.selectedIndex = totalTextTabs;
         files.classList.toggle("chosen");
         files.parentElement.classList.toggle("tooltip");
     })
@@ -308,6 +313,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
     newPair.addEventListener('click', () =>{
         createNewTab('text');
+        textTabs.selectedIndex = totalTextTabs;
         createNewTab('code');
         files.classList.toggle("chosen");
         files.parentElement.classList.toggle("tooltip");
@@ -324,7 +330,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             newEditor.id = `Tab${numOfTextTabs}`;
             newTab.appendChild(newEditor);
             textTabs.appendChild(newTab);
-            textTabs.selectedIndex = totalTextTabs;
             createTextEditor(`Tab${numOfTextTabs}`);
         }
         else if (e === 'code'){
@@ -414,6 +419,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fontOptions = [{'font': ['sans-serif', 'serif', 'monospace', 'inconsolata', 'roboto', 'mirza', 'arial', 'verdana']}]
 
     // -----------------------------------------------------------------
+
+    //this variable is used for auto save
+    let changesMade = false;
+
+    //function to auto save, checks every 15 seconds to see if there were any changes, if there were it runs save function, if not nothing happens.
+    //auto save is a feature only for account holders
+    setInterval(() => {
+        if(user != 'guest'){
+            if(changesMade != false){
+                console.log(numOfTextTabs);
+                const testSave = saveAllJSON();
+                console.log(testSave);
+                api.editor.allSave(testSave)
+                changesMade = false;
+            } 
+        }
+    }, 15000);
+
     //quill text editor
     function createTextEditor(id){
         var quill = new Quill(`#${id}`,{
@@ -454,6 +477,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 api.editor.textSave(content, `Tab${i+1}`);
             })
           }
+
+          //for auto save
+          quill.on('text-change', function(delta,oldDelta,source){
+            changesMade = true;
+          })
     }
     createTextEditor('Tab1');
 
@@ -598,6 +626,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 defaultCode = 'select "Hello World!;';
                 codeEditor.session.setValue(defaultCode);
             }
+        }
+
+        //for auto save
+        for(let i = numOfCodeTabs - 1; i < numOfCodeTabs; i++){
+            codeEditor.getSession().on('change', () =>{
+                changesMade = true;
+            })
         }
 
         `//-------PLACEHOLDER CODE FOR THE BUTTONS ONLY WORKS FOR FIRST TAB---

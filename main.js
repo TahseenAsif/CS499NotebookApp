@@ -175,7 +175,7 @@ function updateWindowApp(){
     mainWindow.moveTop();
     mainWindow.center();
     mainWindow.loadFile(path.join(__dirname, './html/index.html'));
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 }
 
 function openTerminal(error, msg){
