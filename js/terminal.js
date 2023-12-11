@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
     //execution resulted in no errors, show output
     window.api.noErrorMsg((event, msg) => {
         getMessage();
-    })
+    });
 
     async function getMessage(){
         fetch('../message.txt')

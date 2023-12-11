@@ -147,7 +147,6 @@ function createTerminalWindow(){
         }
     });
     termWindow.loadFile(path.join(__dirname, 'html/terminal.html'));
-    termWindow.webContents.openDevTools();
 };
 
 //Used for testing paint functionality, feel free to remove/modify this
@@ -183,16 +182,16 @@ function openTerminal(error, msg){
     createTerminalWindow();
     termWindow.once('ready-to-show', () => {
         termWindow.show();
+        //focuses to terminal
+        termWindow.setAlwaysOnTop(true);
+        termWindow.focus();
+        termWindow.setAlwaysOnTop(false);
         if(error){
             termWindow.webContents.send("sendErrorMsg", msg);
         }
         else{
             termWindow.webContents.send("noErrors", msg);
         }
-        //focuses to terminal
-        setTimeout(() => {
-            termWindow.focus();
-        }, 500);
     });
 }
 
